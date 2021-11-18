@@ -171,4 +171,17 @@ a {
   border-bottom: 3px solid #fff;
 }
 
+.intro {
+  min-height: 80vh;
+}
+.intro__inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+.intro__title {
+  font-size: 4em;
+}
+
 /*# sourceMappingURL=main.css.map */

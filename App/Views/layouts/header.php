@@ -14,8 +14,8 @@
             </nav>
 
             <div class="header__buttons">
-                <a class="header__button" href="/account/signin">Войти</a>
-                <a class="header__button" href="/Register/index">Регистрация</a>
+                <a class="header__button" href="/login/index">Войти</a>
+                <a class="header__button" href="/register/index">Регистрация</a>
             </div>
         </div> <!-- /.header__inner -->
     </div> <!-- /.header -->

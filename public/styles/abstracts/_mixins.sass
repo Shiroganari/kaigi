@@ -1,0 +1,14 @@
+@mixin background($image)
+    background-image: url($image)
+    background-size: cover
+    background-position: center
+    background-repeat: no-repeat
+
+@mixin position-center()
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+
+@function em($pixels, $context: $browser-context)
+    @return #{$pixels / $context}em

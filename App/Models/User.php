@@ -20,4 +20,17 @@ class User extends Model
             echo $e->getMessage();
         }
     }
+
+    public static function registerNewUser($firstName, $email, $password, $location)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'INSERT INTO users (first_name, email, password, location) VALUES (?, ?, ?, ?);';
+            $sth = $db->prepare($sql);
+            $sth->execute([$firstName, $email, $password, $location]);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

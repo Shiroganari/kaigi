@@ -2,3 +2,24 @@
 // .header //
 //---------//
 .header
+    padding: 20px 0
+    background-color: $red-color
+    font-weight: 500
+
+    &__inner
+        display: flex
+        justify-content: space-between
+        align-items: center
+
+    &__button
+        margin-right: 30px
+
+        &:last-child
+            margin-right: 0
+
+    a
+        padding: 5px 0
+        transition: border-bottom 0.1s ease
+
+        &:hover
+            border-bottom: 3px solid #fff

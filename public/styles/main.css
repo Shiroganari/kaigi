@@ -84,8 +84,8 @@ a {
   transition: all 0.3s ease;
 }
 .button:hover {
-  color: #f81240;
-  border-color: #f81240;
+  color: #d40634;
+  border-color: #d40634;
 }
 .button:hover {
   transform: translateY(-0.2em);
@@ -126,6 +126,47 @@ a {
   border: 1px solid #242323;
   outline: none;
   resize: vertical;
+}
+
+.logo {
+  font-size: 2em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-between;
+}
+.nav__item {
+  margin-right: 30px;
+}
+.nav__item:last-child {
+  margin-right: 0;
+}
+
+.header {
+  padding: 20px 0;
+  background-color: #d40634;
+  font-weight: 500;
+}
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__button {
+  margin-right: 30px;
+}
+.header__button:last-child {
+  margin-right: 0;
+}
+.header a {
+  padding: 5px 0;
+  transition: border-bottom 0.1s ease;
+}
+.header a:hover {
+  border-bottom: 3px solid #fff;
 }
 
 /*# sourceMappingURL=main.css.map */

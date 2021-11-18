@@ -7,5 +7,8 @@ use Core\View;
 
 class Account extends Controller
 {
-
+    public function signupAction()
+    {
+        View::render('Account/signup.php');
+    }
 }

@@ -14,23 +14,23 @@
     <section class="signup">
         <h1 class="signup__title">Создание аккаунта</h1>
 
-        <form class="form" action="">
+        <form class="form" method="post" action="http://kaigi.loc/register/signup">
             <div class="form__item">
                 <label class="form__label" for="name">Введите ваше имя:</label>
-                <input class="form__input" id="name" type="text">
+                <input class="form__input" id="name" name="name" type="text">
             </div>
 
             <div class="form__item">
                 <label class="form__label" for="email">Введите ваш Email:</label>
-                <input class="form__input" id="email" type="email">
+                <input class="form__input" id="email" name="email" type="email">
             </div>
 
             <div class="form__item">
                 <label class="form__label" for="pass">Придумайте пароль:</label>
-                <input class="form__input" id="pass" type="password">
+                <input class="form__input" id="pass" name="pass" type="password">
             </div>
 
-            <button class="form__button button">Создать аккаунт</button>
+            <input class="form__button button" type="submit" value="Создать аккаунт">
         </form>
     </section>
 </body>

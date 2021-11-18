@@ -4,6 +4,7 @@
 .form
     display: flex
     flex-direction: column
+    width: 100%
 
     &__item
         position: relative
@@ -33,3 +34,8 @@
         border: 1px solid $dark-color
         outline: none
         resize: vertical
+
+    &__input,
+    &__textarea
+        &:focus
+            border-color: $red-color

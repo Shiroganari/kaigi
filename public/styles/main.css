@@ -63,6 +63,10 @@ a {
   cursor: pointer;
 }
 
+h1 {
+  font-size: 4em;
+}
+
 .container {
   max-width: 1230px;
   margin: 0 auto;
@@ -97,6 +101,7 @@ a {
 .form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .form__item {
   position: relative;
@@ -126,6 +131,9 @@ a {
   border: 1px solid #242323;
   outline: none;
   resize: vertical;
+}
+.form__input:focus, .form__textarea:focus {
+  border-color: #d40634;
 }
 
 .logo {
@@ -180,8 +188,26 @@ a {
   align-items: center;
   min-height: 80vh;
 }
-.intro__title {
-  font-size: 4em;
+
+.signup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  text-align: center;
+}
+.signup .form {
+  max-width: 500px;
+  text-align: left;
+}
+.signup .form__button {
+  margin: 0 auto;
+  min-width: 60%;
+}
+.signup__title {
+  font-size: 2.5em;
+  margin-bottom: 50px;
 }
 
 /*# sourceMappingURL=main.css.map */

@@ -10,5 +10,6 @@
 </head>
 <body>
 <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+<?php require_once(dirname(__DIR__) . '/layouts/intro.php'); ?>
 </body>
 </html>

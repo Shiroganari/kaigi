@@ -5,14 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Kaigi | Signin</title>
+    <title>Kaigi | Войти в аккаунт</title>
     <link rel="stylesheet" href="<?php ROOT ?>/styles/main.css">
 </head>
 <body>
 <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
 
-<section class="signup">
-    <h1 class="signup__title">Вход в аккаунт</h1>
+<section class="login">
+    <h1 class="login__title">Вход в аккаунт</h1>
 
     <form class="form" method="post" action="http://kaigi.loc/register/signup">
         <div class="form__item">

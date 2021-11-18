@@ -1,0 +1,19 @@
+{
+    "name": "shiroganari/kaigi",
+    "autoload": {
+        "files": ["Core/Config/constants.php", "Core/Config/database.php"],
+        "psr-4": {
+            "Core\\": "Core/",
+            "App\\": "App/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Vyacheslav Tyurin",
+            "email": "shiroganari@gmail.com"
+        }
+    ],
+    "require": {
+      "ext-pdo": "*"
+    }
+}

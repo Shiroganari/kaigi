@@ -16,11 +16,24 @@ class Register extends Controller
 
     public function signupAction()
     {
-        $firstName = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['pass'];
+        $username = $this->post_params['username'];
+        $email = $this->post_params['email'];
+        $password = $this->post_params['pass'];
         $location = 'Novosibirsk';
 
-        User::registerNewUser($firstName, $email, $password, $location);
+        if ($this->validate($username, $email, $password) == 'OK') {
+            User::registerNewUser($username, $email, $password, $location);
+            echo 'Регистрация прошла успешно!';
+        }
+    }
+
+    protected function validate($username, $email, $password)
+    {
+        if (!$username || !$email || !$password) {
+           echo 'Ошибка. Введенные данные пользователя не прошли валидацию';
+           exit;
+        }
+
+        return 'OK';
     }
 }

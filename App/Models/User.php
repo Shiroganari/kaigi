@@ -39,7 +39,7 @@ class User extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT id FROM `users` WHERE email = '".$email."' AND password = '".$password."'");
+            $stmt = $db->prepare("SELECT * FROM `users` WHERE email = '".$email."' AND password = '".$password."'");
             $stmt->execute();
             return $stmt->fetch();
         } catch (PDOException $e) {

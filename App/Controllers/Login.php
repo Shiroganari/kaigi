@@ -13,4 +13,24 @@ class Login extends Controller
     {
         View::render('Login/index.php');
     }
+
+    public function signinAction()
+    {
+        $email = $this->post_params['email'];
+        $password = $this->post_params['pass'];
+
+        if ($this->validateUser($email, $password) == 'OK') {
+            echo 'Авторизация прошла успешно!';
+        } else {
+            echo 'Неверный логин или пароль';
+        }
+    }
+
+    public function validateUser($email, $password)
+    {
+        if (User::getUser($email, $password)) {
+            return 'OK';
+        }
+    }
+
 }

@@ -21,14 +21,27 @@ class User extends Model
         }
     }
 
-    public static function registerNewUser($username, $email, $password, $location)
+    public static function checkUser($username, $email)
     {
         try {
             $db = static::getDB();
 
-            $sql = 'INSERT INTO users (username, email, password, location) VALUES (?, ?, ?, ?);';
+            $stmt = $db->prepare("SELECT * FROM `users` WHERE username = '".$username."' OR email = '".$email."'");
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function registerNewUser($username, $email, $password)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?);';
             $sth = $db->prepare($sql);
-            $sth->execute([$username, $email, $password, $location]);
+            $sth->execute([$username, $email, $password]);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

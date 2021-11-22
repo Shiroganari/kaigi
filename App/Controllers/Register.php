@@ -11,6 +11,13 @@ class Register extends Controller
 {
     public function indexAction()
     {
+        session_start();
+
+        if (isset($_SESSION['active'])) {
+            header('Location: /profile/index');
+            exit;
+        }
+
         View::render('Register/index.php');
     }
 

@@ -9,7 +9,15 @@
     <link rel="stylesheet" href="<?php ROOT ?>/styles/main.css">
 </head>
 <body>
-<?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
-<?php require_once(dirname(__DIR__) . '/layouts/intro.php'); ?>
+    <?php
+        session_start();
+        if (isset($_SESSION['active'])) {
+            require_once(dirname(__DIR__) . '/layouts/header_authorized.php');
+        } else {
+            require_once(dirname(__DIR__) . '/layouts/header.php');
+        }
+
+        require_once(dirname(__DIR__) . '/layouts/intro.php');
+    ?>
 </body>
 </html>

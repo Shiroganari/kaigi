@@ -26,7 +26,7 @@ class User extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT * FROM `users` WHERE username = '".$username."' OR email = '".$email."'");
+            $stmt = $db->prepare("SELECT * FROM `users` WHERE username = '" . $username . "' OR email = '" . $email . "'");
             $stmt->execute();
             return $stmt->fetch();
         } catch (PDOException $e) {
@@ -44,6 +44,31 @@ class User extends Model
             $sth->execute([$username, $email, $password]);
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+    public static function completeUserRegister($userID, $firstName, $lastName, $descr, $location)
+    {
+        try {
+            $db = static::getDB();
+
+            $stmt = $db->prepare("UPDATE users SET first_name = '".$firstName."' WHERE id = '".$userID."' ");
+            $stmt->execute();
+
+            $stmt = $db->prepare("UPDATE users SET last_name = '".$lastName."' WHERE id = '".$userID."' ");
+            $stmt->execute();
+
+            $stmt = $db->prepare("UPDATE users SET description = '".$descr."' WHERE id = '".$userID."' ");
+            $stmt->execute();
+
+            $stmt = $db->prepare("UPDATE users SET location = '".$location."' WHERE id = '".$userID."' ");
+            $stmt->execute();
+
+            $stmt = $db->prepare("UPDATE users SET status = '2' WHERE id = '".$userID."' ");
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            exit;
         }
     }
 

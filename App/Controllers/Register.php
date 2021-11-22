@@ -6,6 +6,7 @@ use Core\Controller;
 use Core\View;
 
 use App\Models\User;
+use App\Models\UsersTopics;
 
 class Register extends Controller
 {
@@ -38,6 +39,25 @@ class Register extends Controller
         }
 
         User::registerNewUser($username, $email, $password);
+        header('Location: /login/index');
+    }
+
+    public function completeRegisterAction()
+    {
+        session_start();
+        $userID = $_SESSION['userID'];
+
+        $firstName = $this->post_params['first_name'];
+        $lastName = $this->post_params['last_name'];
+        $descr = $this->post_params['descr'];
+        $location = $this->post_params['city'];
+        $topics = $this->post_params['topics'];
+
+        User::completeUserRegister($userID, $firstName, $lastName, $descr, $location);
+        UsersTopics::addUsersTopics($userID, $topics);
+
+        $_SESSION['status'] = 2;
+        header('Location: /profile/index');
     }
 
     protected function validate($username, $email, $password)

@@ -40,6 +40,7 @@ class Login extends Controller
         $_SESSION['username'] = $user['username'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['pass'] = $user['password'];
+        $_SESSION['userID'] = $user['id'];
 
         header('Location: /profile/index');
     }

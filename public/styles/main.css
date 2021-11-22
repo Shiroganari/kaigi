@@ -109,7 +109,7 @@ h1 {
 }
 .form__label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   font-size: 1.4em;
 }
 .form__input {
@@ -135,6 +135,31 @@ h1 {
 .form__input:focus, .form__textarea:focus {
   border-color: #d40634;
 }
+.form__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  margin-bottom: 10px;
+  padding: 15px 38px 15px 16px;
+  background-size: 10px;
+  transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.form__select:hover {
+  border: 1px solid #999;
+}
+.form__select:focus {
+  border: 1px solid #999;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+.form__title {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
 
 .logo {
   font-size: 2em;
@@ -151,6 +176,15 @@ h1 {
 }
 .nav__item:last-child {
   margin-right: 0;
+}
+
+.topics__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.topics__choice {
+  margin-right: 10px;
 }
 
 .header {
@@ -195,7 +229,7 @@ h1 {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  margin: 50px 0;
   text-align: center;
 }
 .register .form,

@@ -46,18 +46,4 @@ class User extends Model
             echo $e->getMessage();
         }
     }
-
-    public static function getUser($email, $password)
-    {
-        try {
-            $db = static::getDB();
-
-            $stmt = $db->prepare("SELECT * FROM `users` WHERE email = '".$email."' AND password = '".$password."'");
-            $stmt->execute();
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
-        }
-    }
 }

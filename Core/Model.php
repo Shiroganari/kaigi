@@ -29,5 +29,7 @@ class Model
                 echo $e->getMessage();
             }
         }
+
+        return $db;
     }
 }

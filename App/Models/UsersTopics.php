@@ -16,13 +16,10 @@ class UsersTopics extends Model
             $db = static::getDB();
             $topicsCount = count($topics);
 
-            // If a user has selected at least one topic
-            if (isset($topicsCount)) {
-                for ($i = 0; $i < $topicsCount; $i++) {
-                    $sql = 'INSERT INTO users_topics (users_id, topic_name) VALUES (?, ?);';
-                    $stmt = $db->prepare($sql);
-                    $stmt->execute([$id, $topics[$i]]);
-                }
+            for ($i = 0; $i < $topicsCount; $i++) {
+                $sql = 'INSERT INTO users_topics (users_id, topic_name) VALUES (?, ?);';
+                $stmt = $db->prepare($sql);
+                $stmt->execute([$id, $topics[$i]]);
             }
         } catch (PDOException $e) {
             echo $e->getMessage();

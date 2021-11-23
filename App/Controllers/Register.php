@@ -54,7 +54,11 @@ class Register extends Controller
         $topics = $this->post_params['topics'];
 
         User::completeUserRegister($userID, $firstName, $lastName, $descr, $location);
-        UsersTopics::addUsersTopics($userID, $topics);
+
+        // If a user has selected at least one topic, then add it to the database
+        if (isset($topics)) {
+            UsersTopics::addUsersTopics($userID, $topics);
+        }
 
         $_SESSION['status'] = 2;
         header('Location: /profile/index');

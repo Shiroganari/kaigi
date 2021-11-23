@@ -10,7 +10,7 @@ use PDOException;
 class UsersTopics extends Model
 {
     // Add user topics to the table
-    public static function addUsersTopics(int $id, array $topics): void
+    public static function addUsersTopics(int $userID, array $topics): void
     {
         try {
             $db = static::getDB();
@@ -19,7 +19,7 @@ class UsersTopics extends Model
             for ($i = 0; $i < $topicsCount; $i++) {
                 $sql = 'INSERT INTO users_topics (users_id, topic_name) VALUES (?, ?);';
                 $stmt = $db->prepare($sql);
-                $stmt->execute([$id, $topics[$i]]);
+                $stmt->execute([$userID, $topics[$i]]);
             }
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -27,7 +27,7 @@ class UsersTopics extends Model
     }
 
     // Get user topics from the table
-    public static function getUserTopics($userID)
+    public static function getUserTopics(int $userID)
     {
         try {
             $db = static::getDB();
@@ -39,7 +39,7 @@ class UsersTopics extends Model
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
-            return 'ERROR';
+            exit;
         }
     }
 }

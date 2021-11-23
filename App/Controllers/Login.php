@@ -46,7 +46,7 @@ class Login extends Controller
         header('Location: /profile/index');
     }
 
-    public function validateUser($email, $password)
+    public function validateUser(string $email, string $password)
     {
         $user = User::getUser($email);
 

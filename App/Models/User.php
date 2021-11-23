@@ -22,7 +22,7 @@ class User extends Model
         }
     }
 
-    public static function checkUser($username, $email)
+    public static function checkUser(string $username, string $email)
     {
         try {
             $db = static::getDB();
@@ -36,7 +36,7 @@ class User extends Model
         }
     }
 
-    public static function registerNewUser($username, $email, $password):void
+    public static function registerNewUser(string $username, string $email, string $password):void
     {
         try {
             $db = static::getDB();
@@ -50,7 +50,7 @@ class User extends Model
         }
     }
 
-    public static function completeUserRegister($userID, $firstName, $lastName, $descr, $location):void
+    public static function completeUserRegister(int $userID, string $firstName, string $lastName, string $descr, string $location):void
     {
         try {
             $db = static::getDB();
@@ -75,7 +75,7 @@ class User extends Model
         }
     }
 
-    public static function getUser($email)
+    public static function getUser(string $email)
     {
         try {
             $db = static::getDB();

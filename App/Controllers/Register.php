@@ -64,7 +64,7 @@ class Register extends Controller
         header('Location: /profile/index');
     }
 
-    protected function validate($username, $email, $password)
+    protected function validate(string $username, string $email, string $password)
     {
         if (!$username || !$email || !$password) {
            return 'ERROR';

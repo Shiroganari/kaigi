@@ -13,6 +13,7 @@ class Login extends Controller
     {
         session_start();
 
+        // If a user has already logged in, then redirect to the profile page
         if (isset($_SESSION['active'])) {
             header('Location: /profile/index');
             exit;
@@ -27,7 +28,7 @@ class Login extends Controller
         $password = $this->post_params['pass'];
         $user = $this->validateUser($email, $password);
 
-        if ($user == 'No Found') {
+        if (gettype($user) !== 'array') {
             View::render('Login/index.php');
             echo 'Пользователь не был найден.';
             exit;
@@ -47,12 +48,18 @@ class Login extends Controller
 
     public function validateUser($email, $password)
     {
-        $user = User::getUser($email, $password);
+        $user = User::getUser($email);
 
-        if ($user) {
+        if (!$user) {
+            return 'No Found';
+        }
+
+        $hashPassword = $user['password'];
+
+        if (password_verify($password, $hashPassword)) {
             return $user;
         }
 
-        return 'No Found';
+        return 'Wrong password';
     }
 }

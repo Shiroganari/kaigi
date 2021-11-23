@@ -41,7 +41,7 @@ class User extends Model
 
             $sql = 'INSERT INTO users (username, email, password) VALUES (?, ?, ?);';
             $sth = $db->prepare($sql);
-            $sth->execute([$username, $email, $password]);
+            $sth->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT)]);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -72,12 +72,12 @@ class User extends Model
         }
     }
 
-    public static function getUser($email, $password)
+    public static function getUser($email)
     {
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare("SELECT * FROM `users` WHERE email = '".$email."' AND password = '".$password."'");
+            $stmt = $db->prepare("SELECT * FROM `users` WHERE email = '".$email."'");
             $stmt->execute();
             return $stmt->fetch();
         } catch (PDOException $e) {

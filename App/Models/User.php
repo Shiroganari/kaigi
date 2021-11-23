@@ -18,6 +18,7 @@ class User extends Model
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
+            exit;
         }
     }
 
@@ -31,10 +32,11 @@ class User extends Model
             return $stmt->fetch();
         } catch (PDOException $e) {
             echo $e->getMessage();
+            exit;
         }
     }
 
-    public static function registerNewUser($username, $email, $password)
+    public static function registerNewUser($username, $email, $password):void
     {
         try {
             $db = static::getDB();
@@ -44,10 +46,11 @@ class User extends Model
             $sth->execute([$username, $email, password_hash($password, PASSWORD_DEFAULT)]);
         } catch (PDOException $e) {
             echo $e->getMessage();
+            exit;
         }
     }
 
-    public static function completeUserRegister($userID, $firstName, $lastName, $descr, $location)
+    public static function completeUserRegister($userID, $firstName, $lastName, $descr, $location):void
     {
         try {
             $db = static::getDB();

@@ -18,6 +18,7 @@ class Topic extends Model
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
+            exit;
         }
     }
 }

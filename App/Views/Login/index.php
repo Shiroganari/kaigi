@@ -6,27 +6,31 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kaigi | Войти в аккаунт</title>
-    <link rel="stylesheet" href="<?php ROOT ?>/styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
-<?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+    <!-- HEADER -->
+    <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+    <!-- HEADER END -->
 
-<section class="login">
-    <h1 class="login__title">Вход в аккаунт</h1>
+    <!-- LOGIN -->
+    <section class="login">
+        <h1 class="login__title">Вход в аккаунт</h1>
 
-    <form class="form" method="post" action="http://kaigi.loc/login/signin">
-        <div class="form__item">
-            <label class="form__label" for="email">Введите ваш Email:</label>
-            <input class="form__input" id="email" name="email" type="email">
-        </div>
+        <form class="form" method="post" action="http://kaigi.loc/login/signin">
+            <div class="form__item">
+                <label class="form__label" for="email">Введите ваш Email:</label>
+                <input class="form__input" id="email" name="email" type="email">
+            </div>
 
-        <div class="form__item">
-            <label class="form__label" for="pass">Введите пароль:</label>
-            <input class="form__input" id="pass" name="pass" type="password">
-        </div>
+            <div class="form__item">
+                <label class="form__label" for="pass">Введите пароль:</label>
+                <input class="form__input" id="pass" name="pass" type="password">
+            </div>
 
-        <input class="form__button button" type="submit" value="Войти в аккаунт">
-    </form>
-</section>
+            <input class="form__button button" type="submit" value="Войти в аккаунт">
+        </form>
+    </section>
+    <!-- LOGIN END -->
 </body>
 </html>

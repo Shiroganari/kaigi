@@ -1,4 +1,3 @@
-<!-- INTRO -->
 <section class="intro">
     <div class="container">
         <div class="intro__inner">
@@ -6,4 +5,3 @@
         </div>
     </div>
 </section>
-<!-- INTRO END -->

@@ -6,11 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kaigi | Создание аккаунта</title>
-    <link rel="stylesheet" href="<?php ROOT ?>/styles/main.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
+    <!-- HEADER -->
     <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+    <!-- HEADER END -->
 
+    <!-- REGISTER -->
     <section class="register">
         <h1 class="register__title">Создание аккаунта</h1>
 
@@ -33,5 +36,6 @@
             <input class="form__button button" type="submit" value="Создать аккаунт">
         </form>
     </section>
+    <!-- REGISTER END -->
 </body>
 </html>

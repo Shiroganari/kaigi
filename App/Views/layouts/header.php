@@ -1,4 +1,3 @@
-<!-- HEADER -->
 <header class="header">
     <div class="container">
         <div class="header__inner">
@@ -7,9 +6,11 @@
             <nav class="header__nav nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link" href="/events/index">События</a></li>
+                        <a class="nav__link" href="/events/index">События</a>
+                    </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/groups/index">Группы</a></li>
+                        <a class="nav__link" href="/groups/index">Группы</a>
+                    </li>
                 </ul>
             </nav>
 
@@ -20,4 +21,3 @@
         </div> <!-- /.header__inner -->
     </div> <!-- /.header -->
 </header>
-<!-- HEADER END -->

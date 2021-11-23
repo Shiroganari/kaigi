@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use Core\Controller;
 use Core\View;
+use App\Models\User;
+use App\Models\UsersTopics;
 
 class Profile extends Controller
 {
@@ -21,7 +23,10 @@ class Profile extends Controller
             exit;
         }
 
-        View::render('Profile/index.php');
+        $args['user'] = User::getUser($_SESSION['email'], $_SESSION['pass']);
+        $args['user_topics'] = UsersTopics::getUserTopics($_SESSION['userID']);
+
+        View::render('Profile/index.php', $args);
     }
 
     public function completeAction()

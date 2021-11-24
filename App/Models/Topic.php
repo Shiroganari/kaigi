@@ -14,7 +14,8 @@ class Topic extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->query('SELECT name FROM topics;');
+            $sql = 'SELECT name FROM topics';
+            $stmt = $db->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();

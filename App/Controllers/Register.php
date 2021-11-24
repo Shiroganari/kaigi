@@ -47,17 +47,25 @@ class Register extends Controller
         session_start();
 
         $userID = $_SESSION['userID'];
-
         $firstName = $this->post_params['first_name'];
         $lastName = $this->post_params['last_name'];
-        $descr = $this->post_params['descr'];
+        $description = $this->post_params['description'];
         $locationCountry = $this->post_params['country'];
         $locationCity = $this->post_params['city'];
-        $topics = $this->post_params['topics'];
 
-        User::completeUserRegister($userID, $firstName, $lastName, $descr, $locationCountry, $locationCity);
+        $userData = [
+            'userID' => $userID,
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'description' => $description,
+            'locationCountry' => $locationCountry,
+            'locationCity' => $locationCity
+        ];
+
+        User::completeUserRegister($userData);
 
         // If a user has selected at least one topic, then add it to the database
+        $topics = $this->post_params['topics'];
         if (isset($topics)) {
             UsersTopics::addUsersTopics($userID, $topics);
         }

@@ -29,8 +29,8 @@
             </div> <!-- /.form__item -->
 
             <div class="form__item">
-                <label class="form__label" for="descr">Расскажите что-нибудь о себе: </label>
-                <textarea class="form__textarea" name="descr" id="descr" cols="30" rows="10"></textarea>
+                <label class="form__label" for="description">Расскажите что-нибудь о себе: </label>
+                <textarea class="form__textarea" name="description" id="description" cols="30" rows="10"></textarea>
             </div> <!-- /.form__item -->
 
             <div class="form__item">

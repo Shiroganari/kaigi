@@ -1,5 +1,5 @@
 //----------//
-// .profile //
+// .profile.sass //
 //----------//
 .profile
     &__inner
@@ -17,26 +17,27 @@
 .profile-main
     min-height: 600px
 
+
 //----------------//
-// .profile-about //
+// .profile.sass-about //
 //----------------//
 .profile-about
     display: flex
     flex-direction: column
     align-items: center
     width: 30%
-    padding: 45px 20px
     margin-right: 100px
+    padding: 45px 20px
 
     &__item
         margin-bottom: 20px
 
     &__photo
-        max-width: 100px
-        border-radius: 100%
-        border: 2px solid $dark-color
         overflow: hidden
+        max-width: 100px
         background-color: $dark-color
+        border: 2px solid $dark-color
+        border-radius: 100%
 
     &__img
         display: block
@@ -64,7 +65,7 @@
 
 
 //---------------//
-// .profile-main //
+// .profile.sass-main //
 //---------------//
 .profile-main
     width: 70%
@@ -76,12 +77,12 @@
         padding: 30px 10%
 
     &__title
+        padding: 10px
         font-size: 1.2em
         text-transform: uppercase
-        cursor: pointer
-        padding: 10px
         border-radius: 10px
         transition: all 0.5s ease
+        cursor: pointer
 
     &__title.active,
     &__title:hover
@@ -95,14 +96,14 @@
 
 
 //-----------------//
-// .profile-topics //
+// .profile.sass-topics //
 //-----------------//
 .profile-topics
     margin-top: 20px
 
     &__head
-        font-size: 1.5em
         margin-bottom: 10px
+        font-size: 1.5em
 
     &__content
         display: flex

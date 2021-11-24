@@ -1,0 +1,241 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+  content: "";
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+  font-family: "Roboto", Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  color: #242323;
+  scroll-behavior: smooth;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 4em;
+}
+
+.container {
+  max-width: 1230px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.button {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #fff;
+  font-size: 1.1em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #242323;
+  border: 1px solid #242323;
+  border-radius: 10px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.button:hover {
+  color: #d40634;
+  border-color: #d40634;
+}
+.button:hover {
+  transform: translateY(-0.2em);
+}
+.button:active {
+  transform: translateY(0em);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.form__item {
+  position: relative;
+  margin-bottom: 20px;
+}
+.form__label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+.form__input {
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  background-color: inherit;
+  font-size: 1.4em;
+  border: 1px solid #242323;
+  border-radius: 5px;
+  outline: none;
+}
+.form__textarea {
+  width: 100%;
+  min-height: 100px;
+  max-height: 250px;
+  padding: 10px;
+  font-size: 1.4em;
+  border: 1px solid #242323;
+  outline: none;
+  resize: vertical;
+}
+.form__input:focus, .form__textarea:focus {
+  border-color: #d40634;
+}
+.form__select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  margin-bottom: 10px;
+  padding: 15px 38px 15px 16px;
+  background-size: 10px;
+  transition: border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.form__select:hover {
+  border: 1px solid #999;
+}
+.form__select:focus {
+  border: 1px solid #999;
+  box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+  outline: none;
+}
+.form__title {
+  font-size: 1.4em;
+  margin-bottom: 20px;
+}
+
+.logo {
+  font-size: 2em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.nav__list {
+  display: flex;
+  justify-content: space-between;
+}
+.nav__item {
+  margin-right: 30px;
+}
+.nav__item:last-child {
+  margin-right: 0;
+}
+
+.topics__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.topics__choice {
+  margin-right: 10px;
+}
+
+.header {
+  padding: 20px 0;
+  background-color: #d40634;
+  font-weight: 500;
+}
+.header__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__button {
+  margin-right: 30px;
+}
+.header__button:last-child {
+  margin-right: 0;
+}
+.header__button,
+.header .nav__link {
+  padding: 5px 0;
+  transition: border-bottom 0.1s ease;
+}
+.header__button:hover,
+.header .nav__link:hover {
+  border-bottom: 3px solid #fff;
+}
+
+.register,
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 50px 0;
+  text-align: center;
+}
+.register .form,
+.login .form {
+  max-width: 500px;
+  text-align: left;
+}
+.register .form__button,
+.login .form__button {
+  min-width: 60%;
+  margin: 0 auto;
+}
+.register__title,
+.login__title {
+  margin-bottom: 50px;
+  font-size: 2.5em;
+}
+
+/*# sourceMappingURL=account.css.map */

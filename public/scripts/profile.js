@@ -1,5 +1,5 @@
-const profileMainTitles = document.getElementsByClassName('profile-main__title');
-const profileMainHeader = document.getElementById('profile-main__header');
+const profileMainTitles = document.getElementsByClassName('profile.sass-main__title');
+const profileMainHeader = document.getElementById('profile.sass-main__header');
 
 
 profileMainHeader.addEventListener('click', function(e) {

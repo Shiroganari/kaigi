@@ -14,7 +14,7 @@
     <!-- HEADER END -->
 
     <!-- REGISTER -->
-    <section class="register">
+    <section class="register complete">
         <h1 class="register__title">Завершение регистрации</h1>
 
         <form class="form" method="post" action="http://kaigi.loc/register/completeRegister">

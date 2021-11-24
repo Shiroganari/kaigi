@@ -37,8 +37,10 @@
                     </div>
 
                     <div class="profile-about__item profile-about__location">
-                        <span>Город: </span>
-                        <?php echo $user['location']?>
+                        <span>Локация: </span>
+                        <?php
+                            echo $user['location_city'] . ', ' . $user['location_country'];
+                        ?>
                     </div>
                 </div> <!-- /.profile-about -->
 

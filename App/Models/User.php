@@ -50,7 +50,7 @@ class User extends Model
         }
     }
 
-    public static function completeUserRegister(int $userID, string $firstName, string $lastName, string $descr, string $location):void
+    public static function completeUserRegister(int $userID, string $firstName, string $lastName, string $descr, string $locationCountry, string $locationCity):void
     {
         try {
             $db = static::getDB();
@@ -64,7 +64,10 @@ class User extends Model
             $stmt = $db->prepare("UPDATE users SET description = '".$descr."' WHERE id = '".$userID."' ");
             $stmt->execute();
 
-            $stmt = $db->prepare("UPDATE users SET location = '".$location."' WHERE id = '".$userID."' ");
+            $stmt = $db->prepare("UPDATE users SET location_country = '".$locationCountry."' WHERE id = '".$userID."' ");
+            $stmt->execute();
+
+            $stmt = $db->prepare("UPDATE users SET location_city = '".$locationCity."' WHERE id = '".$userID."' ");
             $stmt->execute();
 
             $stmt = $db->prepare("UPDATE users SET status = '2' WHERE id = '".$userID."' ");

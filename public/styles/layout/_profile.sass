@@ -2,18 +2,30 @@
 // .profile //
 //----------//
 .profile
-
     &__inner
         display: flex
         justify-content: space-between
         padding-top: 50px
 
+.profile-about,
+.profile-main,
+.profile-topics__content
+    border: 2px solid $dark-color
+    border-radius: 5px
+
+.profile-about,
+.profile-main
+    min-height: 600px
+
+//----------------//
+// .profile-about //
+//----------------//
 .profile-about
     display: flex
     flex-direction: column
     align-items: center
     width: 30%
-    padding: 45px 5px
+    padding: 45px 20px
     margin-right: 100px
 
     &__item
@@ -42,15 +54,21 @@
     &__location
         font-size: 1.1em
         font-style: italic
+        line-height: 1.3em
+        color: #5b5b5b
 
         span
             font-weight: 700
             font-style: normal
+            color: #111
 
 
+//---------------//
+// .profile-main //
+//---------------//
 .profile-main
     width: 70%
-    padding: 15px
+    padding: 15px 30px
 
     &__header
         display: flex
@@ -75,13 +93,10 @@
         word-wrap: break-word
         font-size: 1.4em
 
-.profile-about,
-.profile-main
-    min-height: 600px
-    border: 2px solid $dark-color
-    border-radius: 5px
 
-
+//-----------------//
+// .profile-topics //
+//-----------------//
 .profile-topics
     margin-top: 20px
 
@@ -96,10 +111,10 @@
 
     &__item
         margin-right: 10px
+        padding: 10px
         background-color: $red-color
         color: #fff
         border-radius: 10px
-        padding: 10px
 
         &:last-child
             margin-right: 0

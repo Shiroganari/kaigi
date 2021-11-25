@@ -9,7 +9,6 @@ use PDOException;
 
 class User extends Model
 {
-    // Get all users from the database
     public static function getAll()
     {
         try {
@@ -24,7 +23,6 @@ class User extends Model
         }
     }
 
-    // Check if the user already exists
     public static function checkUser(string $username, string $email)
     {
         try {
@@ -34,7 +32,7 @@ class User extends Model
             $stmt = $db->prepare($sql);
             $stmt->execute([
                 ':username' => $username,
-                ':email'    => $email
+                ':email' => $email
             ]);
             return $stmt->fetch();
         } catch (PDOException $e) {
@@ -43,8 +41,7 @@ class User extends Model
         }
     }
 
-    // Register a new user
-    public static function registerNewUser(string $username, string $email, string $password):void
+    public static function registerNewUser(string $username, string $email, string $password): void
     {
         try {
             $db = static::getDB();
@@ -55,7 +52,7 @@ class User extends Model
             $sth = $db->prepare($sql);
             $sth->execute([
                 ':username' => $username,
-                ':email'    => $email,
+                ':email' => $email,
                 ':password' => $passwordHash
             ]);
         } catch (PDOException $e) {
@@ -64,8 +61,7 @@ class User extends Model
         }
     }
 
-    // Add additional user data into the database
-    public static function completeUserRegister(array $userData):void
+    public static function completeUserRegister(array $userData): void
     {
         try {
             $db = static::getDB();
@@ -73,37 +69,37 @@ class User extends Model
             $stmt = $db->prepare('UPDATE `users` SET first_name = :firstName WHERE id = :userID');
             $stmt->execute([
                 ':firstName' => $userData['firstName'],
-                ':userID'    => $userData['userID']
+                ':userID' => $userData['userID']
             ]);
 
             $stmt = $db->prepare('UPDATE `users` SET last_name = :lastName WHERE id = :userID');
             $stmt->execute([
-                ':lastName'  => $userData['lastName'],
-                ':userID'    => $userData['userID']
+                ':lastName' => $userData['lastName'],
+                ':userID' => $userData['userID']
             ]);
 
             $stmt = $db->prepare('UPDATE `users` SET description = :description WHERE id = :userID');
             $stmt->execute([
-                ':description'  => $userData['description'],
+                ':description' => $userData['description'],
                 ':userID' => $userData['userID']
             ]);
 
             $stmt = $db->prepare('UPDATE `users` SET location_country = :locationCountry WHERE id = :userID');
             $stmt->execute([
-                ':locationCountry'  => $userData['locationCountry'],
-                ':userID'           => $userData['userID']
+                ':locationCountry' => $userData['locationCountry'],
+                ':userID' => $userData['userID']
             ]);
 
             $stmt = $db->prepare('UPDATE `users` SET location_city = :locationCity WHERE id = :userID');
             $stmt->execute([
                 ':locationCity' => $userData['locationCity'],
-                ':userID'       => $userData['userID']
+                ':userID' => $userData['userID']
             ]);
 
             $stmt = $db->prepare('UPDATE `users` SET status = :status WHERE id = :userID');
             $stmt->execute([
-                ':status'   => 2,
-                ':userID'   => $userData['userID']
+                ':status' => 2,
+                ':userID' => $userData['userID']
             ]);
         } catch (PDOException $e) {
             echo $e->getMessage();
@@ -111,7 +107,6 @@ class User extends Model
         }
     }
 
-    // Get user by email
     public static function getUser(string $email)
     {
         try {

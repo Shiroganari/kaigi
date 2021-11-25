@@ -77,7 +77,7 @@ class Register extends Controller
     protected function validate(string $username, string $email, string $password)
     {
         if (!$username || !$email || !$password) {
-           return 'ERROR';
+            return 'ERROR';
         }
 
         return 'OK';

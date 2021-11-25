@@ -14,9 +14,16 @@
                 </ul>
             </nav>
 
-            <div class="header__buttons">
-                <a class="header__button" href="/profile/index">Профиль</a>
-                <a class="header__button" href="/profile/logout">Выйти</a>
+            <div class="header-buttons">
+                <div class="header-buttons__item">
+                    <a class="header-buttons__button" href="/events/create">Создать событие</a>
+                    <a class="header-buttons__button" href="#">Создать группу</a>
+                </div>
+
+                <div class="header-buttons__item">
+                    <a class="header-buttons__button" href="/profile/index">Профиль</a>
+                    <a class="header-buttons__button" href="/profile/logout">Выйти</a>
+                </div>
             </div>
         </div> <!-- /.header__inner -->
     </div> <!-- /.header -->

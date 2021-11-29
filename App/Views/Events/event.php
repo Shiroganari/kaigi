@@ -53,6 +53,16 @@
                             </div>
                         <?php endif;?>
 
+                        <div class="event-header__date">
+                            Дата начала:
+                            <?php echo $eventData['date_start'] ?>
+                        </div>
+
+                        <div class="event-header__time">
+                            Время начала:
+                            <?php echo $eventData['time_start'] ?>
+                        </div>
+
                         <div class="event-header__category">
                             Категория:
                             <?php echo $eventCategory['name']; ?>

@@ -57,16 +57,16 @@
                 </div> <!-- /.profile-main -->
             </div> <!-- /.profile__inner -->
 
-            <div class="topics">
-                <h2 class="profile__subtitle">Увлекается: </h2>
+            <div class="profile-topics">
+                <h2 class="profile-topics__subtitle">Увлекается: </h2>
 
-                <div class="topics__content">
+                <div class="profile-topics__inner">
                     <?php
                         for ($i = 0; $i < count($user_topics); $i++) {
                             $topic_name = $user_topics[$i]['topic_name'];
 
                             echo '<div class="label-choice">';
-                                echo "<input class='label-choice__checkbox' name='topics[]' type='checkbox' value='$topic_name'>";
+                                echo "<input class='label-choice__checkbox' name='topics[]' type='text' value='$topic_name'>";
                                 echo "<span class='label-choice__title'>$topic_name</span>";
                             echo '</div>';
                         }

@@ -184,7 +184,9 @@ h1 {
 .label-choice {
   position: relative;
   display: block;
+  min-width: 100px;
   margin: 15px;
+  text-align: center;
   cursor: pointer;
 }
 .label-choice__checkbox {

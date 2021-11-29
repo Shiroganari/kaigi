@@ -66,38 +66,22 @@ class UsersModel extends Model
         try {
             $db = static::getDB();
 
-            $stmt = $db->prepare('UPDATE `users` SET first_name = :firstName WHERE id = :userID');
+            $sql = 'UPDATE `users` SET 
+                first_name = :firstName,
+                last_name = :lastName,
+                description = :description,
+                location_country = :locationCountry,
+                location_city = :locationCity,
+                status = :status
+            WHERE id = :userID';
+
+            $stmt = $db->prepare($sql);
             $stmt->execute([
                 ':firstName' => $userData['firstName'],
-                ':userID' => $userData['userID']
-            ]);
-
-            $stmt = $db->prepare('UPDATE `users` SET last_name = :lastName WHERE id = :userID');
-            $stmt->execute([
                 ':lastName' => $userData['lastName'],
-                ':userID' => $userData['userID']
-            ]);
-
-            $stmt = $db->prepare('UPDATE `users` SET description = :description WHERE id = :userID');
-            $stmt->execute([
                 ':description' => $userData['description'],
-                ':userID' => $userData['userID']
-            ]);
-
-            $stmt = $db->prepare('UPDATE `users` SET location_country = :locationCountry WHERE id = :userID');
-            $stmt->execute([
                 ':locationCountry' => $userData['locationCountry'],
-                ':userID' => $userData['userID']
-            ]);
-
-            $stmt = $db->prepare('UPDATE `users` SET location_city = :locationCity WHERE id = :userID');
-            $stmt->execute([
                 ':locationCity' => $userData['locationCity'],
-                ':userID' => $userData['userID']
-            ]);
-
-            $stmt = $db->prepare('UPDATE `users` SET status = :status WHERE id = :userID');
-            $stmt->execute([
                 ':status' => 2,
                 ':userID' => $userData['userID']
             ]);

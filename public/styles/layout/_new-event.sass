@@ -1,0 +1,124 @@
+//------------//
+// .new-event //
+//------------//
+.new-event
+    padding: 40px 10px
+    text-align: center
+
+    &__inner
+        position: relative
+        min-height: 300px
+
+    &__title
+        font-size: 2.8em
+        margin-bottom: 40px
+
+    &__step
+        display: none
+
+    &__step.active
+        display: block
+
+
+//-----------------//
+// .new-event-step //
+//-----------------//
+.new-event__step
+    &--second
+        .new-event-content
+            max-width: 500px
+            background-color: #fff
+
+    &--fifth
+        .new-event-content
+            max-width: 600px
+
+//-------------------//
+// .new-event-header //
+//-------------------//
+.new-event-header
+    padding: 50px 0
+
+    &__title
+        font-size: 2.2em
+        margin-bottom: 15px
+
+    &__description
+        font-size: 1.2em
+
+
+//--------------------//
+// .new-event-content //
+//--------------------//
+.new-event-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    margin: 0 auto
+
+    &__item
+        display: flex
+        justify-content: center
+        flex-direction: column
+        align-items: center
+        width: 100%
+        margin-bottom: 30px
+
+        &:last-child
+            margin-bottom: 0
+
+    &__title
+        margin: 20px
+        font-size: 1.3em
+
+    .form__input,
+    .form__select
+        min-width: 50%
+        max-width: 50%
+
+    .form__textarea
+        font-size: 1em
+        min-height: 250px
+
+    .topics
+        display: flex
+        justify-content: center
+
+    &__location,
+    .form__item
+        display: flex
+        justify-content: center
+        flex-direction: column
+        align-items: center
+        width: 100%
+
+    &__location
+        display: none
+
+    &__formats
+        display: flex
+        justify-content: center
+        margin-bottom: 50px
+
+
+.step-button
+    position: absolute
+    bottom: -100px
+    padding: 10px 30px
+    background-color: $red-color
+    font-size: 1.4em
+    text-transform: uppercase
+    color: #fff
+    border: none
+    border-radius: 15px
+    outline: none
+    cursor: pointer
+
+    &--next,
+    &--create
+        right: 0
+
+    &--previous
+        display: none
+        left: 0

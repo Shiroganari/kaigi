@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Core\Model;
 
+use PDO;
 use PDOException;
 
 class EventsTopicsModel extends Model
@@ -23,6 +24,22 @@ class EventsTopicsModel extends Model
                     ':topicsName' => $topics[$i]
                 ]);
             }
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
+    public static function getEventTopics(int $eventID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT topics_name FROM `events_topics` WHERE events_id = :eventID';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':eventID', $eventID);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

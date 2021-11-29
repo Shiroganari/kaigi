@@ -23,6 +23,22 @@ class CategoriesModel extends Model
         }
     }
 
+    public static function getCategoryName(int $categoryID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT name FROM `categories` WHERE id = :categoryID';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':categoryID', $categoryID);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public static function getCategoryId(string $categoryName)
     {
         try {

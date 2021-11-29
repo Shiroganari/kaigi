@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\FormatsModel;
 use App\Models\TopicsModel;
+use App\Models\Users;
 use Core\Controller;
 use Core\View;
 
@@ -18,6 +19,25 @@ class Events extends Controller
         View::render('Events/index.php');
     }
 
+    function eventPageAction()
+    {
+        $eventID = $this->route_params['id'];
+        $eventData = EventsModel::getEventInfo($eventID);
+        $formatName = FormatsModel::getFormatName($eventData['formats_id']);
+        $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
+        $organizerName = Users::getUserById($eventData['users_id']);
+        $eventTopics = EventsTopicsModel::getEventTopics($eventID);
+
+        View::render('Events/event.php',
+            [
+                'eventData' => $eventData,
+                'eventFormat' => $formatName,
+                'eventCategory' => $categoryName,
+                'organizerName' => $organizerName,
+                'eventTopics' => $eventTopics
+            ]);
+    }
+
     function newAction()
     {
         $args['categories'] = CategoriesModel::getAll();
@@ -27,6 +47,8 @@ class Events extends Controller
 
     function createAction()
     {
+        session_start();
+
         $categoryName = $this->post_params['event-category'];
         $formatName = $this->post_params['event-format'];
 
@@ -44,9 +66,10 @@ class Events extends Controller
         $eventCity = $this->post_params['event-city'];
         $eventStreet = $this->post_params['event-street'];
         $eventTopics = $this->post_params['event-topics'];
+        $eventOrganizer = $_SESSION['userID'];
 
         // If the event format is 'offline'
-        if ($eventFormat == 2) {
+        if ($eventFormat == 1) {
             $eventCountry = '';
             $eventCity = '';
             $eventStreet = '';
@@ -62,13 +85,14 @@ class Events extends Controller
             'eventFormat' => $eventFormat,
             'eventCountry' => $eventCountry,
             'eventCity' => $eventCity,
-            'eventStreet' => $eventStreet
+            'eventStreet' => $eventStreet,
+            'eventOrganizer' => $eventOrganizer
         ];
 
         EventsModel::newEvent($eventData);
         EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
 
-        View::render('Events/event.php');
+        header('Location: /events/event-page/' . $eventID);
     }
 
     function topicsAction()

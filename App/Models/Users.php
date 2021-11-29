@@ -7,7 +7,7 @@ use Core\Model;
 use PDO;
 use PDOException;
 
-class User extends Model
+class Users extends Model
 {
     public static function getAll()
     {
@@ -115,6 +115,23 @@ class User extends Model
             $sql = 'SELECT * FROM `users` WHERE email = :email';
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':email', $email);
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            exit;
+        }
+    }
+
+    public static function getUserById(int $id)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `users` WHERE id = :userID';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':userID', $id);
             $stmt->execute();
 
             return $stmt->fetch();

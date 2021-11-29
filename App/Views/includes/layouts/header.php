@@ -14,10 +14,8 @@
                 </ul>
             </nav>
 
-            <div class="header__buttons">
+            <div class="header-buttons">
                 <?php
-                    session_start();
-
                     if (isset($_SESSION['active'])) {
                         echo '<div class="header-buttons__item">';
                             echo '<a class="header-buttons__button" href="/events/new">Создать событие</a>';
@@ -30,8 +28,8 @@
                         echo '</div>';
                     } else {
                         echo '<div class="header-buttons__item">';
-                            echo '<a class="header__button" href="/login/index">Войти</a>';
-                            echo '<a class="header__button" href="/register/index">Регистрация</a>';
+                            echo '<a class="header-buttons__button" href="/login/index">Войти</a>';
+                            echo '<a class="header-buttons__button" href="/register/index">Регистрация</a>';
                         echo '</div>';
                     }
                 ?>

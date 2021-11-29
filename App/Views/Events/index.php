@@ -10,7 +10,10 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
+    <?php
+        session_start();
+        require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
+    ?>
     <!-- HEADER END -->
 
 </body>

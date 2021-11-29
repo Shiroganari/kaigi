@@ -29,7 +29,7 @@
                     } else {
                         echo '<div class="header-buttons__item">';
                             echo '<a class="header-buttons__button" href="/login/index">Войти</a>';
-                            echo '<a class="header-buttons__button" href="/register/index">Регистрация</a>';
+                            echo '<a class="header-buttons__button" href="/registration/index">Регистрация</a>';
                         echo '</div>';
                     }
                 ?>

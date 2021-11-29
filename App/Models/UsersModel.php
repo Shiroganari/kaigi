@@ -41,7 +41,7 @@ class UsersModel extends Model
         }
     }
 
-    public static function registerNewUser(string $username, string $email, string $password): void
+    public static function userRegistration(string $username, string $email, string $password): void
     {
         try {
             $db = static::getDB();
@@ -61,7 +61,7 @@ class UsersModel extends Model
         }
     }
 
-    public static function completeUserRegister(array $userData): void
+    public static function completeUserRegistration(array $userData): void
     {
         try {
             $db = static::getDB();

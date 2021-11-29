@@ -247,7 +247,7 @@ h1 {
   margin-right: 0;
 }
 
-.register,
+.registration,
 .login {
   display: flex;
   flex-direction: column;
@@ -260,22 +260,22 @@ h1 {
   border: 2px solid #242323;
   border-radius: 10px;
 }
-.register .form,
+.registration .form,
 .login .form {
   max-width: 500px;
   text-align: left;
 }
-.register .form__button,
+.registration .form__button,
 .login .form__button {
   min-width: 60%;
   margin: 0 auto;
 }
-.register__title,
+.registration__title,
 .login__title {
   margin-bottom: 50px;
   font-size: 2.5em;
 }
-.register .topics,
+.registration .topics,
 .login .topics {
   display: flex;
   justify-content: center;

@@ -14,10 +14,10 @@
     <!-- HEADER END -->
 
     <!-- REGISTER -->
-    <section class="register">
-        <h1 class="register__title">Создание аккаунта</h1>
+    <section class="registration">
+        <h1 class="registration__title">Создание аккаунта</h1>
 
-        <form class="form" method="post" action="http://kaigi.loc/register/signup">
+        <form class="form" method="post" action="http://kaigi.loc/registration/signup">
             <div class="form__item">
                 <label class="form__label" for="name">Введите ваш никнейм:</label>
                 <input class="form__input" id="name" name="username" type="text" placeholder="Никнейм">

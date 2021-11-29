@@ -8,7 +8,7 @@ use Core\View;
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
 
-class Register extends Controller
+class Registration extends Controller
 {
     public function indexAction()
     {
@@ -19,7 +19,7 @@ class Register extends Controller
             exit;
         }
 
-        View::render('Register/index.php');
+        View::render('Registration/index.php');
     }
 
     public function signupAction()
@@ -38,11 +38,11 @@ class Register extends Controller
             exit;
         }
 
-        UsersModel::registerNewUser($username, $email, $password);
+        UsersModel::userRegistration($username, $email, $password);
         header('Location: /login/index');
     }
 
-    public function completeRegisterAction()
+    public function completeRegistrationAction()
     {
         session_start();
 
@@ -62,7 +62,7 @@ class Register extends Controller
             'locationCity' => $locationCity
         ];
 
-        UsersModel::completeUserRegister($userData);
+        UsersModel::completeUserRegistration($userData);
 
         // If a user has selected at least one topic, then add it to the database
         $topics = $this->post_params['topics'];

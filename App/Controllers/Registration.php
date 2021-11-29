@@ -42,7 +42,7 @@ class Registration extends Controller
         header('Location: /login/index');
     }
 
-    public function completeRegistrationAction()
+    public function completeUserRegistrationAction()
     {
         session_start();
 

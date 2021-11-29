@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
-use App\Models\User;
+use App\Models\UsersModel;
 use App\Models\UsersTopics;
 
 class Register extends Controller
@@ -33,12 +33,12 @@ class Register extends Controller
             exit;
         }
 
-        if (User::checkUser($username, $email)) {
+        if (UsersModel::checkUser($username, $email)) {
             echo 'Такой пользователь уже существует.';
             exit;
         }
 
-        User::registerNewUser($username, $email, $password);
+        UsersModel::registerNewUser($username, $email, $password);
         header('Location: /login/index');
     }
 
@@ -62,7 +62,7 @@ class Register extends Controller
             'locationCity' => $locationCity
         ];
 
-        User::completeUserRegister($userData);
+        UsersModel::completeUserRegister($userData);
 
         // If a user has selected at least one topic, then add it to the database
         $topics = $this->post_params['topics'];

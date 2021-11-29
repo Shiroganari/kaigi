@@ -7,7 +7,7 @@ use Core\Model;
 use PDO;
 use PDOException;
 
-class Users extends Model
+class UsersModel extends Model
 {
     public static function getAll()
     {

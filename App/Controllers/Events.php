@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\FormatsModel;
 use App\Models\TopicsModel;
-use App\Models\Users;
+use App\Models\UsersModel;
 use Core\Controller;
 use Core\View;
 
@@ -25,7 +25,7 @@ class Events extends Controller
         $eventData = EventsModel::getEventInfo($eventID);
         $formatName = FormatsModel::getFormatName($eventData['formats_id']);
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
-        $organizerName = Users::getUserById($eventData['users_id']);
+        $organizerName = UsersModel::getUserById($eventData['users_id']);
         $eventTopics = EventsTopicsModel::getEventTopics($eventID);
 
         View::render('Events/event.php',

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
-use App\Models\User;
+use App\Models\UsersModel;
 
 class Login extends Controller
 {
@@ -48,7 +48,7 @@ class Login extends Controller
 
     public function validateUser(string $email, string $password)
     {
-        $user = User::getUser($email);
+        $user = UsersModel::getUser($email);
 
         if (!$user) {
             return 'No Found';

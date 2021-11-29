@@ -10,14 +10,14 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
     <!-- LOGIN -->
     <section class="login">
         <h1 class="login__title">Вход в аккаунт</h1>
 
-        <form class="form" method="post" action="http://kaigi.loc/login/signin">
+        <form class="form" method="post" action="signin">
             <div class="form__item">
                 <label class="form__label" for="email">Введите ваш Email:</label>
                 <input class="form__input" id="email" name="email" type="email">

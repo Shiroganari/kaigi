@@ -10,19 +10,11 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php
-        session_start();
-
-        if (isset($_SESSION['active'])) {
-            require_once(dirname(__DIR__) . '/layouts/header_authorized.php');
-        } else {
-            require_once(dirname(__DIR__) . '/layouts/header.php');
-        }
-    ?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
     <!-- INTRO -->
-    <?php require_once(dirname(__DIR__) . '/layouts/intro.php'); ?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'intro.php'); ?>
     <!-- INTRO END -->
 </body>
 </html>

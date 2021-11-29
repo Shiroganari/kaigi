@@ -1,15 +1,25 @@
 //----------//
-// .profile.sass //
+// .profile //
 //----------//
 .profile
+
     &__inner
         display: flex
         justify-content: space-between
         padding-top: 50px
 
+    &__subtitle
+        margin: 15px 0
+        font-size: 1.5em
+
+    .label-choice
+        cursor: default
+
+        &__title
+            opacity: 1
+
 .profile-about,
-.profile-main,
-.profile-topics__content
+.profile-main
     border: 2px solid $dark-color
     border-radius: 5px
 
@@ -19,7 +29,7 @@
 
 
 //----------------//
-// .profile.sass-about //
+// .profile-about //
 //----------------//
 .profile-about
     display: flex
@@ -65,7 +75,7 @@
 
 
 //---------------//
-// .profile.sass-main //
+// .profile-main //
 //---------------//
 .profile-main
     width: 70%
@@ -86,8 +96,8 @@
 
     &__title.active,
     &__title:hover
-        font-weight: 700
         background-color: $red-color
+        font-weight: 700
         color: #fff
 
     &__descr
@@ -95,27 +105,19 @@
         font-size: 1.4em
 
 
-//-----------------//
-// .profile.sass-topics //
-//-----------------//
-.profile-topics
-    margin-top: 20px
-
-    &__head
-        margin-bottom: 10px
-        font-size: 1.5em
+//---------//
+// .topics //
+//---------//
+.topics
 
     &__content
         display: flex
-        padding: 10px
+        padding: 10px 5px
         border: 2px solid $dark-color
-
-    &__item
-        margin-right: 10px
-        padding: 10px
-        background-color: $red-color
-        color: #fff
         border-radius: 10px
+
+    .label-choice
+        margin: 0 15px 0 0
 
         &:last-child
             margin-right: 0

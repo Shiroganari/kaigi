@@ -6,11 +6,11 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Kaigi | Профиль</title>
-    <link rel="stylesheet" href="/styles/pages/profile/profile.css"">
+    <link rel="stylesheet" href="/styles/pages/profile/profile.css">
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . '/layouts/header_authorized.php');?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
     <!-- PROFILE -->
@@ -23,9 +23,7 @@
                     </div>
 
                     <div class="profile-about__item profile-about__username">
-                        <?php
-                            echo $user['username'];
-                        ?>
+                        <?php echo $user['username']; ?>
                     </div>
 
                     <div class="profile-about__item profile-about__name">
@@ -59,21 +57,22 @@
                 </div> <!-- /.profile-main -->
             </div> <!-- /.profile__inner -->
 
-            <div class="profile-topics">
-                <div class="profile-topics__head">
-                    <h2 class="profile-topics__title">Увлекается: </h2>
-                </div>
+            <div class="topics">
+                <h2 class="profile__subtitle">Увлекается: </h2>
 
-                <div class="profile-topics__content">
+                <div class="topics__content">
                     <?php
                         for ($i = 0; $i < count($user_topics); $i++) {
-                            echo "<div class='profile-topics__item'>";
-                                echo $user_topics[$i]['topic_name'];
-                            echo "</div>";
+                            $topic_name = $user_topics[$i]['topic_name'];
+
+                            echo '<div class="label-choice">';
+                                echo "<input class='label-choice__checkbox' name='topics[]' type='checkbox' value='$topic_name'>";
+                                echo "<span class='label-choice__title'>$topic_name</span>";
+                            echo '</div>';
                         }
                     ?>
                 </div>
-            </div> <!-- /.profile-topics -->
+            </div> <!-- /-topics -->
         </div> <!-- /.container -->
     </section>
     <!-- PROFILE END -->

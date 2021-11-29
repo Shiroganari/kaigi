@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . '/layouts/header_authorized.php'); ?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
     <!-- REGISTER -->
@@ -59,14 +59,15 @@
 
                 <div class="topics" id="topics">
                     <?php
-                        $topics = App\Models\Topic::getAll();
+                        $topics = $args['topics'];
 
                         foreach($topics as $topic) {
                             $topic_name = $topic['name'];
-                            echo "<div class='topics__item'>";
-                                echo "<input class='topics__choice' name='topics[]' type='checkbox' value='$topic_name'>";
-                                echo "<span class='topics__text'>$topic_name</span>";
-                            echo "</div>";
+
+                            echo '<label class="label-choice">';
+                                echo "<input class='label-choice__checkbox' name='topics[]' type='checkbox' value='$topic_name'>";
+                                echo "<span class='label-choice__title'>$topic_name</span>";
+                            echo '</label>';
                         }
                     ?>
                 </div>

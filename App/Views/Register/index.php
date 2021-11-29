@@ -10,7 +10,7 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . '/layouts/header.php'); ?>
+    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
     <!-- REGISTER -->

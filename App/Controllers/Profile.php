@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\TopicsModel;
 use Core\Controller;
 use Core\View;
 use App\Models\User;
@@ -23,7 +24,7 @@ class Profile extends Controller
             exit;
         }
 
-        $args['user'] = User::getUser($_SESSION['email'], $_SESSION['pass']);
+        $args['user'] = User::getUser($_SESSION['email']);
         $args['user_topics'] = UsersTopics::getUserTopics($_SESSION['userID']);
 
         View::render('Profile/index.php', $args);
@@ -43,7 +44,9 @@ class Profile extends Controller
             exit;
         }
 
-        View::render('Profile/complete.php');
+        $args['topics'] = TopicsModel::getAll();
+
+        View::render('Profile/complete.php', $args);
     }
 
     public function logoutAction()

@@ -15,8 +15,26 @@
             </nav>
 
             <div class="header__buttons">
-                <a class="header__button" href="/login/index">Войти</a>
-                <a class="header__button" href="/register/index">Регистрация</a>
+                <?php
+                    session_start();
+
+                    if (isset($_SESSION['active'])) {
+                        echo '<div class="header-buttons__item">';
+                            echo '<a class="header-buttons__button" href="/events/new">Создать событие</a>';
+                            echo '<a class="header-buttons__button" href="#">Создать группу</a>';
+                        echo '</div>';
+
+                        echo '<div class="header-buttons__item">';
+                            echo '<a class="header-buttons__button" href="/profile/index">Профиль</a>';
+                            echo '<a class="header-buttons__button" href="/profile/logout">Выйти</a>';
+                        echo '</div>';
+                    } else {
+                        echo '<div class="header-buttons__item">';
+                            echo '<a class="header__button" href="/login/index">Войти</a>';
+                            echo '<a class="header__button" href="/register/index">Регистрация</a>';
+                        echo '</div>';
+                    }
+                ?>
             </div>
         </div> <!-- /.header__inner -->
     </div> <!-- /.header -->

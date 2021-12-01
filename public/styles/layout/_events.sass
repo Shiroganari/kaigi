@@ -2,3 +2,54 @@
 // .events //
 //---------//
 .events
+
+    &__inner
+        padding-top: 50px
+
+        .event-item
+            margin-bottom: 20px
+
+
+//----------------//
+// .events-header //
+//----------------//
+.events-header
+    margin-bottom: 50px
+
+    &__title
+        font-size: 3em
+        margin-bottom: 40px
+
+    &__top,
+    &__location
+        display: flex
+
+        > label
+            margin-right: 30px
+
+            &:last-child
+                margin-right: 0
+
+    .form
+        &__item
+            width: inherit
+
+        &__select
+            max-width: 200px
+            min-width: 200px
+            padding: 10px
+
+        &__input
+            width: 30%
+            font-size: 0.8em
+
+
+//-----------------//
+// .events-content //
+//-----------------//
+.events-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    width: 100%

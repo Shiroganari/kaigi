@@ -62,14 +62,13 @@
 
                 <div class="profile-topics__inner">
                     <?php
-                        for ($i = 0; $i < count($user_topics); $i++) {
-                            $topic_name = $user_topics[$i]['topic_name'];
-
-                            echo '<div class="label-choice">';
-                                echo "<input class='label-choice__checkbox' name='topics[]' type='text' value='$topic_name'>";
-                                echo "<span class='label-choice__title'>$topic_name</span>";
-                            echo '</div>';
-                        }
+                        \Core\View::render('includes/components/topics-list.php',
+                            [
+                                'topics' => $userTopics,
+                                'column' => 'topic_name',
+                                'inputType' => 'text'
+                            ]
+                        );
                     ?>
                 </div>
             </div> <!-- /-topics -->

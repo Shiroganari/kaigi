@@ -22,7 +22,7 @@
             <div class="event__inner">
                 <div class="event-header">
                     <div class="event-header__avatar">
-                        <img class="event-header__img" src="<?php ROOT?>/images/mongol.jpg"" alt="Event Picture">
+                        <img class="event-header__img" src="<?php ROOT?>/images/mongol.jpg" alt="Event Picture">
                     </div>
 
                     <div class="event-header__information">
@@ -91,14 +91,13 @@
 
                     <div class="event-topics__inner">
                         <?php
-                            for ($i = 0; $i < count($eventTopics); $i++) {
-                                $topicName = $eventTopics[$i]['topics_name'];
-
-                                echo '<div class="label-choice">';
-                                    echo "<input class='label-choice__checkbox' name='topics[]' type='text' value='$topicName'>";
-                                    echo "<span class='label-choice__title'>$topicName</span>";
-                                echo '</div>';
-                            }
+                            Core\View::render('includes/components/topics-list.php',
+                                [
+                                    'topics' => $eventTopics,
+                                    'inputType' => 'text',
+                                    'column' => 'topics_name'
+                                ]
+                            );
                         ?>
                     </div>
                 </div>

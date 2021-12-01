@@ -58,18 +58,13 @@
                 <h2 class="form__title">Выберите темы, которые вас интересуют:</h2>
 
                 <div class="topics" id="topics">
-                    <?php
-                        $topics = $args['topics'];
-
-                        foreach($topics as $topic) {
-                            $topic_name = $topic['name'];
-
-                            echo '<label class="label-choice">';
-                                echo "<input class='label-choice__checkbox' name='topics[]' type='checkbox' value='$topic_name'>";
-                                echo "<span class='label-choice__title'>$topic_name</span>";
-                            echo '</label>';
-                        }
-                    ?>
+                    <?php \Core\View::render('includes/components/topics-list.php',
+                        [
+                            'topics' => $topics,
+                            'column' => 'name',
+                            'inputType' => 'checkbox'
+                        ]
+                    ) ?>
                 </div>
             </div> <!-- /.form__item -->
 

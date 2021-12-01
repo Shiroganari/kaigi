@@ -13,7 +13,6 @@
 <body>
     <!-- HEADER -->
     <?php
-        session_start();
         require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
     ?>
     <!-- HEADER END -->
@@ -64,16 +63,9 @@
 
                         <div class="new-event-content">
                             <label class="new-event-content__title" for="event-category">Выберите категорию:</label>
-                            <select class="form__select" name="event-category" id="event-category">
+                            <select class="form__select topics-to-div" name="event-category" id="event-category">
                                 <option selected>Выберите категорию</option>
-                                <?php
-                                    $categories = $args['categories'];
-
-                                    foreach($categories as $category) {
-                                        $categoryName = $category['name'];
-                                        echo "<option value='$categoryName'>$categoryName</option>";
-                                    }
-                                ?>
+                                <?php \Core\View::render('includes/components/categories-list.php', ['categories' => $categories]) ?>
                             </select>
 
                             <div class="new-event-content__title" >Выберите по крайней мере один топик:</div>
@@ -180,5 +172,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script src="//geodata.solutions/includes/countrystatecity.js"></script>
     <script src="<?php ROOT ?>/scripts/createEvent.js"></script>
+    <script src="<?php ROOT ?>/scripts/topics.js"></script>
 </body>
 </html>

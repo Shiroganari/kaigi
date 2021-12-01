@@ -1,0 +1,54 @@
+//-------------//
+// .event-item //
+//-------------//
+.event-item
+    display: flex
+    min-width: 70%
+    max-width: 70%
+    padding: 10px
+    color: $dark-color
+    border: 2px solid $dark-color
+    border-radius: 10px
+
+    &:last-child
+        margin-bottom: 0
+
+    &:hover
+        transform: translate(-20px, -10px)
+
+    &__avatar
+        max-width: 150px
+        max-height: 150px
+        margin-right: 50px
+
+    &__img
+        max-width: 100%
+        max-height: 100%
+        border: 2px solid $dark-color
+        border-radius: 30px
+
+    &__information > div
+        margin-bottom: 10px
+        font-size: 1.2em
+
+    &__information .event-item__title
+        margin-bottom: 15px
+        font-size: 1.5em
+        font-weight: 700
+
+    &__description
+        line-height: 1.4em
+        word-break: break-word
+
+    &__location
+        font-style: italic
+        color: #5b5b5b
+
+    &__time
+        font-weight: 700
+
+    &__categories
+        display: flex
+
+        > span
+            margin-left: 5px

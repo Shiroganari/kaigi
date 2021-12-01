@@ -18,7 +18,7 @@
                 <?php
                     if (isset($_SESSION['active'])) {
                         echo '<div class="header-buttons__item">';
-                            echo '<a class="header-buttons__button" href="/events/new">Создать событие</a>';
+                            echo '<a class="header-buttons__button" href="/events/new-event">Создать событие</a>';
                             echo '<a class="header-buttons__button" href="#">Создать группу</a>';
                         echo '</div>';
 

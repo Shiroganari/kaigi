@@ -1,16 +1,11 @@
 $(document).ready(function() {
-    $('#event-category').on('change', function() {
-        let $this = $(this);
-        $('#topics').load("topics", {category: $this.val()});
-    })
-
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd'
     });
 
-    $( function() {
+    $(function() {
         $("#event-date" ).datepicker();
-    } );
+    });
 
     $('#event-time').timepicker({
         timeFormat: 'h:mm p',
@@ -40,30 +35,25 @@ $(document).ready(function() {
 
         switch (stepCount) {
             case 1:
-                $('.progress-bar__item--first').addClass('active');
+                $('.progress-bar__item--first, .new-event__step--first').addClass('active');
                 $('.progress-bar__item--first').next().removeClass('active');
-                $(".new-event__step--first").addClass('active');
                 $('#previous-step').css('display', 'none');
                 break;
             case 2:
-                $('.progress-bar__item--second').addClass('active');
+                $('.progress-bar__item--second, .new-event__step--second').addClass('active');
                 $('.progress-bar__item--second').next().removeClass('active');
-                $(".new-event__step--second").addClass('active');
                 break;
             case 3:
-                $('.progress-bar__item--third').addClass('active');
+                $('.progress-bar__item--third, .new-event__step--third').addClass('active');
                 $('.progress-bar__item--third').next().removeClass('active');
-                $(".new-event__step--third").addClass('active');
                 break;
             case 4:
-                $('.progress-bar__item--fourth').addClass('active');
+                $('.progress-bar__item--fourth, .new-event__step--fourth').addClass('active');
                 $('.progress-bar__item--fourth').next().removeClass('active');
-                $(".new-event__step--fourth").addClass('active');
                 break;
             case 5:
-                $('.progress-bar__item--fifth').addClass('active');
+                $('.progress-bar__item--fifth, .new-event__step--fifth').addClass('active');
                 $('.progress-bar__item--fifth').next().removeClass('active');
-                $(".new-event__step--fifth").addClass('active');
                 $('#next-step').css('display', 'none');
                 break;
         }
@@ -78,5 +68,4 @@ $(document).ready(function() {
             $('.new-event-content__location').css('display', 'none');
         }
     })
-
 })

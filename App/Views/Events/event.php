@@ -11,7 +11,6 @@
 <body>
     <!-- HEADER -->
     <?php
-        session_start();
         require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
     ?>
     <!-- HEADER END -->
@@ -58,17 +57,17 @@
 
                         <div class="event-header__date">
                             Дата начала:
-                            <?php echo $eventData['date_start'] ?>
+                            <?php echo date('Y-m-d', strtotime($eventData['date_start'])) ?>
                         </div>
 
                         <div class="event-header__time">
                             Время начала:
-                            <?php echo $eventData['time_start'] ?>
+                            <?php echo date('H:i', strtotime($eventData['date_start'])) ?>
                         </div>
 
                         <div class="event-header__category">
                             Категория:
-                            <?php echo $eventCategory['name']; ?>
+                            <?php echo $eventCategory['name'] ?>
                         </div>
                     </div>
                 </div>
@@ -106,5 +105,7 @@
     </section>
     <!-- EVENT END -->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="<?php ROOT ?>/scripts/events.js"></script>
 </body>
 </html>

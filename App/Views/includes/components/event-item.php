@@ -5,7 +5,6 @@
     $eventCountry = $eventData['eventCountry'];
     $eventCity = $eventData['eventCity'];
     $eventDate = $eventData['eventDate'];
-    $eventTime = $eventData['eventTime'];
     $eventFormat = $eventData['eventFormat'];
     $eventCategory = $eventData['eventCategory'];
  ?>
@@ -41,7 +40,7 @@
 
         <div class="event-item__time">
             <?php
-                echo $eventDate . ', ' . $eventTime;
+                echo $eventDate;
             ?>
         </div>
 

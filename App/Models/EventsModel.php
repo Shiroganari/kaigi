@@ -16,8 +16,8 @@ class EventsModel extends Model
 
             $sql = 'INSERT INTO `events` (id, title, description, location_country, 
                       location_city, location_street, formats_id, categories_id, users_id,
-                      date_start, time_start) VALUES (:id, :title, :description, :locationCountry, :locationCity, :locationStreet,
-                                                       :formatsID, :categoriesID, :usersID, :dateStart, :timeStart)';
+                      date_start) VALUES (:id, :title, :description, :locationCountry, :locationCity, :locationStreet,
+                                                       :formatsID, :categoriesID, :usersID, :dateStart)';
             $sth = $db->prepare($sql);
             $sth->execute([
                 ':id' => $eventData['eventID'],
@@ -30,7 +30,6 @@ class EventsModel extends Model
                 ':categoriesID' => $eventData['eventCategory'],
                 ':usersID' => $eventData['eventOrganizer'],
                 ':dateStart' => $eventData['eventDate'],
-                ':timeStart' => $eventData['eventTime']
             ]);
         } catch (PDOException $e) {
             echo $e->getMessage();

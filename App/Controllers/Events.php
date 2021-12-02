@@ -22,6 +22,8 @@ class Events extends Controller
 
     function eventPageAction()
     {
+        session_start();
+
         $eventID = $this->route_params['id'];
         $eventData = EventsModel::getEventInfoById($eventID);
         $formatName = FormatsModel::getFormatName($eventData['formats_id']);
@@ -67,8 +69,8 @@ class Events extends Controller
         $eventTitle = $this->post_params['event-title'];
         $eventCategoryId = $categoryInfo['id'];
         $eventDescription = $this->post_params['event-description'];
-        $eventDate = $this->post_params['event-date'];
-        $eventTime = $this->post_params['event-time'];
+        $eventDate = date('Y-m-d', strtotime($this->post_params['event-date']));
+        $eventTime = date('H:i', strtotime($this->post_params['event-time']));
         $eventFormat = $formatInfo['id'];
         $eventCountry = $this->post_params['event-country'];
         $eventCity = $this->post_params['event-city'];
@@ -88,8 +90,7 @@ class Events extends Controller
             'eventTitle' => $eventTitle,
             'eventCategory' => $eventCategoryId,
             'eventDescription' => $eventDescription,
-            'eventDate' => $eventDate,
-            'eventTime' => $eventTime,
+            'eventDate' => $eventDate . ' ' . $eventTime,
             'eventFormat' => $eventFormat,
             'eventCountry' => $eventCountry,
             'eventCity' => $eventCity,
@@ -140,8 +141,7 @@ class Events extends Controller
                 'eventCity' => $event['location_city'],
                 'eventFormat' => $eventFormatID,
                 'eventCategory' => $categoryInfo['name'],
-                'eventDate' => $event['date_start'],
-                'eventTime' => $event['time_start']
+                'eventDate' => $event['date_start']
             ];
 
             View::render('includes/components/event-item.php', ['eventData' => $eventData]);

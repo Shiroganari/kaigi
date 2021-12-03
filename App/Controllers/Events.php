@@ -10,6 +10,7 @@ use App\Models\UsersModel;
 use App\Models\CategoriesModel;
 use App\Models\EventsModel;
 use App\Models\EventsTopicsModel;
+use App\Models\EventsMembersModel;
 
 class Events extends Controller
 {
@@ -30,6 +31,21 @@ class Events extends Controller
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
         $organizerName = UsersModel::getUserById($eventData['users_id']);
         $eventTopics = EventsTopicsModel::getEventTopics($eventID);
+        $userID = 0;
+        $user = null;
+        $isMember = false;
+
+        if (isset($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+        }
+
+        if ($userID) {
+            $user = EventsMembersModel::getUser($eventID, $userID);
+        }
+
+        if ($user) {
+            $isMember = true;
+        }
 
         View::render('Events/event.php',
             [
@@ -37,7 +53,9 @@ class Events extends Controller
                 'eventFormat' => $formatName,
                 'eventCategory' => $categoryName,
                 'organizerName' => $organizerName,
-                'eventTopics' => $eventTopics
+                'eventTopics' => $eventTopics,
+                'userID' => $userID,
+                'isMember' => $isMember
             ]);
     }
 
@@ -58,6 +76,8 @@ class Events extends Controller
     function createAction()
     {
         session_start();
+
+        $userID = $_SESSION['userID'];
 
         $categoryName = $this->post_params['event-category'];
         $formatName = $this->post_params['event-format'];
@@ -100,6 +120,7 @@ class Events extends Controller
 
         EventsModel::newEvent($eventData);
         EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
+        EventsMembersModel::newMember($eventID, $userID, 1);
 
         header('Location: /events/event-page/' . $eventID);
     }
@@ -146,5 +167,21 @@ class Events extends Controller
 
             View::render('includes/components/event-item.php', ['eventData' => $eventData]);
         }
+    }
+
+    function eventParticipationAction()
+    {
+        $userID = (int)$this->post_params['userID'];
+        $eventID = (int)$this->post_params['eventID'];
+        $roleID = 2; // Участник
+
+        if (EventsMembersModel::getUser($eventID, $userID)) {
+            EventsMembersModel::removeMember($eventID, $userID);
+            echo json_encode('Left');
+            exit;
+        }
+
+        EventsMembersModel::newMember($eventID, $userID, $roleID);
+        echo json_encode('Join');
     }
 }

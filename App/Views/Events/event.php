@@ -11,6 +11,13 @@
 <body>
     <!-- HEADER -->
     <?php
+        $eventID = $eventData['id'];
+
+        $activeClass = '';
+
+        if ($isMember) {
+            $activeClass = 'join-event--active';
+        }
         require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
     ?>
     <!-- HEADER END -->
@@ -69,6 +76,21 @@
                             Категория:
                             <?php echo $eventCategory['name'] ?>
                         </div>
+
+                        <div class="event-header__member">
+                            <input id="user-id" type="text" value="<?php echo $userID?>" hidden>
+                            <input id="event-id" type="text" value="<?php echo $eventID?>" hidden>
+                            <input id="is-member" type="text" value="<?php echo $isMember?>" hidden>
+                            <button class="button join-event <?php echo $activeClass?>" id="join-event">
+                                <?php
+                                    if ($isMember) {
+                                        echo 'Вы участвуете';
+                                    } else {
+                                        echo 'Стать участником';
+                                    }
+                                ?>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -106,6 +128,6 @@
     <!-- EVENT END -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?php ROOT ?>/scripts/events.js"></script>
+    <script src="<?php ROOT ?>/scripts/eventPage.js"></script>
 </body>
 </html>

@@ -26,6 +26,22 @@ class EventsMembersModel extends Model
         }
     }
 
+    public static function removeMember(int $eventID, int $userID):void
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'DELETE FROM `events_members` WHERE events_id = :eventID AND users_id = :userID';
+            $sth = $db->prepare($sql);
+            $sth->execute([
+                ':eventID' => $eventID,
+                ':userID' => $userID
+            ]);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
+
     public static function getUser(int $eventID, int $userID)
     {
         try {

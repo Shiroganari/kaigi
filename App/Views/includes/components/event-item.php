@@ -16,9 +16,9 @@
     </div>
 
     <div class="event-item__information">
-        <div class="event-item__title">
+        <h3 class="event-item__title">
             <?php echo $eventTitle?>
-        </div>
+        </h3>
 
         <?php if ($eventDescription): ?>
             <div class="event-item__description">
@@ -30,11 +30,11 @@
 
         <div class="event-item__location">
             <?php
-            if ($eventCountry) {
-                echo $eventCountry . ', ' . $eventCity;
-            } else {
-                echo 'Онлайн';
-            }
+                if ($eventCountry) {
+                    echo $eventCountry . ', ' . $eventCity;
+                } else {
+                    echo 'Онлайн';
+                }
             ?>
         </div>
 
@@ -43,7 +43,6 @@
                 echo $eventDate;
             ?>
         </div>
-
 
         <div class="event-item__categories">
             <div class="event-item__subtitle">Категории:</div>

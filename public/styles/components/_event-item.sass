@@ -2,30 +2,36 @@
 // .event-item //
 //-------------//
 .event-item
+    position: relative
     display: flex
     min-width: 70%
     max-width: 70%
-    padding: 10px
+    padding: 20px 10px
     color: $dark-color
     border: 2px solid $dark-color
     border-radius: 10px
+    box-shadow: rgb(38, 57, 77) 0px 15px 20px -10px
 
     &:last-child
         margin-bottom: 0
 
     &:hover
-        transform: translate(-20px, -10px)
+        transform: translate(-5px, -5px)
 
     &__avatar
         max-width: 150px
         max-height: 150px
         margin-right: 50px
+        background-color: $dark-color
+        border-radius: 30px
+
 
     &__img
         max-width: 100%
         max-height: 100%
         border: 2px solid $dark-color
         border-radius: 30px
+        box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px
 
     &__information > div
         margin-bottom: 10px
@@ -35,17 +41,27 @@
         margin-bottom: 15px
         font-size: 1.5em
         font-weight: 700
+        text-transform: uppercase
 
-    &__description
-        line-height: 1.4em
+    &__information .event-item__description
+        line-height: 26px
         word-break: break-word
+        max-height: 50px
+        overflow: hidden
+
+        margin-bottom: 20px
 
     &__location
+        position: absolute
+        top: 0
+        right: 0
         font-style: italic
-        color: #5b5b5b
-
-    &__time
-        font-weight: 700
+        background-color: $red-color
+        color: #ffffff
+        opacity: 0.9
+        padding: 10px
+        border-bottom-left-radius: 10px
+        border-top-right-radius: 10px
 
     &__categories
         display: flex

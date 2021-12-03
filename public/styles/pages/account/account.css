@@ -185,8 +185,11 @@ h1 {
   position: relative;
   display: block;
   min-width: 100px;
-  margin: 15px;
+  margin-right: 15px;
   text-align: center;
+}
+.label-choice:last-child {
+  margin-right: 0;
 }
 .label-choice__checkbox {
   opacity: 0;

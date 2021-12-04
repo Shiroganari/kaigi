@@ -71,7 +71,7 @@
                         );
                     ?>
                 </div>
-            </div> <!-- /-topics -->
+            </div> <!-- /.profile-topics -->
         </div> <!-- /.container -->
     </section>
     <!-- PROFILE END -->

@@ -8,27 +8,27 @@ use Core\View;
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
 
-class Registration extends Controller
+class RegistrationController extends Controller
 {
-    public function indexAction()
+    public function index()
     {
         session_start();
 
         if (isset($_SESSION['active'])) {
-            header('Location: /profile/index');
+            header('Location: /profile');
             exit;
         }
 
         View::render('Registration/index.php');
     }
 
-    public function signupAction()
+    public function signup()
     {
         $username = $this->post_params['username'];
         $email = $this->post_params['email'];
         $password = $this->post_params['pass'];
 
-        if ($this->validate($username, $email, $password) == 'ERROR') {
+        if ($this->validateEnteredData($username, $email, $password) == 'ERROR') {
             echo 'Пожалуйста, проверьте корректность введенных Вами данных.';
             exit;
         }
@@ -39,10 +39,10 @@ class Registration extends Controller
         }
 
         UsersModel::userRegistration($username, $email, $password);
-        header('Location: /login/index');
+        header('Location: /login');
     }
 
-    public function completeUserRegistrationAction()
+    public function completeUserRegistration()
     {
         session_start();
 
@@ -71,10 +71,10 @@ class Registration extends Controller
         }
 
         $_SESSION['status'] = 2;
-        header('Location: /profile/index');
+        header('Location: /profile');
     }
 
-    protected function validate(string $username, string $email, string $password)
+    protected function validateEnteredData(string $username, string $email, string $password): string
     {
         if (!$username || !$email || !$password) {
             return 'ERROR';

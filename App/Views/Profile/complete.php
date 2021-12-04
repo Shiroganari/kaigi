@@ -17,7 +17,7 @@
     <section class="registration complete">
         <h1 class="registration__title">Завершение регистрации</h1>
 
-        <form class="form" method="post" action="http://kaigi.loc/registration/completeUserRegistration">
+        <form class="form" method="post" action="/registration/completeUserRegistration">
             <div class="form__item">
                 <label class="form__label" for="firstName">Введите ваше имя:</label>
                 <input class="form__input" id="firstName" name="first_name" type="text" placeholder="Имя" required>

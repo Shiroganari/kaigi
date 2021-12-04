@@ -52,7 +52,7 @@ class Router
             throw new Exception('No route matched.');
         }
 
-        $controller = $this->params['controller'];
+        $controller = $this->params['controller'] . 'Controller';
         $controller = $this->convertToStudlyCaps($controller);
         $controller = $this->getNamespace().$controller;
 

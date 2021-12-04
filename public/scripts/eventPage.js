@@ -21,7 +21,7 @@ $('#join-event').on('click', function() {
     }
 
     $.ajax({
-        url: '/events/event-participation',
+        url: '/event/event-participation',
         method: 'POST',
         data: {
             userID: userID,

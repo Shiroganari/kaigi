@@ -13,11 +13,11 @@
     <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
     <!-- HEADER END -->
 
-    <!-- REGISTER -->
+    <!-- REGISTRATION -->
     <section class="registration">
         <h1 class="registration__title">Создание аккаунта</h1>
 
-        <form class="form" method="post" action="http://kaigi.loc/registration/signup">
+        <form class="form" method="post" action="registration/signup">
             <div class="form__item">
                 <label class="form__label" for="name">Введите ваш никнейм:</label>
                 <input class="form__input" id="name" name="username" type="text" placeholder="Никнейм">
@@ -36,6 +36,6 @@
             <input class="form__button button" type="submit" value="Создать аккаунт">
         </form>
     </section>
-    <!-- REGISTER END -->
+    <!-- REGISTRATION END -->
 </body>
 </html>

@@ -17,7 +17,7 @@
     <section class="login">
         <h1 class="login__title">Вход в аккаунт</h1>
 
-        <form class="form" method="post" action="signin">
+        <form class="form" method="post" action="login/signin">
             <div class="form__item">
                 <label class="form__label" for="email">Введите ваш Email:</label>
                 <input class="form__input" id="email" name="email" type="email">

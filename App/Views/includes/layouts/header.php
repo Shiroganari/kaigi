@@ -6,10 +6,10 @@
             <nav class="header__nav nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <a class="nav__link" href="/events/index">События</a>
+                        <a class="nav__link" href="/events">События</a>
                     </li>
                     <li class="nav__item">
-                        <a class="nav__link" href="/groups/index">Группы</a>
+                        <a class="nav__link" href="/groups">Группы</a>
                     </li>
                 </ul>
             </nav>
@@ -18,18 +18,18 @@
                 <?php
                     if (isset($_SESSION['active'])) {
                         echo '<div class="header-buttons__item">';
-                            echo '<a class="header-buttons__button" href="/events/new-event">Создать событие</a>';
+                            echo '<a class="header-buttons__button" href="/new-event">Создать событие</a>';
                             echo '<a class="header-buttons__button" href="#">Создать группу</a>';
                         echo '</div>';
 
                         echo '<div class="header-buttons__item">';
-                            echo '<a class="header-buttons__button" href="/profile/index">Профиль</a>';
+                            echo '<a class="header-buttons__button" href="/profile">Профиль</a>';
                             echo '<a class="header-buttons__button" href="/profile/logout">Выйти</a>';
                         echo '</div>';
                     } else {
                         echo '<div class="header-buttons__item">';
-                            echo '<a class="header-buttons__button" href="/login/index">Войти</a>';
-                            echo '<a class="header-buttons__button" href="/registration/index">Регистрация</a>';
+                            echo '<a class="header-buttons__button" href="/login">Войти</a>';
+                            echo '<a class="header-buttons__button" href="/registration">Регистрация</a>';
                         echo '</div>';
                     }
                 ?>

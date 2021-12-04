@@ -9,9 +9,9 @@ use App\Models\TopicsModel;
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
 
-class Profile extends Controller
+class ProfileController extends Controller
 {
-    public function indexAction()
+    public function index()
     {
         session_start();
 
@@ -21,7 +21,7 @@ class Profile extends Controller
         }
 
         if ($_SESSION['status'] == 1) {
-            header('Location: /profile/complete');
+            header('Location: /profile/completeRegistration');
             exit;
         }
 
@@ -35,7 +35,7 @@ class Profile extends Controller
             ]);
     }
 
-    public function completeAction()
+    public function completeRegistration()
     {
         session_start();
 
@@ -45,7 +45,7 @@ class Profile extends Controller
         }
 
         if (!$_SESSION['status'] == 1) {
-            header('Location: /profile/index');
+            header('Location: /profile');
             exit;
         }
 
@@ -58,12 +58,12 @@ class Profile extends Controller
         );
     }
 
-    public function logoutAction()
+    public function logout()
     {
         session_start();
         session_unset();
         session_destroy();
 
-        header('Location: /home/index');
+        header('Location: /');
     }
 }

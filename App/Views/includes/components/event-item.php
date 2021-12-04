@@ -9,7 +9,7 @@
     $eventCategory = $eventData['eventCategory'];
  ?>
 
-<a class="event-item" href="/events/event-page/<?php echo $eventID?>">
+<a class="event-item" href="/event/<?php echo $eventID?>">
 
     <div class="event-item__avatar">
         <img class="event-item__img" src="/images/mongol.jpg" alt="Event Picture">

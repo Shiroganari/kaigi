@@ -13,7 +13,7 @@ $(document).ready(function() {
         let eventCategory = $('.event-filter--category').val();
 
         $.ajax({
-            url: 'showEvents',
+            url: 'events/showEvents',
             method: 'POST',
             data: {
                 eventTitle: eventTitle,

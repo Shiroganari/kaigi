@@ -18,6 +18,7 @@
         if ($isMember) {
             $activeClass = 'join-event--active';
         }
+
         require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
     ?>
     <!-- HEADER END -->

@@ -7,10 +7,10 @@ use App\Models\TopicsModel;
 
 use Core\Controller;
 
-class Topics extends Controller
+class TopicsController extends Controller
 {
     // Ajax Request
-    function getAllTopicsAction()
+    function getAllTopics()
     {
         $categoryName = $this->post_params['category'];
 

@@ -40,7 +40,7 @@
 
         <div class="container">
             <div class="new-event__inner">
-                <form class="new-event__form" action="create" method="post">
+                <form class="new-event__form" action="event/createEvent" method="post">
                     <div class="new-event__step new-event__step--first active">
                         <div class="new-event-header">
                             <h2 class="new-event-header__title">1. Придумайте название для вашей встречи</h2>

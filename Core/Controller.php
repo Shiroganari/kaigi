@@ -19,7 +19,7 @@ abstract class Controller
 
     public function __call($name, $args)
     {
-        $method = $name . 'Action';
+        $method = $name;
 
         if (!method_exists($this, $method)) {
             throw new Exception("Method $method not found in controller " . get_class($this));

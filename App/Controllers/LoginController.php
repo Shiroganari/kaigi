@@ -7,30 +7,29 @@ use Core\View;
 
 use App\Models\UsersModel;
 
-class Login extends Controller
+class LoginController extends Controller
 {
-    public function indexAction()
+    public function index()
     {
         session_start();
 
         // If a user has already logged in, then redirect to the profile page
         if (isset($_SESSION['active'])) {
-            header('Location: /profile/index');
+            header('Location: /profile');
             exit;
         }
 
         View::render('Login/index.php');
     }
 
-    public function signinAction()
+    public function signin()
     {
         $email = $this->post_params['email'];
         $password = $this->post_params['pass'];
-        $user = $this->validateUser($email, $password);
+        $user = $this->userAuthentication($email, $password);
 
         if (gettype($user) !== 'array') {
-            View::render('Login/index.php');
-            echo 'Пользователь не был найден.';
+            header('Location: /login');
             exit;
         }
 
@@ -43,15 +42,15 @@ class Login extends Controller
         $_SESSION['pass'] = $user['password'];
         $_SESSION['userID'] = $user['id'];
 
-        header('Location: /profile/index');
+        header('Location: /profile');
     }
 
-    public function validateUser(string $email, string $password)
+    public function userAuthentication(string $email, string $password)
     {
         $user = UsersModel::getUser($email);
 
         if (!$user) {
-            return 'No Found';
+            return 'Wrong email';
         }
 
         $hashPassword = $user['password'];

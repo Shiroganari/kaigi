@@ -5,23 +5,16 @@ namespace App\Controllers;
 use Core\Controller;
 use Core\View;
 
+use App\Models\EventsMembersModel;
+use App\Models\EventsTopicsModel;
+use App\Models\EventsModel;
+use App\Models\CategoriesModel;
 use App\Models\FormatsModel;
 use App\Models\UsersModel;
-use App\Models\CategoriesModel;
-use App\Models\EventsModel;
-use App\Models\EventsTopicsModel;
-use App\Models\EventsMembersModel;
 
-class Events extends Controller
+class EventController extends Controller
 {
-    function indexAction()
-    {
-        $categories = CategoriesModel::getAll();
-
-        View::render('Events/index.php', ['categories' => $categories]);
-    }
-
-    function eventPageAction()
+    public function index()
     {
         session_start();
 
@@ -47,33 +40,32 @@ class Events extends Controller
             $isMember = true;
         }
 
-        View::render('Events/event.php',
-            [
-                'eventData' => $eventData,
-                'eventFormat' => $formatName,
-                'eventCategory' => $categoryName,
-                'organizerName' => $organizerName,
-                'eventTopics' => $eventTopics,
-                'userID' => $userID,
-                'isMember' => $isMember
-            ]);
+        View::render('Event/index.php', [
+            'eventData' => $eventData,
+            'eventFormat' => $formatName,
+            'eventCategory' => $categoryName,
+            'organizerName' => $organizerName,
+            'eventTopics' => $eventTopics,
+            'userID' => $userID,
+            'isMember' => $isMember
+        ]);
     }
 
-    function newEventAction()
+    public function eventCreationPage()
     {
         session_start();
 
         $categories = CategoriesModel::getAll();
 
         if (!isset($_SESSION['userID'])) {
-            header('Location: /home/index');
+            header('Location: /');
             exit;
         }
 
-        View::render('Events/new-event.php', ['categories' => $categories]);
+        View::render('Event/new-event.php', ['categories' => $categories]);
     }
 
-    function createAction()
+    public function createEvent()
     {
         session_start();
 
@@ -122,54 +114,10 @@ class Events extends Controller
         EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
         EventsMembersModel::newMember($eventID, $userID, 1);
 
-        header('Location: /events/event-page/' . $eventID);
+        header('Location: /event/' . $eventID);
     }
 
-    // Ajax Request
-    function showEventsAction()
-    {
-        $eventFormatID = null;
-        $eventCategoryID = null;
-
-        $formatName = $this->post_params['eventFormat'];
-        $eventFormat = FormatsModel::getFormatId($formatName);
-
-        $categoryName = $this->post_params['eventCategory'];
-        $eventCategory = CategoriesModel::getCategoryId($categoryName);
-
-        if ($eventFormat) {
-            $eventFormatID = $eventFormat['id'];
-        }
-
-        if ($eventCategory) {
-            $eventCategoryID = $eventCategory['id'];
-        }
-
-        $eventTitle = $this->post_params['eventTitle'];
-        $eventCountry = $this->post_params['eventCountry'];
-        $eventCity = $this->post_params['eventCity'];
-
-        $events = EventsModel::getEventsByFilters($eventTitle, $eventCountry, $eventCity, $eventFormatID, $eventCategoryID);
-
-        foreach ($events as $event) {
-            $categoryInfo = CategoriesModel::getCategoryName($event['categories_id']);
-
-            $eventData = [
-                'eventID' => $event['id'],
-                'eventTitle' => $event['title'],
-                'eventDescription' => $event['description'],
-                'eventCountry' => $event['location_country'],
-                'eventCity' => $event['location_city'],
-                'eventFormat' => $eventFormatID,
-                'eventCategory' => $categoryInfo['name'],
-                'eventDate' => $event['date_start']
-            ];
-
-            View::render('includes/components/event-item.php', ['eventData' => $eventData]);
-        }
-    }
-
-    function eventParticipationAction()
+    public function eventParticipation()
     {
         $userID = (int)$this->post_params['userID'];
         $eventID = (int)$this->post_params['eventID'];

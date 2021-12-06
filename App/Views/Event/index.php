@@ -52,13 +52,21 @@
                             <div class="event-header__location">
                                 Локация:
                                 <div class="event-header__country">
-                                    <?php echo $eventData['location_country'] . ', '?>
+                                    <?php echo $eventData['location_country']?>
                                 </div>
                                 <div class="event-header__city">
-                                    <?php echo $eventData['location_city'] . ', '?>
+                                    <?php
+                                        if ($eventData['location_city']) {
+                                            echo ', ' . $eventData['location_city'];
+                                        }
+                                    ?>
                                 </div>
                                 <div class="event-header__street">
-                                    <?php echo $eventData['location_street']?>
+                                    <?php
+                                        if ($eventData['location_street']) {
+                                            echo ', ' . $eventData['location_street'];
+                                        }
+                                    ?>
                                 </div>
                             </div>
                         <?php endif;?>

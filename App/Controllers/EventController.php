@@ -71,23 +71,23 @@ class EventController extends Controller
 
         $userID = $_SESSION['userID'];
 
-        $categoryName = $this->post_params['event-category'];
-        $formatName = $this->post_params['event-format'];
+        $categoryName = $this->post_params['entity-category'];
+        $formatName = $this->post_params['entity-format'];
 
         $categoryInfo = CategoriesModel::getCategoryId($categoryName);
         $formatInfo = FormatsModel::getFormatId($formatName);
 
         $eventID = rand(1, 1000);
-        $eventTitle = $this->post_params['event-title'];
+        $eventTitle = $this->post_params['entity-title'];
         $eventCategoryId = $categoryInfo['id'];
-        $eventDescription = $this->post_params['event-description'];
-        $eventDate = date('Y-m-d', strtotime($this->post_params['event-date']));
-        $eventTime = date('H:i', strtotime($this->post_params['event-time']));
+        $eventDescription = $this->post_params['entity-description'];
+        $eventDate = date('Y-m-d', strtotime($this->post_params['entity-date']));
+        $eventTime = date('H:i', strtotime($this->post_params['entity-time']));
         $eventFormat = $formatInfo['id'];
-        $eventCountry = $this->post_params['event-country'];
-        $eventCity = $this->post_params['event-city'];
-        $eventStreet = $this->post_params['event-street'];
-        $eventTopics = $this->post_params['event-topics'];
+        $eventCountry = $this->post_params['entity-country'];
+        $eventCity = $this->post_params['entity-city'];
+        $eventStreet = $this->post_params['entity-street'];
+        $eventTopics = $this->post_params['entity-topics'];
         $eventOrganizer = $_SESSION['userID'];
 
         // If the event format is 'offline'
@@ -111,7 +111,11 @@ class EventController extends Controller
         ];
 
         EventsModel::newEvent($eventData);
-        EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
+
+        if (isset($eventTopics)) {
+            EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
+        }
+
         EventsMembersModel::newMember($eventID, $userID, 1);
 
         header('Location: /event/' . $eventID);

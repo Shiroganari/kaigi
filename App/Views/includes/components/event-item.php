@@ -31,7 +31,10 @@
         <div class="event-item__location">
             <?php
                 if ($eventCountry) {
-                    echo $eventCountry . ', ' . $eventCity;
+                    echo $eventCountry;
+                    if ($eventCity != '') {
+                        echo ', ' . $eventCity;
+                    }
                 } else {
                     echo 'Онлайн';
                 }

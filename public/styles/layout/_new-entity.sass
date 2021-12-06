@@ -1,7 +1,7 @@
-//------------//
-// .new-event //
-//------------//
-.new-event
+//-------------//
+// .new-entity //
+//-------------//
+.new-entity
     padding: 40px 10px
     text-align: center
 
@@ -19,24 +19,29 @@
     &__step.active
         display: block
 
+.new-entity--group
+    .progress-bar__item
+        width: 25%
 
-//-----------------//
-// .new-event-step //
-//-----------------//
-.new-event__step
+
+//------------------//
+// .new-entity-step //
+//------------------//
+.new-entity__step
     &--second
-        .new-event-content
+        .new-entity-content
             max-width: 500px
             background-color: #fff
 
     &--fifth
-        .new-event-content
+        .new-entity-content
             max-width: 600px
 
-//-------------------//
-// .new-event-header //
-//-------------------//
-.new-event-header
+
+//--------------------//
+// .new-entity-header //
+//--------------------//
+.new-entity-header
     padding: 50px 0
 
     &__title
@@ -47,10 +52,10 @@
         font-size: 1.2em
 
 
-//--------------------//
-// .new-event-content //
-//--------------------//
-.new-event-content
+//---------------------//
+// .new-entity-content //
+//---------------------//
+.new-entity-content
     display: flex
     flex-direction: column
     justify-content: center
@@ -101,8 +106,13 @@
         justify-content: center
         margin-bottom: 50px
 
+.new-entity--group
+    .new-entity-content__location
+        display: flex
 
-.step-button
+
+.step-button,
+.create-entity
     position: absolute
     bottom: -100px
     padding: 10px 30px
@@ -115,10 +125,21 @@
     outline: none
     cursor: pointer
 
-    &--next,
-    &--create
+    &--next
+        opacity: 0.5
         right: 0
+        cursor: default
 
     &--previous
         display: none
         left: 0
+
+.create-entity
+    opacity: 0.5
+    right: 0
+    cursor: default
+
+.step-button--next.active,
+.create-entity.active
+    opacity: 1
+    cursor: pointer

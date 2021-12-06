@@ -6,6 +6,7 @@ $router = new Router();
 
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('new-event', ['controller' => 'Event', 'action' => 'EventCreationPage']);
+$router->add('new-group', ['controller' => 'Group', 'action' => 'GroupCreationPage']);
 
 $router->add('{controller}/{action}');
 $router->add('{controller}', ['{controller}' => '{controller}', 'action' => 'index']);

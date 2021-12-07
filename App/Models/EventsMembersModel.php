@@ -57,6 +57,25 @@ class EventsMembersModel extends Model
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function countEventMembers(int $eventID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT COUNT(*) FROM `events_members` WHERE events_id = :eventID';
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':eventID' => $eventID,
+            ]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
         }
     }
 }

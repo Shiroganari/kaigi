@@ -5,6 +5,7 @@
     $groupCountry = $groupData['groupCountry'];
     $groupCity = $groupData['groupCity'];
     $groupCategory = $groupData['groupCategory'];
+    $groupMembersCount = $groupData['groupMembersCount'];
 ?>
 
 <a class="group-item" href="/group/<?php echo $groupID?>">
@@ -37,6 +38,13 @@
                 } else {
                     echo 'Онлайн';
                 }
+            ?>
+        </div>
+
+        <div class="group-item__members">
+            Количество участников:
+            <?php
+                echo ' ' . $groupMembersCount;
             ?>
         </div>
 

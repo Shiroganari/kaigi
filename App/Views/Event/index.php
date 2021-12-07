@@ -86,7 +86,14 @@
                             <?php echo $eventCategory['name'] ?>
                         </div>
 
-                        <div class="event-header__member">
+                        <div class="event-header__members">
+                            Количество участников:
+                            <?php
+                                echo ' ' . $eventMembersCount;
+                            ?>
+                        </div>
+
+                        <div class="event-header__participation">
                             <input id="user-id" type="text" value="<?php echo $userID?>" hidden>
                             <input id="entity-id" type="text" value="<?php echo $eventID?>" hidden>
                             <input id="is-member" type="text" value="<?php echo $isMember?>" hidden>

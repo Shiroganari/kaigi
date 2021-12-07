@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\GroupsMembersModel;
 use Core\Controller;
 use Core\View;
 
@@ -37,6 +38,7 @@ class GroupsController extends Controller
 
         foreach ($groups as $group) {
             $categoryInfo = CategoriesModel::getCategoryName($group['categories_id']);
+            $groupMembers = GroupsMembersModel::countGroupMembers($group['id']);
 
             $groupData = [
                 'groupID' => $group['id'],
@@ -45,6 +47,7 @@ class GroupsController extends Controller
                 'groupCountry' => $group['location_country'],
                 'groupCity' => $group['location_city'],
                 'groupCategory' => $categoryInfo['name'],
+                'groupMembersCount' => $groupMembers['COUNT(*)']
             ];
 
             View::render('includes/components/group-item.php', ['groupData' => $groupData]);

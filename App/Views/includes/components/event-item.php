@@ -7,6 +7,7 @@
     $eventDate = $eventData['eventDate'];
     $eventFormat = $eventData['eventFormat'];
     $eventCategory = $eventData['eventCategory'];
+    $eventMembersCount = $eventData['eventMembersCount'];
  ?>
 
 <a class="event-item" href="/event/<?php echo $eventID?>">
@@ -44,6 +45,13 @@
         <div class="event-item__time">
             <?php
                 echo $eventDate;
+            ?>
+        </div>
+
+        <div class="event-item__members">
+            Количество участников:
+            <?php
+                echo ' ' . $eventMembersCount;
             ?>
         </div>
 

@@ -76,4 +76,22 @@ class GroupsMembersModel extends Model
             echo $e->getMessage();
         }
     }
+
+    public static function countGroupMembers(int $groupID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT COUNT(*) FROM `groups_members` WHERE groups_id = :groupID';
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':groupID' => $groupID,
+            ]);
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

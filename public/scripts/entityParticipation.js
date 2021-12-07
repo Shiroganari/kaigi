@@ -38,8 +38,6 @@ $('#entity-participation').on('click', function() {
         return;
     }
 
-    console.log(entity);
-
     $.ajax({
         url: url,
         method: 'POST',

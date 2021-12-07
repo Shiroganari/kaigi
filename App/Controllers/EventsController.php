@@ -8,6 +8,7 @@ use Core\View;
 use App\Models\CategoriesModel;
 use App\Models\FormatsModel;
 use App\Models\EventsModel;
+use App\Models\EventsMembersModel;
 
 class EventsController extends Controller
 {
@@ -46,6 +47,7 @@ class EventsController extends Controller
 
         foreach ($events as $event) {
             $categoryInfo = CategoriesModel::getCategoryName($event['categories_id']);
+            $eventMembers = EventsMembersModel::countEventMembers($event['id']);
 
             $eventData = [
                 'eventID' => $event['id'],
@@ -55,7 +57,8 @@ class EventsController extends Controller
                 'eventCity' => $event['location_city'],
                 'eventFormat' => $eventFormatID,
                 'eventCategory' => $categoryInfo['name'],
-                'eventDate' => $event['date_start']
+                'eventDate' => $event['date_start'],
+                'eventMembersCount' => $eventMembers['COUNT(*)']
             ];
 
             View::render('includes/components/event-item.php', ['eventData' => $eventData]);

@@ -24,6 +24,7 @@ class EventController extends Controller
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
         $organizerName = UsersModel::getUserById($eventData['users_id']);
         $eventTopics = EventsTopicsModel::getEventTopics($eventID);
+        $eventMembers = EventsMembersModel::countEventMembers($eventID);
         $userID = 0;
         $user = null;
         $isMember = false;
@@ -47,7 +48,8 @@ class EventController extends Controller
             'organizerName' => $organizerName,
             'eventTopics' => $eventTopics,
             'userID' => $userID,
-            'isMember' => $isMember
+            'isMember' => $isMember,
+            'eventMembersCount' => $eventMembers['COUNT(*)']
         ]);
     }
 

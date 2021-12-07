@@ -22,6 +22,7 @@ class GroupController extends Controller
         $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
         $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
         $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
+        $groupMembers = GroupsMembersModel::countGroupMembers($groupID);
         $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
 
         $userID = 0;
@@ -46,7 +47,8 @@ class GroupController extends Controller
             'organizerName' => $groupOrganizer,
             'groupTopics' => $groupTopics,
             'userID' => $userID,
-            'isMember' => $isMember
+            'isMember' => $isMember,
+            'groupMembersCount' => $groupMembers['COUNT(*)']
         ]);
     }
 

@@ -86,6 +86,15 @@
                                 </div>
                             </div>
 
+                            <div class="group-block-content__item"">
+                                <h3 class="group-block-content__title">Количество участников:</h3>
+                                <div class="group-block-content__members">
+                                    <?php
+                                        echo ' ' . $groupMembersCount;
+                                    ?>
+                                </div>
+                            </div>
+
                             <div class="group-block-content__item">
                                 <h3 class="group-block-content__title">Топики:</h3>
                                 <div class="group-block-content__topics event-topics__inner">

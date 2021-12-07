@@ -1,7 +1,8 @@
 //-------------//
-// .event-item //
+// ENTITY-ITEM //
 //-------------//
-.event-item
+.event-item,
+.group-item
     position: relative
     display: flex
     min-width: 70%
@@ -25,7 +26,6 @@
         background-color: $dark-color
         border-radius: 30px
 
-
     &__img
         max-width: 100%
         max-height: 100%
@@ -37,13 +37,15 @@
         margin-bottom: 10px
         font-size: 1.2em
 
-    &__information .event-item__title
+    &__information .event-item__title,
+    &__information .group-item__title
         margin-bottom: 15px
         font-size: 1.5em
         font-weight: 700
         text-transform: uppercase
 
-    &__information .event-item__description
+    &__information .event-item__description,
+    &__information .group-item__description
         line-height: 26px
         word-break: break-word
         max-height: 50px

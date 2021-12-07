@@ -30,7 +30,6 @@
                 <img class="group-header__img" src="/images/mongol.jpg" alt="Logotype">
             </div>
 
-
             <input id="user-id" type="text" value="<?php echo $userID?>" hidden>
             <input id="entity-id" type="text" value="<?php echo $groupID?>" hidden>
             <input id="is-member" type="text" value="<?php echo $isMember?>" hidden>

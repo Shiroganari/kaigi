@@ -2,21 +2,21 @@
 
 namespace App\Controllers;
 
-
 use Core\Controller;
 use Core\View;
 
 use App\Models\GroupsMembersModel;
-use App\Models\UsersModel;
-use App\Models\CategoriesModel;
-use App\Models\GroupsModel;
 use App\Models\GroupsTopicsModel;
+use App\Models\GroupsModel;
+use App\Models\CategoriesModel;
+use App\Models\UsersModel;
 
 class GroupController extends Controller
 {
     public function index()
     {
         session_start();
+
         $groupID = $this->route_params['id'];
         $groupData = GroupsModel::getGroupInfoById($groupID);
         $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);

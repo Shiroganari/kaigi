@@ -62,7 +62,7 @@ class EventController extends Controller
             exit;
         }
 
-        View::render('Event/new-event.php', ['categories' => $categories]);
+        View::render('Event/new-index.php', ['categories' => $categories]);
     }
 
     public function createEvent()

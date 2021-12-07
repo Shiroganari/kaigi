@@ -10,7 +10,12 @@
 </head>
 <body>
     <!-- HEADER -->
-    <?php require_once(dirname(__DIR__) . LAYOUTS . 'header.php'); ?>
+    <?php
+        use App\Models\CategoriesModel;
+        use App\Models\GroupsMembersModel;
+
+        require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
+    ?>
     <!-- HEADER END -->
 
     <!-- PROFILE -->
@@ -43,16 +48,36 @@
                 </div> <!-- /.profile-about -->
 
                 <div class="profile-main">
-                    <div class="profile-main__header" id="profile-main__header">
-                        <div class="profile-main__title profile-main__title--descr active">Описание</div>
-                        <div class="profile-main__title profile-main__title--groups">Группы</div>
-                        <div class="profile-main__title profile-main__title--events">Посещенные события</div>
+                    <div class="profile-main-header" id="profile-main-header">
+                        <div class="profile-main-header__title profile-main-header__title--description active">Описание</div>
+                        <div class="profile-main-header__title profile-main-header__title--groups">Группы</div>
                     </div>
 
-                    <div class="profile-main__content">
-                        <p class="profile-main__descr">
+                    <div class="profile-main-content">
+                        <p class="profile-main-content__item profile-main-content__item--description active">
                             <?php echo $user['description']?>
                         </p>
+
+                        <div class="profile-main-content__item profile-main-content__item--groups">
+                            <?php
+                                foreach ($groups as $group) {
+                                    $categoryInfo = CategoriesModel::getCategoryName($group['categories_id']);
+                                    $groupMembers = GroupsMembersModel::countGroupMembers($group['id']);
+
+                                    $groupData = [
+                                        'groupID' => $group['id'],
+                                        'groupTitle' => $group['title'],
+                                        'groupDescription' => $group['description'],
+                                        'groupCountry' => $group['location_country'],
+                                        'groupCity' => $group['location_city'],
+                                        'groupCategory' => $categoryInfo['name'],
+                                        'groupMembersCount' => $groupMembers['COUNT(*)']
+                                    ];
+
+                                    \Core\View::render('includes/components/group-item.php', ['groupData' => $groupData]);
+                                }
+                            ?>
+                        </div>
                     </div>
                 </div> <!-- /.profile-main -->
             </div> <!-- /.profile__inner -->
@@ -76,6 +101,7 @@
     </section>
     <!-- PROFILE END -->
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="<?php ROOT ?>/scripts/profile.js"></script>
 </body>
 </html>

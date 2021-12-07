@@ -8,6 +8,26 @@
         justify-content: space-between
         padding-top: 50px
 
+    .group-item
+        min-width: 100%
+        max-width: 100%
+        margin-bottom: 30px
+        font-size: 1em
+
+        &__avatar
+            max-width: 120px
+            max-height: 120px
+            margin-right: 30px
+
+        &__information > div
+            font-size: 1em
+
+        &__information .group-item__title
+            font-size: 1.4em
+
+        &:last-child
+            margin-bottom: 0
+
 
 .profile-about,
 .profile-main
@@ -72,12 +92,17 @@
     width: 70%
     padding: 15px 30px
 
-    &__header
-        display: flex
-        justify-content: space-between
-        padding: 30px 10%
+
+//----------------------//
+// .profile-main-header //
+//----------------------//
+.profile-main-header
+    display: flex
+    justify-content: center
+    padding: 30px 10%
 
     &__title
+        margin-right: 30px
         padding: 10px
         font-size: 1.2em
         text-transform: uppercase
@@ -85,15 +110,42 @@
         transition: all 0.5s ease
         cursor: pointer
 
+        &:last-child
+            margin-right: 0
+
     &__title.active,
     &__title:hover
         background-color: $red-color
         font-weight: 700
         color: #fff
 
-    &__descr
-        word-wrap: break-word
-        font-size: 1.4em
+
+//-----------------------//
+// .profile-main-content //
+//-----------------------//
+.profile-main-content
+
+    &__item
+        display: none
+
+        &--description
+            font-size: 1.2em
+
+        &--groups
+            overflow-y: scroll
+            min-height: 450px
+            max-height: 450px
+            padding-right: 20px
+
+            > a:hover
+                transform: none
+
+    &__item.active
+        display: block
+
+        &--groups
+            display: flex
+            flex-direction: column
 
 
 //-----------------//

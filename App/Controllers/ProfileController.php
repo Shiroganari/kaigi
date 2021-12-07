@@ -2,12 +2,14 @@
 
 namespace App\Controllers;
 
+use App\Models\GroupsModel;
 use Core\Controller;
 use Core\View;
 
 use App\Models\TopicsModel;
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
+use App\Models\GroupsMembersModel;
 
 class ProfileController extends Controller
 {
@@ -26,12 +28,21 @@ class ProfileController extends Controller
         }
 
         $user = UsersModel::getUser($_SESSION['email']);
-        $userTopics = UsersTopics::getUserTopics($_SESSION['userID']);
+        $userID = $_SESSION['userID'];
+        $userTopics = UsersTopics::getUserTopics($userID);
+        $userGroups = GroupsMembersModel::getUserGroups($userID);
+        $groups = [];
+
+        foreach ($userGroups as $group) {
+            $groups[] = GroupsModel::getGroupInfoById($group['groups_id']);
+        }
 
         View::render('Profile/index.php',
             [
                 'user' => $user,
-                'userTopics' => $userTopics
+                'userTopics' => $userTopics,
+                'userGroups' => $userGroups,
+                'groups' => $groups
             ]);
     }
 

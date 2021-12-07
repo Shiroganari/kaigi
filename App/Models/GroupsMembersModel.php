@@ -94,4 +94,22 @@ class GroupsMembersModel extends Model
             return false;
         }
     }
+
+    public static function getUserGroups(int $userID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `groups_members` WHERE users_id = :userID';
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':userID' => $userID,
+            ]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

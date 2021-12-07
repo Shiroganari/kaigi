@@ -2,20 +2,52 @@
 
 namespace App\Controllers;
 
-use App\Models\EventsModel;
-use App\Models\GroupsMembersModel;
+
 use Core\Controller;
 use Core\View;
 
+use App\Models\GroupsMembersModel;
+use App\Models\UsersModel;
 use App\Models\CategoriesModel;
-use App\Models\groupsModel;
-use App\Models\groupsTopicsModel;
+use App\Models\GroupsModel;
+use App\Models\GroupsTopicsModel;
 
 class GroupController extends Controller
 {
     public function index()
     {
-        View::render('Group/index.php');
+        session_start();
+        $groupID = $this->route_params['id'];
+        $groupData = GroupsModel::getGroupInfoById($groupID);
+        $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
+        $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
+        $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
+        $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
+
+        $userID = 0;
+        $user = null;
+        $isMember = false;
+
+        if (isset($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+        }
+
+        if ($userID) {
+            $user = GroupsMembersModel::getUser($groupID, $userID);
+        }
+
+        if ($user) {
+            $isMember = true;
+        }
+
+        View::render('Group/index.php', [
+            'groupData' => $groupData,
+            'groupCategory' => $categoryName,
+            'organizerName' => $groupOrganizer,
+            'groupTopics' => $groupTopics,
+            'userID' => $userID,
+            'isMember' => $isMember
+        ]);
     }
 
     public function groupCreationPage()
@@ -60,7 +92,6 @@ class GroupController extends Controller
             'groupOrganizer' => $groupOrganizer
         ];
 
-        var_dump($groupData);
         GroupsModel::newGroup($groupData);
 
         if (isset($groupTopics)) {
@@ -70,5 +101,21 @@ class GroupController extends Controller
         GroupsMembersModel::newMember($groupID, $userID, 1);
 
         header('Location: /group/' . $groupID);
+    }
+
+    public function groupParticipation()
+    {
+        $userID = (int)$this->post_params['userID'];
+        $groupID = (int)$this->post_params['entityID'];
+        $roleID = 2; // Участник
+
+        if (GroupsMembersModel::getUser($groupID, $userID)) {
+            GroupsMembersModel::removeMember($groupID, $userID);
+            echo json_encode('Left');
+            exit;
+        }
+
+        GroupsMembersModel::newMember($groupID, $userID, $roleID);
+        echo json_encode('Join');
     }
 }

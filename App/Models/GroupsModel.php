@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Core\Model;
 
-use PDO;
 use PDOException;
 
 class GroupsModel extends Model
@@ -30,6 +29,23 @@ class GroupsModel extends Model
             ]);
         } catch (PDOException $e) {
             echo $e->getMessage();
+        }
+    }
+
+    public static function getGroupInfoById(int $groupID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `groups` WHERE id = :groupID';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':groupID', $groupID);
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
         }
     }
 }

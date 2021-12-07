@@ -124,16 +124,16 @@ class EventController extends Controller
     public function eventParticipation()
     {
         $userID = (int)$this->post_params['userID'];
-        $eventID = (int)$this->post_params['eventID'];
+        $entityID = (int)$this->post_params['entityID'];
         $roleID = 2; // Участник
 
-        if (EventsMembersModel::getUser($eventID, $userID)) {
-            EventsMembersModel::removeMember($eventID, $userID);
+        if (EventsMembersModel::getUser($entityID, $userID)) {
+            EventsMembersModel::removeMember($entityID, $userID);
             echo json_encode('Left');
             exit;
         }
 
-        EventsMembersModel::newMember($eventID, $userID, $roleID);
+        EventsMembersModel::newMember($entityID, $userID, $roleID);
         echo json_encode('Join');
     }
 }

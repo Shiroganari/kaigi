@@ -16,7 +16,7 @@
         $activeClass = '';
 
         if ($isMember) {
-            $activeClass = 'join-event--active';
+            $activeClass = 'entity-participation--active';
         }
 
         require_once(dirname(__DIR__) . LAYOUTS . 'header.php');
@@ -88,9 +88,9 @@
 
                         <div class="event-header__member">
                             <input id="user-id" type="text" value="<?php echo $userID?>" hidden>
-                            <input id="event-id" type="text" value="<?php echo $eventID?>" hidden>
+                            <input id="entity-id" type="text" value="<?php echo $eventID?>" hidden>
                             <input id="is-member" type="text" value="<?php echo $isMember?>" hidden>
-                            <button class="button join-event <?php echo $activeClass?>" id="join-event">
+                            <button class="button entity-participation entity-participation--event <?php echo $activeClass?>" id="entity-participation">
                                 <?php
                                     if ($isMember) {
                                         echo 'Вы участвуете';
@@ -130,13 +130,13 @@
                             );
                         ?>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div> <!-- /.event-topics -->
+            </div> <!-- /.event__inner -->
+        </div> <!-- /.container -->
     </section>
     <!-- EVENT END -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="<?php ROOT ?>/scripts/eventPage.js"></script>
+    <script src="<?php ROOT ?>/scripts/entityParticipation.js"></script>
 </body>
 </html>

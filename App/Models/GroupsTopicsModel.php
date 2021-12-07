@@ -28,4 +28,21 @@ class GroupsTopicsModel extends Model
             echo $e->getMessage();
         }
     }
+
+    public static function getGroupTopics(int $groupID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT topics_name FROM `groups_topics` WHERE groups_id = :groupID';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':groupID', $groupID);
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

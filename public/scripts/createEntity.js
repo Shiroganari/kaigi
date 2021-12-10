@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let stepCount = 1;
 
     $('.entity-data').on('input change', function () {
@@ -12,7 +12,7 @@ $(document).ready(function() {
         }
     })
 
-    $('.step-button').click(function() {
+    $('.step-button').click(function () {
         let action = $(this).attr('id');
         $(".new-entity__step").removeClass('active');
         $('#next-step').css('display', 'inline-block');
@@ -57,7 +57,7 @@ $(document).ready(function() {
         }
     })
 
-    $('.entity-format').on('click', function() {
+    $('.entity-format').on('click', function () {
         let formatName = $(this).val();
 
         if (formatName === 'Офлайн') {

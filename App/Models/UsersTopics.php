@@ -16,13 +16,13 @@ class UsersTopics extends Model
             $db = static::getDB();
 
             $topicsCount = count($topics);
-            $sql = 'INSERT INTO users_topics (users_id, topic_name) VALUES (:userID, :topic)';
+            $sql = 'INSERT INTO `users_topics` (users_id, topics_name) VALUES (:userID, :topic)';
 
             for ($i = 0; $i < $topicsCount; $i++) {
                 $stmt = $db->prepare($sql);
                 $stmt->execute([
-                    ':userID'  => $userID,
-                    ':topic'   => $topics[$i]
+                    ':userID' => $userID,
+                    ':topic' => $topics[$i]
                 ]);
             }
         } catch (PDOException $e) {
@@ -36,7 +36,7 @@ class UsersTopics extends Model
         try {
             $db = static::getDB();
 
-            $sql = 'SELECT topic_name FROM users_topics WHERE users_id = :userID';
+            $sql = 'SELECT topics_name FROM `users_topics` WHERE users_id = :userID';
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':userID', $userID);
             $stmt->execute();

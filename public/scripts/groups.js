@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     filter_data();
 
-    $('.groups-filter').change(function() {
+    $('.groups-filter').change(function () {
         filter_data();
     })
 
@@ -20,7 +20,7 @@ $(document).ready(function() {
                 groupsCity: groupsCity,
                 groupsCategory: groupsCategory
             },
-            success: function(data) {
+            success: function (data) {
                 $('#groups-content').html(data);
             }
         });

@@ -61,7 +61,7 @@ class GroupsMembersModel extends Model
         }
     }
 
-    public static function removeMember(int $groupID, int $userID):void
+    public static function removeMember(int $groupID, int $userID): void
     {
         try {
             $db = static::getDB();

@@ -1,10 +1,10 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $.datepicker.setDefaults({
         dateFormat: 'yy-mm-dd'
     });
 
-    $(function() {
-        $("#entity-date" ).datepicker();
+    $(function () {
+        $("#entity-date").datepicker();
     });
 
     $('#entity-time').timepicker({

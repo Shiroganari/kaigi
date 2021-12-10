@@ -14,7 +14,7 @@ class TopicsModel extends Model
         try {
             $db = static::getDB();
 
-            $sql = 'SELECT name FROM `topics`';
+            $sql = 'SELECT topics_name FROM `topics`';
             $stmt = $db->query($sql);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
@@ -28,7 +28,7 @@ class TopicsModel extends Model
         try {
             $db = static::getDB();
 
-            $sql = 'SELECT name FROM `topics` WHERE categories_id = :categoryID';
+            $sql = 'SELECT topics_name FROM `topics` WHERE categories_id = :categoryID';
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':categoryID', $categoryID);
             $stmt->execute();

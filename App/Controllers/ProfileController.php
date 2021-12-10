@@ -2,14 +2,16 @@
 
 namespace App\Controllers;
 
-use App\Models\GroupsModel;
 use Core\Controller;
 use Core\View;
 
-use App\Models\TopicsModel;
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
+use App\Models\GroupsModel;
 use App\Models\GroupsMembersModel;
+
+use App\Views\GroupsView;
+use App\Views\TopicsView;
 
 class ProfileController extends Controller
 {
@@ -17,13 +19,15 @@ class ProfileController extends Controller
     {
         session_start();
 
+        // If a user is not logged in
         if (!isset($_SESSION['status'])) {
             header('Location: /');
             exit;
         }
 
+        // If a user has not completed the registration process
         if ($_SESSION['status'] == 1) {
-            header('Location: /profile/completeRegistration');
+            header('Location: /auth/completeRegistrationPage');
             exit;
         }
 
@@ -37,44 +41,18 @@ class ProfileController extends Controller
             $groups[] = GroupsModel::getGroupInfoById($group['groups_id']);
         }
 
-        View::render('Profile/index.php',
+        // Getting a list of user topics
+        $topicsList = TopicsView::renderTopics($userTopics, 'text');
+
+        // Getting a list of user groups
+        $groupsList = GroupsView::renderGroups($groups);
+
+        View::renderTemplate('profile/index','Kaigi | Профиль', 'profile',
             [
                 'user' => $user,
-                'userTopics' => $userTopics,
-                'userGroups' => $userGroups,
-                'groups' => $groups
-            ]);
-    }
-
-    public function completeRegistration()
-    {
-        session_start();
-
-        if (!isset($_SESSION['status'])) {
-            header('Location: /');
-            exit;
-        }
-
-        if (!$_SESSION['status'] == 1) {
-            header('Location: /profile');
-            exit;
-        }
-
-        $topics = TopicsModel::getAll();
-
-        View::render('Profile/complete.php',
-            [
-                'topics' => $topics
+                'topicsList' => $topicsList,
+                'groupsList' => $groupsList
             ]
         );
-    }
-
-    public function logout()
-    {
-        session_start();
-        session_unset();
-        session_destroy();
-
-        header('Location: /');
     }
 }

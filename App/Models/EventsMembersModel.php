@@ -26,7 +26,7 @@ class EventsMembersModel extends Model
         }
     }
 
-    public static function removeMember(int $eventID, int $userID):void
+    public static function removeMember(int $eventID, int $userID): void
     {
         try {
             $db = static::getDB();

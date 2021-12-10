@@ -9,6 +9,8 @@ class HomeController extends Controller
 {
     public function index()
     {
-        View::render('Home/index.php');
+        session_start();
+
+        View::renderTemplate('home/index','Kaigi | Главная страница', 'home');
     }
 }

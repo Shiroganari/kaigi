@@ -12,6 +12,9 @@ use App\Models\CategoriesModel;
 use App\Models\FormatsModel;
 use App\Models\UsersModel;
 
+use App\Views\CategoriesView;
+use App\Views\TopicsView;
+
 class EventController extends Controller
 {
     public function index()
@@ -20,11 +23,13 @@ class EventController extends Controller
 
         $eventID = $this->route_params['id'];
         $eventData = EventsModel::getEventInfoById($eventID);
+        $eventTitle = $eventData['title'];
+        $eventTopics = EventsTopicsModel::getEventTopics($eventID);
+        $eventMembers = EventsMembersModel::countEventMembers($eventID);
         $formatName = FormatsModel::getFormatName($eventData['formats_id']);
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
         $organizerName = UsersModel::getUserById($eventData['users_id']);
-        $eventTopics = EventsTopicsModel::getEventTopics($eventID);
-        $eventMembers = EventsMembersModel::countEventMembers($eventID);
+
         $userID = 0;
         $user = null;
         $isMember = false;
@@ -41,12 +46,15 @@ class EventController extends Controller
             $isMember = true;
         }
 
-        View::render('Event/index.php', [
+        $topicsList = TopicsView::renderTopics($eventTopics, 'text');
+
+        View::renderTemplate('event/index', "Kaigi | $eventTitle", 'events',
+        [
             'eventData' => $eventData,
             'eventFormat' => $formatName,
             'eventCategory' => $categoryName,
             'organizerName' => $organizerName,
-            'eventTopics' => $eventTopics,
+            'topicsList' => $topicsList,
             'userID' => $userID,
             'isMember' => $isMember,
             'eventMembersCount' => $eventMembers['COUNT(*)']
@@ -57,14 +65,22 @@ class EventController extends Controller
     {
         session_start();
 
-        $categories = CategoriesModel::getAll();
-
         if (!isset($_SESSION['userID'])) {
             header('Location: /');
             exit;
         }
 
-        View::render('Event/new-event.php', ['categories' => $categories]);
+        $categories = CategoriesModel::getAll();
+        $categoriesList = CategoriesView::renderCategories($categories);
+        View::renderTemplate('event/new-event', 'Kaigi | Новое событие', 'events',
+            [
+                'categoriesList' => $categoriesList
+            ],
+            [
+                'http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css',
+                '/cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css'
+            ]
+        );
     }
 
     public function createEvent()
@@ -118,7 +134,7 @@ class EventController extends Controller
             EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
         }
 
-        EventsMembersModel::newMember($eventID, $userID, 1);
+        EventsMembersModel::newMember($eventID, $userID, ORGANIZER);
 
         header('Location: /event/' . $eventID);
     }
@@ -127,7 +143,6 @@ class EventController extends Controller
     {
         $userID = (int)$this->post_params['userID'];
         $entityID = (int)$this->post_params['entityID'];
-        $roleID = 2; // Участник
 
         if (EventsMembersModel::getUser($entityID, $userID)) {
             EventsMembersModel::removeMember($entityID, $userID);
@@ -135,7 +150,7 @@ class EventController extends Controller
             exit;
         }
 
-        EventsMembersModel::newMember($entityID, $userID, $roleID);
+        EventsMembersModel::newMember($entityID, $userID, MEMBER);
         echo json_encode('Join');
     }
 }

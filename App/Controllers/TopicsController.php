@@ -10,7 +10,7 @@ use Core\Controller;
 class TopicsController extends Controller
 {
     // Ajax Request
-    function getAllTopics()
+    public function getAllTopics()
     {
         $categoryName = $this->post_params['category'];
 

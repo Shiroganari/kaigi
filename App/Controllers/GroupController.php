@@ -11,6 +11,9 @@ use App\Models\GroupsModel;
 use App\Models\CategoriesModel;
 use App\Models\UsersModel;
 
+use App\Views\CategoriesView;
+use App\Views\TopicsView;
+
 class GroupController extends Controller
 {
     public function index()
@@ -19,11 +22,11 @@ class GroupController extends Controller
 
         $groupID = $this->route_params['id'];
         $groupData = GroupsModel::getGroupInfoById($groupID);
-        $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
-        $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
+        $groupTitle = $groupData['title'];
         $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
         $groupMembers = GroupsMembersModel::countGroupMembers($groupID);
-        $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
+        $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
+        $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
 
         $userID = 0;
         $user = null;
@@ -41,29 +44,38 @@ class GroupController extends Controller
             $isMember = true;
         }
 
-        View::render('Group/index.php', [
-            'groupData' => $groupData,
-            'groupCategory' => $categoryName,
-            'organizerName' => $groupOrganizer,
-            'groupTopics' => $groupTopics,
-            'userID' => $userID,
-            'isMember' => $isMember,
-            'groupMembersCount' => $groupMembers['COUNT(*)']
-        ]);
+        $topicsList = TopicsView::renderTopics($groupTopics, 'text');
+
+        View::renderTemplate('group/index', "Kaigi | $groupTitle", 'groups',
+            [
+                'groupData' => $groupData,
+                'groupCategory' => $categoryName,
+                'organizerName' => $groupOrganizer,
+                'topicsList' => $topicsList,
+                'userID' => $userID,
+                'isMember' => $isMember,
+                'groupMembersCount' => $groupMembers['COUNT(*)']
+            ]
+        );
     }
 
     public function groupCreationPage()
     {
         session_start();
 
-        $categories = CategoriesModel::getAll();
-
         if (!isset($_SESSION['userID'])) {
             header('Location: /');
             exit;
         }
 
-        View::render('Group/new-group.php', ['categories' => $categories]);
+        $categories = CategoriesModel::getAll();
+        $categoriesList = CategoriesView::renderCategories($categories);
+
+        View::renderTemplate('group/new-group', 'Kaigi | Создание новой группы', 'groups',
+            [
+                'categoriesList' => $categoriesList
+            ]
+        );
     }
 
     public function createGroup()

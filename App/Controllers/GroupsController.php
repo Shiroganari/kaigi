@@ -2,20 +2,29 @@
 
 namespace App\Controllers;
 
-use App\Models\GroupsMembersModel;
+use App\Views\CategoriesView;
 use Core\Controller;
 use Core\View;
 
 use App\Models\CategoriesModel;
 use App\Models\GroupsModel;
 
+use App\Views\GroupsView;
+
 class GroupsController extends Controller
 {
     public function index()
     {
-        $categories = CategoriesModel::getAll();
+        session_start();
 
-        View::render('Groups/index.php', ['categories' => $categories]);
+        $categories = CategoriesModel::getAll();
+        $categoriesList = CategoriesView::renderCategories($categories);
+
+        View::renderTemplate('groups/index','Kaigi | Группы', 'groups',
+            [
+                'categoriesList' => $categoriesList
+            ]
+        );
     }
 
     // [Ajax Request]
@@ -36,21 +45,6 @@ class GroupsController extends Controller
 
         $groups = groupsModel::getGroupsByFilters($groupsTitle, $groupsCountry, $groupsCity, $groupsCategoryID);
 
-        foreach ($groups as $group) {
-            $categoryInfo = CategoriesModel::getCategoryName($group['categories_id']);
-            $groupMembers = GroupsMembersModel::countGroupMembers($group['id']);
-
-            $groupData = [
-                'groupID' => $group['id'],
-                'groupTitle' => $group['title'],
-                'groupDescription' => $group['description'],
-                'groupCountry' => $group['location_country'],
-                'groupCity' => $group['location_city'],
-                'groupCategory' => $categoryInfo['name'],
-                'groupMembersCount' => $groupMembers['COUNT(*)']
-            ];
-
-            View::render('includes/components/group-item.php', ['groupData' => $groupData]);
-        }
+        echo GroupsView::renderGroups($groups);
     }
 }

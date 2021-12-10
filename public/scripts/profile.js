@@ -1,9 +1,8 @@
-$(document).ready(function() {
-
+$(document).ready(function () {
     const profileMainTitles = document.getElementsByClassName('profile-main-header__title');
     const profileMainHeader = document.getElementById('profile-main-header');
 
-    profileMainHeader.addEventListener('click', function(e) {
+    profileMainHeader.addEventListener('click', function (e) {
         const target = e.target;
         Array.from(profileMainTitles).forEach(item => {
             item.classList.remove('active');

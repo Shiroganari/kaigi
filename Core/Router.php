@@ -26,7 +26,7 @@ class Router
         $this->routes[$route] = $params;
     }
 
-    public function match($url):bool
+    public function match($url): bool
     {
         foreach ($this->routes as $route => $params) {
             if (preg_match($route, $url, $matches)) {
@@ -41,7 +41,7 @@ class Router
             }
         }
 
-       return false;
+        return false;
     }
 
     public function dispatch($url)
@@ -54,7 +54,7 @@ class Router
 
         $controller = $this->params['controller'] . 'Controller';
         $controller = $this->convertToStudlyCaps($controller);
-        $controller = $this->getNamespace().$controller;
+        $controller = $this->getNamespace() . $controller;
 
         if (!class_exists($controller)) {
             throw new Exception("Controller class $controller not found.");
@@ -76,7 +76,7 @@ class Router
         return str_replace(' ', '', ucwords(str_replace('-', ' ', $string)));
     }
 
-    protected function convertToCamelCase($string):string
+    protected function convertToCamelCase($string): string
     {
         return lcfirst($this->convertToStudlyCaps($string));
     }
@@ -98,7 +98,7 @@ class Router
         return $url;
     }
 
-    protected function getNamespace():string
+    protected function getNamespace(): string
     {
         $namespace = 'App\Controllers\\';
 

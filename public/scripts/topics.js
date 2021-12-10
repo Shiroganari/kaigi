@@ -5,14 +5,14 @@ function getTopics(element) {
         data: {
             category: element.val()
         },
-        success: function(data) {
+        success: function (data) {
             var response = $.parseJSON(data);
             showTopics(element, response);
         }
     });
 }
 
-$('#entity-category').on('change', function() {
+$('#entity-category').on('change', function () {
     getTopics($(this));
 })
 
@@ -21,11 +21,11 @@ function showTopics(element, data) {
 
     for (let i = 0; i < Object.keys(data).length; i++) {
         if (element.hasClass('select')) {
-            $('<option>'+data[i]['name']+'</option>').appendTo('.topics');
+            $('<option>' + data[i]['topics_name'] + '</option>').appendTo('.topics');
         } else {
             let label = $('<div class="label-choice">').html("" +
-                "<input class='label-choice__checkbox' name='entity-topics[]' type='checkbox' value='"+data[i]['name'] +"'>" +
-                "<span class='label-choice__title'>"+data[i]['name']+"</span>");
+                "<input class='label-choice__checkbox' name='entity-topics[]' type='checkbox' value='" + data[i]['topics_name'] + "'>" +
+                "<span class='label-choice__title'>" + data[i]['topics_name'] + "</span>");
             label.appendTo('.topics');
         }
     }

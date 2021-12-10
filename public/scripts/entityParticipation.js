@@ -1,5 +1,5 @@
 // Join/Leave an event or group
-$('#entity-participation').on('click', function() {
+$('#entity-participation').on('click', function () {
     let button = $(this);
     let url;
     let entity;
@@ -46,7 +46,7 @@ $('#entity-participation').on('click', function() {
             entityID: entityID,
             entity: entity
         },
-        success: function(response) {
+        success: function (response) {
             let result = response.replace(/"/g, '');
 
             if (result === 'Join') {

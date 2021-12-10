@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     filter_data();
 
-    $('.event-filter').change(function() {
+    $('.event-filter').change(function () {
         filter_data();
     })
 
@@ -22,7 +22,7 @@ $(document).ready(function() {
                 eventCity: eventCity,
                 eventCategory: eventCategory
             },
-            success: function(data) {
+            success: function (data) {
                 $('#events-content').html(data);
             }
         });

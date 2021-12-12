@@ -1,0 +1,38 @@
+//-------------//
+// .tab-header //
+//-------------//
+.tab-header
+    display: flex
+    justify-content: center
+
+
+//-----------//
+// .tab-link //
+//-----------//
+.tab-link
+    opacity: 1
+    padding: 15px
+    font-size: 1.3em
+    border: 2px solid transparent
+    border-radius: 10px
+    transition: all 0.3s ease
+    cursor: pointer
+
+    &:hover
+        color: $red-color
+        border-color: $red-color
+
+.tab-link.active
+    background-color: $red-color
+    color: #fff
+    cursor: pointer
+
+
+//--------------//
+// .tab-content //
+//--------------//
+.tab-content
+    display: none
+
+.tab-content.active
+    display: block

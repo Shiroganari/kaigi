@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Views\UsersView;
 use Core\Controller;
 use Core\View;
 
@@ -25,7 +26,8 @@ class EventController extends Controller
         $eventData = EventsModel::getEventInfoById($eventID);
         $eventTitle = $eventData['title'];
         $eventTopics = EventsTopicsModel::getEventTopics($eventID);
-        $eventMembers = EventsMembersModel::countEventMembers($eventID);
+        $eventMembersCount = EventsMembersModel::countEventMembers($eventID);
+        $eventMembersID = EventsMembersModel::getAllMembers($eventID);
         $formatName = FormatsModel::getFormatName($eventData['formats_id']);
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
         $organizerName = UsersModel::getUserById($eventData['users_id']);
@@ -33,6 +35,11 @@ class EventController extends Controller
         $userID = 0;
         $user = null;
         $isMember = false;
+        $eventMembers = [];
+
+        foreach ($eventMembersID as $value) {
+            $eventMembers[] = UsersModel::getUserById($value['users_id']);
+        }
 
         if (isset($_SESSION['userID'])) {
             $userID = $_SESSION['userID'];
@@ -47,6 +54,7 @@ class EventController extends Controller
         }
 
         $topicsList = TopicsView::renderTopics($eventTopics, 'text');
+        $membersList = UsersView::renderUser($eventMembers);
 
         View::renderTemplate('event/index', "Kaigi | $eventTitle", 'events',
         [
@@ -57,7 +65,8 @@ class EventController extends Controller
             'topicsList' => $topicsList,
             'userID' => $userID,
             'isMember' => $isMember,
-            'eventMembersCount' => $eventMembers['COUNT(*)']
+            'eventMembersCount' => $eventMembersCount['COUNT(*)'],
+            'membersList' => $membersList
         ]);
     }
 

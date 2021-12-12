@@ -53,8 +53,9 @@ class GroupsMembersModel extends Model
             $sql = 'SELECT users_id FROM `groups_members` WHERE groups_id = :groupID';
             $stmt = $db->prepare($sql);
             $stmt->bindValue(':groupID', $groupID);
+            $stmt->execute();
 
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;

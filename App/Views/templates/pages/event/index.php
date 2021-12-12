@@ -104,14 +104,20 @@
             </div> <!-- /.event-header -->
 
             <div class="event-content">
-                <div class="event-content__header">
-                    <div class="event-content__title active">Описание</div>
-                    <div class="event-content__title">Участники</div>
-                    <div class="event-content__title">Комментарии</div>
+                <div class="event-content__header tab-header">
+                    <div class="event-content__title tab-link active"
+                    onClick="tabMenu(event, 'event-about')">Описание</div>
+                    <div class="event-content__title tab-link"
+                    onClick="tabMenu(event, 'event-members')">Участники</div>
+                    <div class="event-content__title tab-link">Комментарии</div>
                 </div>
 
-                <div class="event-content__description">
+                <div class="event-content__description tab-content active" id="event-about">
                     <?php echo $eventData['description']; ?>
+                </div>
+
+                <div class="event-content__members members-list tab-content" id="event-members">
+                    <?php echo $membersList; ?>
                 </div>
 
             </div> <!-- /.event-content -->
@@ -129,3 +135,4 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?php ROOT ?>/scripts/entityParticipation.js"></script>
+<script src="<?php ROOT ?>/scripts/tabMenu.js"></script>

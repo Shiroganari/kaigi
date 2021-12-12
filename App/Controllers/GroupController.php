@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Views\UsersView;
 use Core\Controller;
 use Core\View;
 
@@ -24,13 +25,19 @@ class GroupController extends Controller
         $groupData = GroupsModel::getGroupInfoById($groupID);
         $groupTitle = $groupData['title'];
         $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
-        $groupMembers = GroupsMembersModel::countGroupMembers($groupID);
+        $groupMembersCount = GroupsMembersModel::countGroupMembers($groupID);
+        $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
         $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
         $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
 
         $userID = 0;
         $user = null;
         $isMember = false;
+        $groupMembers = [];
+
+        foreach($groupMembersID as $value) {
+            $groupMembers[] = UsersModel::getUserById($value['users_id']);
+        }
 
         if (isset($_SESSION['userID'])) {
             $userID = $_SESSION['userID'];
@@ -45,6 +52,7 @@ class GroupController extends Controller
         }
 
         $topicsList = TopicsView::renderTopics($groupTopics, 'text');
+        $membersList = UsersView::renderUser($groupMembers);
 
         View::renderTemplate('group/index', "Kaigi | $groupTitle", 'groups',
             [
@@ -54,7 +62,8 @@ class GroupController extends Controller
                 'topicsList' => $topicsList,
                 'userID' => $userID,
                 'isMember' => $isMember,
-                'groupMembersCount' => $groupMembers['COUNT(*)']
+                'groupMembersCount' => $groupMembersCount['COUNT(*)'],
+                'membersList' => $membersList
             ]
         );
     }

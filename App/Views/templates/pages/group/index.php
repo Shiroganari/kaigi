@@ -41,14 +41,16 @@
 
         <div class="group__content">
             <div class="group-block group-information">
-                <div class="group-block-header">
-                    <h2 class="group-block-header__title active">О группе</h2>
-                    <h2 class="group-block-header__title">Участники</h2>
-                    <h2 class="group-block-header__title">Организаторы</h2>
+                <div class="group-block-header tab-header">
+                    <h2 class="group-block-header__title tab-link active"
+                        onclick="tabMenu(event, 'group-about')">О группе</h2>
+                    <h2 class="group-block-header__title tab-link"
+                        onclick="tabMenu(event, 'group-members')">Участники</h2>
+                    <h2 class="group-block-header__title tab-link">Организаторы</h2>
                 </div> <!-- /.group-block-header -->
 
                 <div class="group-block-content">
-                    <div class="group-block-content__about">
+                    <div class="group-block-content__about tab-content active" id="group-about">
                         <div class="group-block-content__item">
                             <h3 class="group-block-content__title">Описание:</h3>
                             <p class="group-block-content__description">
@@ -72,7 +74,7 @@
 
                         <div class="group-block-content__item">
                             <h3 class="group-block-content__title">Количество участников:</h3>
-                            <div class="group-block-content__members">
+                            <div class="group-block-content__members-count">
                                 <?php echo ' ' . $groupMembersCount; ?>
                             </div>
                         </div>
@@ -85,8 +87,8 @@
                         </div>
                     </div> <!-- /.group-block-content__about -->
 
-                    <div class="group-block-content__members">
-
+                    <div class="group-block-content__members members-list tab-content" id="group-members">
+                        <?php echo $membersList; ?>
                     </div> <!-- /.group-block-content__members -->
                 </div><!-- /.group-block-content -->
             </div> <!-- /.group-block -->
@@ -96,3 +98,4 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?php ROOT ?>/scripts/entityParticipation.js"></script>
+<script src="<?php ROOT ?>/scripts/tabMenu.js"></script>

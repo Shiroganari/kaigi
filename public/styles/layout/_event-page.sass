@@ -74,18 +74,19 @@
     &__title
         margin-right: 15px
         padding: 20px
-        border-radius: 10px
-        transition: all 0.3s ease
-        opacity: 0.5
 
         &:last-child
+            cursor: default
+            opacity: 0.5
             margin-right: 0
 
+            &:hover
+                border-color: transparent
+                color: #111
+
     &__title.active
-        opacity: 1
         background-color: $red-color
         color: #fff
-        cursor: pointer
 
     &__description
         font-size: 1.5em

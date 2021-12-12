@@ -25,18 +25,22 @@
             </div> <!-- /.profile-about -->
 
             <div class="profile-main">
-                <div class="profile-main-header" id="profile-main-header">
-                    <div class="profile-main-header__title profile-main-header__title--description active">Описание
+                <div class="profile-main-header tab-header" id="profile-main-header">
+                    <div class="profile-main-header__title tab-link active"
+                         onclick="tabMenu(event, 'profile-about')">Описание</div>
+                    <div class="profile-main-header__title tab-link"
+                         onclick="tabMenu(event, 'profile-groups')">Группы
                     </div>
-                    <div class="profile-main-header__title profile-main-header__title--groups">Группы</div>
                 </div>
 
                 <div class="profile-main-content">
-                    <p class="profile-main-content__item profile-main-content__item--description active">
+                    <div class="profile-main-content__item profile-main-content__item--about
+                    tab-content active" id="profile-about">
                         <?php echo $user['description']; ?>
-                    </p>
+                    </div>
 
-                    <div class="profile-main-content__item profile-main-content__item--groups">
+                    <div class="profile-main-content__item profile-main-content__item--groups
+                    tab-content" id="profile-groups">
                         <?php echo $groupsList; ?>
                     </div>
                 </div>
@@ -54,4 +58,4 @@
 </section>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="<?php ROOT ?>/scripts/profile.js"></script>
+<script src="<?php ROOT ?>/scripts/tabMenu.js"></script>

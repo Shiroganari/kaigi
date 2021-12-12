@@ -56,26 +56,20 @@
 // .group-block-header //
 //---------------------//
 .group-block-header
-    display: flex
-    justify-content: center
     margin-bottom: 30px
 
     &__title
-        opacity: 0.7
-        padding: 20px
         margin-right: 60px
-        font-size: 1.3em
-        cursor: default
 
         &:last-child
+            opacity: 0.6
             margin-right: 0
+            cursor: default
 
-    &__title.active
-        opacity: 1
-        background-color: $red-color
-        color: #fff
-        border-radius: 10px
-        cursor: pointer
+            &:hover
+                opacity: 0.7
+                color: #111
+                border-color: transparent
 
 
 //----------------------//

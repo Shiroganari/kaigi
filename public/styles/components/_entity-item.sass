@@ -2,7 +2,8 @@
 // ENTITY-ITEM //
 //-------------//
 .event-item,
-.group-item
+.group-item,
+.member-item
     position: relative
     display: flex
     min-width: 70%
@@ -46,12 +47,11 @@
 
     &__information .event-item__description,
     &__information .group-item__description
+        overflow: hidden
+        max-height: 50px
+        margin-bottom: 20px
         line-height: 26px
         word-break: break-word
-        max-height: 50px
-        overflow: hidden
-
-        margin-bottom: 20px
 
     &__location
         position: absolute
@@ -70,3 +70,24 @@
 
         > span
             margin-left: 5px
+
+
+//--------------//
+// .member-item //
+//--------------//
+.member-item__information
+
+    .member-item
+
+        &__name
+            margin-bottom: 5px
+            font-size: 1.1em
+            font-weight: 500
+            text-transform: capitalize
+
+        &__username
+            font-size: 1em
+            text-transform: uppercase
+
+        &__location
+            font-size: 0.9em

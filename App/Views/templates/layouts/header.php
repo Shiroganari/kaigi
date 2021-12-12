@@ -24,7 +24,7 @@
 
                     echo '<div class="header-buttons__item">';
                     echo '<a class="header-buttons__button" href="/profile">Профиль</a>';
-                    echo '<a class="header-buttons__button" href="/profile/logout">Выйти</a>';
+                    echo '<a class="header-buttons__button" href="/auth/logout">Выйти</a>';
                     echo '</div>';
                 } else {
                     echo '<div class="header-buttons__item">';

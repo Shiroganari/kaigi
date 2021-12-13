@@ -2,7 +2,28 @@
 // .member-item //
 //--------------//
 .member-item
+    position: relative
+    font-size: 20px
+    line-height: 25px
     color: #111
+
+    &:hover
+        transform: none
+
+        .report-button
+            opacity: 1
+            visibility: visible
+
+    .report-button
+        position: absolute
+        top: 0
+        right: 0
+        border-radius: 0
+
+.member-item.sender
+    .report-button
+        display: none
+
 
 //---------------//
 // .members-list //

@@ -30,7 +30,7 @@ class GroupController extends Controller
         $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
         $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
 
-        $userID = 0;
+        $userID = null;
         $user = null;
         $isMember = false;
         $groupMembers = [];
@@ -54,6 +54,16 @@ class GroupController extends Controller
         $topicsList = TopicsView::renderTopics($groupTopics, 'text');
         $membersList = UsersView::renderUser($groupMembers);
 
+        ob_start();
+        View::render('component:report-button',
+            [
+                'reportType' => 'group',
+                'nickname' => $groupData['title'],
+                'userID' => $userID
+            ]
+        );
+        $reportButton = ob_get_clean();
+
         View::renderTemplate('group/index', "Kaigi | $groupTitle", 'groups',
             [
                 'groupData' => $groupData,
@@ -63,7 +73,8 @@ class GroupController extends Controller
                 'userID' => $userID,
                 'isMember' => $isMember,
                 'groupMembersCount' => $groupMembersCount['COUNT(*)'],
-                'membersList' => $membersList
+                'membersList' => $membersList,
+                'reportButton' => $reportButton
             ]
         );
     }

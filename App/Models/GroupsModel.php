@@ -50,6 +50,24 @@ class GroupsModel extends Model
         }
     }
 
+    public static function getGroupInfoByTitle(string $groupTitle)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `groups` WHERE title = :groupTitle';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':groupTitle', $groupTitle);
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+
     public static function getGroupsByFilters($groupTitle, $groupCountry, $groupCity, $groupCategoryID)
     {
         try {

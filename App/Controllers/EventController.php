@@ -32,7 +32,7 @@ class EventController extends Controller
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
         $organizerName = UsersModel::getUserById($eventData['users_id']);
 
-        $userID = 0;
+        $userID = null;
         $user = null;
         $isMember = false;
         $eventMembers = [];
@@ -56,6 +56,16 @@ class EventController extends Controller
         $topicsList = TopicsView::renderTopics($eventTopics, 'text');
         $membersList = UsersView::renderUser($eventMembers);
 
+        ob_start();
+        View::render('component:report-button',
+            [
+                'reportType' => 'event',
+                'nickname' => $eventData['title'],
+                'userID' => $userID
+            ]
+        );
+        $reportButton = ob_get_clean();
+
         View::renderTemplate('event/index', "Kaigi | $eventTitle", 'events',
         [
             'eventData' => $eventData,
@@ -66,7 +76,8 @@ class EventController extends Controller
             'userID' => $userID,
             'isMember' => $isMember,
             'eventMembersCount' => $eventMembersCount['COUNT(*)'],
-            'membersList' => $membersList
+            'membersList' => $membersList,
+            'reportButton' => $reportButton
         ]);
     }
 

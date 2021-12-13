@@ -108,6 +108,23 @@ class UsersModel extends Model
         }
     }
 
+    public static function getUserByUsername(string $username)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `users` WHERE username = :username';
+            $stmt = $db->prepare($sql);
+            $stmt->bindValue(':username', $username);
+            $stmt->execute();
+
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            exit;
+        }
+    }
+
     public static function getUserById(int $id)
     {
         try {

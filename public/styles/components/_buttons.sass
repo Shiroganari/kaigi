@@ -1,0 +1,104 @@
+//---------//
+// .button //
+//---------//
+.button
+    display: inline-block
+    padding: 8px 20px
+    background-color: #fff
+    font-size: 1.1em
+    text-align: center
+    text-transform: uppercase
+    color: $dark-color
+    border: 1px solid $dark-color
+    border-radius: 10px
+    outline: none
+    cursor: pointer
+    transition: all 0.3s ease
+
+    &:hover
+        color: $red-color
+        border-color: $red-color
+
+    &:hover
+        transform: translateY(-0.2em)
+
+    &:active
+        transform: translateY(0em)
+
+
+//----------------//
+// .report-button //
+//----------------//
+.report-button
+    z-index: 10
+    opacity: 0
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 40px
+    height: 40px
+    background-color: transparent
+    color: #fff
+    border: 2px solid #9d9d9d
+    border-right: none
+    border-top: none
+    border-radius: 10px
+    transition: all 0.3s ease
+
+    &:hover
+        border-color: $dark-color
+        cursor: pointer
+
+        .report-button__item
+            background-color: $dark-color
+
+    &__item
+        display: block
+        width: 5px
+        height: 5px
+        margin-right: 5px
+        background-color: #9d9d9d
+        border-radius: 100%
+        transition: all 0.3s ease
+
+        &:last-child
+            margin-right: 0
+
+
+//----------------//
+// .toggle-button //
+//----------------//
+.toggle-button
+    z-index: 10
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    width: 35px
+    height: 20px
+    padding: 0
+    background-color: transparent
+    cursor: pointer
+
+    &__item
+        display: block
+        width: 100%
+        height: 3px
+        background-color: $dark-color
+        transition: all 0.3s ease
+
+
+// When the button was clicked
+.toggle-button.active
+    transition: transform 0.3s ease
+
+    &:active
+        transform: rotate(0deg)
+
+    .toggle-button__item:nth-child(2)
+        background-color: transparent
+
+    .toggle-button__item:nth-child(1)
+        transform: rotate(45deg) translate(5px, 1px)
+
+    .toggle-button__item:nth-child(3)
+        transform: rotate(-45deg) translate(10px, -7px)

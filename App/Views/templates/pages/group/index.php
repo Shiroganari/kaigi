@@ -5,6 +5,13 @@
     if ($isMember) {
         $activeClass = 'entity-participation--active';
     }
+
+    $senderID = null;
+    $isSender = null;
+
+    if (isset($_SESSION['userID'])) {
+        $senderID = $_SESSION['userID'];
+    }
 ?>
 
 <section class="group">
@@ -22,6 +29,9 @@
         <label for="is-member">
             <input id="is-member" type="text" value="<?php echo $isMember; ?>" hidden>
         </label>
+        <label for="url">
+            <input id="url" name="url" type="text" value="<?php echo $_SERVER['REQUEST_URI']; ?>" hidden>
+        </label>
 
         <button class="button entity-participation entity-participation--group <?php echo $activeClass; ?>" id="entity-participation">
             <?php
@@ -32,6 +42,8 @@
                 }
             ?>
         </button>
+
+        <?php echo $reportButton; ?>
     </div> <!-- /.group-header -->
 
     <div class="container">
@@ -99,3 +111,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?php ROOT ?>/scripts/entityParticipation.js"></script>
 <script src="<?php ROOT ?>/scripts/tabMenu.js"></script>
+<script src="<?php ROOT ?>/scripts/report-popup.js"></script>

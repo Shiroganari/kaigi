@@ -1,14 +1,26 @@
 <?php
 
+$memberID = $userData['id'];
 $firstName = $userData['first_name'];
 $lastName = $userData['last_name'];
 $username = $userData['username'];
 $locationCountry = $userData['location_country'];
 $locationCity = $userData['location_city'];
 
+$senderID = null;
+$isSender = null;
+
+if (isset($_SESSION['userID'])) {
+    $senderID = $_SESSION['userID'];
+}
+
+if ($memberID ===  $senderID) {
+    $isSender = true;
+}
+
 ?>
 
-<a class="member-item" href="#">
+<a class="member-item <?php if (isset($isSender)) echo 'sender'; ?>" href="#">
     <div class="member-item__avatar">
         <img class="member-item__img" src="/images/mongol.jpg" alt="member Picture">
     </div>
@@ -32,4 +44,12 @@ $locationCity = $userData['location_city'];
             ?>
         </div>
     </div>
+
+    <?php \Core\View::render('component:report-button',
+        [
+            'reportType' => 'user',
+            'nickname' => $username,
+            'userID' => $senderID
+        ])
+    ?>
 </a>

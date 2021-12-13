@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?php echo $pageTitle; ?></title>
     <link rel="stylesheet" href="/styles/pages/<?php echo $cssFileName . '/' . $cssFileName . '.css'?>">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
     <?php
         foreach ($styles as $style) {
             echo "<link rel='stylesheet' href='$style'>";

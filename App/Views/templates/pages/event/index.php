@@ -5,6 +5,13 @@
     if ($isMember) {
         $activeClass = 'entity-participation--active';
     }
+
+    $senderID = null;
+    $isSender = null;
+
+    if (isset($_SESSION['userID'])) {
+        $senderID = $_SESSION['userID'];
+    }
 ?>
 
 <section class="event">
@@ -88,6 +95,9 @@
                         <label for="is-member">
                             <input id="is-member" type="text" value="<?php echo $isMember; ?>" hidden>
                         </label>
+                        <label for="url">
+                            <input id="url" name="url" type="text" value="<?php echo $_SERVER['REQUEST_URI']; ?>" hidden>
+                        </label>
 
                         <button class="button entity-participation entity-participation--event <?php echo $activeClass; ?>"
                                 id="entity-participation">
@@ -99,6 +109,8 @@
                                 }
                             ?>
                         </button>
+
+                        <?php echo $reportButton; ?>
                     </div>
                 </div>
             </div> <!-- /.event-header -->
@@ -136,3 +148,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="<?php ROOT ?>/scripts/entityParticipation.js"></script>
 <script src="<?php ROOT ?>/scripts/tabMenu.js"></script>
+<script src="<?php ROOT ?>/scripts/report-popup.js"></script>

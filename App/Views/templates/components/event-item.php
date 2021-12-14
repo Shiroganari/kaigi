@@ -8,65 +8,55 @@ $eventCity = $eventData['eventCity'];
 $eventDate = $eventData['eventDate'];
 $eventMembersCount = $eventData['eventMembersCount'];
 $eventCategory = $eventData['eventCategory'];
+
 ?>
 
-<a class="event-item" href="/event/<?php
-echo $eventID ?>">
+<a class="event-item" href="/event/<?php echo $eventID; ?>">
 
     <div class="event-item__avatar">
         <img class="event-item__img" src="/images/mongol.jpg" alt="Event Picture">
     </div>
 
     <div class="event-item__information">
-        <h3 class="event-item__title">
-            <?php
-            echo $eventTitle ?>
-        </h3>
+        <h3 class="event-item__title"><?php echo $eventTitle; ?></h3>
 
-        <?php
-        if ($eventDescription): ?>
+        <?php if ($eventDescription): ?>
             <div class="event-item__description">
-                <?php
-                echo $eventDescription ?>
+                <?php echo $eventDescription; ?>
             </div>
-        <?php
-        else: ?>
+        <?php else: ?>
             <div class="event-item__description">Описание отсутствует</div>
-        <?php
-        endif ?>
+        <?php endif ?>
 
         <div class="event-item__location">
             <?php
-            if ($eventCountry) {
-                echo $eventCountry;
-                if ($eventCity != '') {
-                    echo ', ' . $eventCity;
+                if ($eventCountry) {
+                    echo $eventCountry;
+
+                    if ($eventCity != '') {
+                        echo ', ' . $eventCity;
+                    }
+                } else {
+                    echo 'Онлайн';
                 }
-            } else {
-                echo 'Онлайн';
-            }
             ?>
         </div>
 
         <div class="event-item__time">
-            <?php
-            echo $eventDate;
-            ?>
+            <?php echo $eventDate; ?>
         </div>
 
         <div class="event-item__members">
             Количество участников:
-            <?php
-            echo ' ' . $eventMembersCount;
-            ?>
+            <?php echo ' ' . $eventMembersCount; ?>
         </div>
 
         <div class="event-item__categories">
             <div class="event-item__subtitle">Категории:</div>
             <?php
-            echo '<span>';
-            echo "$eventCategory";
-            echo '</span>';
+                echo '<span>';
+                    echo "$eventCategory";
+                echo '</span>';
             ?>
         </div>
     </div>

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     filter_data();
 
-    $('.event-filter').change(function () {
+    $('.event-filter').on('change input', function () {
         filter_data();
     })
 
@@ -11,6 +11,8 @@ $(document).ready(function () {
         let eventCountry = $('.event-filter--country').val();
         let eventCity = $('.event-filter--city').val();
         let eventCategory = $('.event-filter--category').val();
+        let myEvents = $('.event-filter--my-events').val();
+        let isOrganizer = $('.event-filter--organizer').is(':checked');
 
         $.ajax({
             url: 'events/showEvents',
@@ -20,7 +22,9 @@ $(document).ready(function () {
                 eventFormat: eventFormat,
                 eventCountry: eventCountry,
                 eventCity: eventCity,
-                eventCategory: eventCategory
+                eventCategory: eventCategory,
+                myEvents: myEvents,
+                isOrganizer: isOrganizer
             },
             success: function (data) {
                 $('#events-content').html(data);

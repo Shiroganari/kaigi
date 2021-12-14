@@ -834,6 +834,38 @@ h1 {
   width: 100%;
 }
 
+.my-events__inner {
+  display: flex;
+  justify-content: space-between;
+  padding: 100px 0;
+}
+.my-events__filters {
+  width: 35%;
+  margin-right: 100px;
+}
+.my-events__content {
+  width: 65%;
+}
+.my-events__title {
+  font-size: 3em;
+  margin-bottom: 30px;
+}
+.my-events .form-item {
+  display: flex;
+  flex-direction: row;
+}
+.my-events .event-filter--title {
+  font-size: 1.1em;
+}
+.my-events .event-item {
+  min-width: 100%;
+  max-width: 100%;
+  margin-bottom: 15px;
+}
+.my-events .event-item:last-child {
+  margin-bottom: 0;
+}
+
 .event__inner {
   padding-top: 30px;
 }

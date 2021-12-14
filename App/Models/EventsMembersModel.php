@@ -95,4 +95,22 @@ class EventsMembersModel extends Model
             return false;
         }
     }
+
+    public static function getUserEvents(int $userID)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT * FROM `events_members` WHERE users_id = :userID';
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':userID' => $userID,
+            ]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

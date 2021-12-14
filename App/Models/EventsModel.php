@@ -126,4 +126,32 @@ class EventsModel extends Model
             return false;
         }
     }
+
+    public static function getUserEvents(int $userID, string $organizer, string $eventTitle)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT events.* FROM events
+            INNER JOIN events_members ON events_members.events_id = events.id WHERE events_members.users_id = :userID';
+
+            if ($organizer === 'true') {
+                $sql .= " AND events.users_id = $userID";
+            }
+
+            if ($eventTitle) {
+                $sql .= " AND events.title LIKE '%$eventTitle%'";
+            }
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':userID' => $userID,
+            ]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Views\CategoriesView;
-use App\Views\EventsView;
 use Core\Controller;
 use Core\View;
 
 use App\Models\CategoriesModel;
 use App\Models\FormatsModel;
 use App\Models\EventsModel;
+
+use App\Views\CategoriesView;
+use App\Views\EventsView;
 
 class EventsController extends Controller
 {
@@ -27,17 +28,42 @@ class EventsController extends Controller
         );
     }
 
+    public function myEventsPage()
+    {
+        session_start();
+
+        if (!isset($_SESSION['userID'])) {
+            header('Location: /login');
+        }
+
+        View::renderTemplate('events/my-events', 'Kaigi | Мои события', 'events');
+    }
+
     // [Ajax Request]
     public function showEvents()
     {
+        session_start();
+        $userID = $_SESSION['userID'];
+
         $eventFormatID = null;
         $eventCategoryID = null;
+        $eventFormat = null;
+        $eventCategory = null;
+        $eventTitle = null;
+        $eventCountry = null;
+        $eventCity = null;
+        $myEvents = null;
+        $isOrganizer = false;
 
-        $formatName = $this->post_params['eventFormat'];
-        $eventFormat = FormatsModel::getFormatId($formatName);
+        if (isset($this->post_params['eventFormat'])) {
+            $formatName = $this->post_params['eventFormat'];
+            $eventFormat = FormatsModel::getFormatId($formatName);
+        }
 
-        $categoryName = $this->post_params['eventCategory'];
-        $eventCategory = CategoriesModel::getCategoryId($categoryName);
+        if (isset($this->post_params['eventCategory'])) {
+            $categoryName = $this->post_params['eventCategory'];
+            $eventCategory = CategoriesModel::getCategoryId($categoryName);
+        }
 
         if ($eventFormat) {
             $eventFormatID = $eventFormat['id'];
@@ -47,17 +73,39 @@ class EventsController extends Controller
             $eventCategoryID = $eventCategory['id'];
         }
 
-        $eventTitle = $this->post_params['eventTitle'];
-        $eventCountry = $this->post_params['eventCountry'];
-        $eventCity = $this->post_params['eventCity'];
+        if (isset($this->post_params['eventTitle'])) {
+            $eventTitle = $this->post_params['eventTitle'];
+        }
 
-        $events = EventsModel::getEventsByFilters(
-            $eventTitle,
-            $eventCountry,
-            $eventCity,
-            $eventFormatID,
-            $eventCategoryID
-        );
+        if (isset($this->post_params['eventCountry'])) {
+            $eventCountry = $this->post_params['eventCountry'];
+        }
+
+        if (isset($this->post_params['eventCity'])) {
+            $eventCity = $this->post_params['eventCity'];
+        }
+
+        if (isset($this->post_params['myEvents'])) {
+            $myEvents = true;
+        }
+
+        if (isset($this->post_params['isOrganizer'])) {
+            $isOrganizer = $this->post_params['isOrganizer'];
+        }
+
+        $events = null;
+
+        if ($myEvents) {
+            $events = EventsModel::getUserEvents($userID, $isOrganizer, $eventTitle);
+        } else {
+            $events = EventsModel::getEventsByFilters(
+                $eventTitle,
+                $eventCountry,
+                $eventCity,
+                $eventFormatID,
+                $eventCategoryID
+            );
+        }
 
         echo EventsView::renderEvents($events);
     }

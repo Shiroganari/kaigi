@@ -43,7 +43,12 @@ class GroupsController extends Controller
     {
         session_start();
 
-        $userID = $_SESSION['userID'];
+        $userID = null;
+
+        if (isset($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+        }
+
         $groupsCategoryID = null;
         $groupsTitle = null;
         $groupsCountry = null;

@@ -43,7 +43,12 @@ class EventsController extends Controller
     public function showEvents()
     {
         session_start();
-        $userID = $_SESSION['userID'];
+
+        $userID = null;
+
+        if (isset($_SESSION['userID'])) {
+            $userID = $_SESSION['userID'];
+        }
 
         $eventFormatID = null;
         $eventCategoryID = null;

@@ -11,6 +11,7 @@ $router->add('registration', ['controller' => 'auth', 'action' => 'registrationP
 $router->add('new-event', ['controller' => 'event', 'action' => 'EventCreationPage']);
 $router->add('new-group', ['controller' => 'group', 'action' => 'GroupCreationPage']);
 $router->add('my-events', ['controller' => 'events', 'action' => 'myEventsPage']);
+$router->add('my-groups', ['controller' => 'groups', 'action' => 'myGroupsPage']);
 
 $router->add('{controller}/{action}');
 $router->add('{controller}', ['{controller}' => '{controller}', 'action' => 'index']);

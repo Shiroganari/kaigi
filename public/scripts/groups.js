@@ -1,7 +1,7 @@
 $(document).ready(function () {
     filter_data();
 
-    $('.groups-filter').change(function () {
+    $('.groups-filter').on('change input', function () {
         filter_data();
     })
 
@@ -10,6 +10,8 @@ $(document).ready(function () {
         let groupsCountry = $('.groups-filter--country').val();
         let groupsCity = $('.groups-filter--city').val();
         let groupsCategory = $('.groups-filter--category').val();
+        let myGroups = $('.groups-filter--my-groups').val();
+        let isOrganizer = $('.groups-filter--organizer').is(':checked');
 
         $.ajax({
             url: 'groups/showGroups',
@@ -18,7 +20,9 @@ $(document).ready(function () {
                 groupsTitle: groupsTitle,
                 groupsCountry: groupsCountry,
                 groupsCity: groupsCity,
-                groupsCategory: groupsCategory
+                groupsCategory: groupsCategory,
+                myGroups: myGroups,
+                isOrganizer: isOrganizer
             },
             success: function (data) {
                 $('#groups-content').html(data);

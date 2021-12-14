@@ -102,4 +102,32 @@ class GroupsModel extends Model
             return false;
         }
     }
+
+    public static function getUserGroups(int $userID, string $organizer, string $groupTitle)
+    {
+        try {
+            $db = static::getDB();
+
+            $sql = 'SELECT groups.* FROM groups
+            INNER JOIN groups_members ON groups_members.groups_id = groups.id WHERE groups_members.users_id = :userID';
+
+            if ($organizer === 'true') {
+                $sql .= " AND groups.users_id = $userID";
+            }
+
+            if ($groupTitle) {
+                $sql .= " AND groups.title LIKE '%$groupTitle%'";
+            }
+
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                ':userID' => $userID,
+            ]);
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }

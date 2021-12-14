@@ -834,35 +834,49 @@ h1 {
   width: 100%;
 }
 
-.my-events__inner {
+.my-events__inner,
+.my-groups__inner {
   display: flex;
   justify-content: space-between;
   padding: 100px 0;
 }
-.my-events__filters {
+.my-events__filters,
+.my-groups__filters {
   width: 35%;
   margin-right: 100px;
 }
-.my-events__content {
+.my-events__content,
+.my-groups__content {
   width: 65%;
 }
-.my-events__title {
-  font-size: 3em;
+.my-events__title,
+.my-groups__title {
   margin-bottom: 30px;
+  font-size: 3em;
 }
-.my-events .form-item {
+.my-events .form-item,
+.my-groups .form-item {
   display: flex;
   flex-direction: row;
 }
-.my-events .event-filter--title {
+.my-events .event-filter--title,
+.my-events .group-filter--title,
+.my-groups .event-filter--title,
+.my-groups .group-filter--title {
   font-size: 1.1em;
 }
-.my-events .event-item {
+.my-events .event-item,
+.my-events .group-item,
+.my-groups .event-item,
+.my-groups .group-item {
   min-width: 100%;
   max-width: 100%;
   margin-bottom: 15px;
 }
-.my-events .event-item:last-child {
+.my-events .event-item:last-child,
+.my-events .group-item:last-child,
+.my-groups .event-item:last-child,
+.my-groups .group-item:last-child {
   margin-bottom: 0;
 }
 

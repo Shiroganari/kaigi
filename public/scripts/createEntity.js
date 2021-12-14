@@ -2,7 +2,6 @@ $(document).ready(function () {
     let stepCount = 1;
 
     $('.entity-data').on('input change', function () {
-        console.log($(this))
         if ($(this).val() != '') {
             $('.step-button--next, .create-entity').addClass('active');
             $('.step-button--next, .create-entity').attr('disabled', false);

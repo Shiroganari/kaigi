@@ -32,4 +32,16 @@ class Model
 
         return $db;
     }
+
+    public static function getLastRecord(string $tableName) {
+        try {
+            $db = static::getDB();
+
+            $sql = "SELECT MAX(id) FROM $tableName";
+            $stmt = $db->query($sql);
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
+    }
 }

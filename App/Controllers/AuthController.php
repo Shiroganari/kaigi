@@ -79,7 +79,7 @@ class AuthController extends Controller
         $_SESSION['pass'] = $user['password'];
         $_SESSION['userID'] = $user['id'];
 
-        header('Location: /profile');
+        header('Location: /user/' . $user['id']);
     }
 
     public function completeRegistrationPage()

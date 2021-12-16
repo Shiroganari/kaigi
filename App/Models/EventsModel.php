@@ -14,13 +14,12 @@ class EventsModel extends Model
         try {
             $db = static::getDB();
 
-            $sql = 'INSERT INTO `events` (id, title, description, location_country, 
+            $sql = 'INSERT INTO `events` (title, description, location_country, 
                       location_city, location_street, formats_id, categories_id, users_id,
-                      date_start) VALUES (:id, :title, :description, :locationCountry, :locationCity, :locationStreet,
+                      date_start) VALUES (:title, :description, :locationCountry, :locationCity, :locationStreet,
                                                        :formatsID, :categoriesID, :usersID, :dateStart)';
             $sth = $db->prepare($sql);
             $sth->execute([
-                ':id' => $eventData['eventID'],
                 ':title' => $eventData['eventTitle'],
                 ':description' => $eventData['eventDescription'],
                 ':locationCountry' => $eventData['eventCountry'],
@@ -29,7 +28,7 @@ class EventsModel extends Model
                 ':formatsID' => $eventData['eventFormat'],
                 ':categoriesID' => $eventData['eventCategory'],
                 ':usersID' => $eventData['eventOrganizer'],
-                ':dateStart' => $eventData['eventDate'],
+                ':dateStart' => $eventData['eventDate']
             ]);
         } catch (PDOException $e) {
             echo $e->getMessage();

@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Views\UsersView;
 use Core\Controller;
 use Core\View;
 
@@ -15,6 +14,7 @@ use App\Models\UsersModel;
 
 use App\Views\CategoriesView;
 use App\Views\TopicsView;
+use App\Views\UsersView;
 
 class EventController extends Controller
 {
@@ -125,10 +125,9 @@ class EventController extends Controller
         $categoryInfo = CategoriesModel::getCategoryId($categoryName);
         $formatInfo = FormatsModel::getFormatId($formatName);
 
-        $eventID = rand(1, 1000);
         $eventTitle = $this->post_params['entity-title'];
-        $eventCategoryId = $categoryInfo['id'];
         $eventDescription = $this->post_params['entity-description'];
+        $eventCategoryId = $categoryInfo['id'];
         $eventDate = date('Y-m-d', strtotime($this->post_params['entity-date']));
         $eventTime = date('H:i', strtotime($this->post_params['entity-time']));
         $eventFormat = $formatInfo['id'];
@@ -146,7 +145,6 @@ class EventController extends Controller
         }
 
         $eventData = [
-            'eventID' => $eventID,
             'eventTitle' => $eventTitle,
             'eventCategory' => $eventCategoryId,
             'eventDescription' => $eventDescription,
@@ -159,6 +157,8 @@ class EventController extends Controller
         ];
 
         EventsModel::newEvent($eventData);
+        $eventID = EventsModel::getLastRecord('events');
+        $eventID = $eventID['MAX(id)'];
 
         if (isset($eventTopics)) {
             EventsTopicsModel::addEventsTopics($eventID, $eventTopics);

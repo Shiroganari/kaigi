@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Views\UsersView;
 use Core\Controller;
 use Core\View;
 
@@ -14,6 +13,7 @@ use App\Models\UsersModel;
 
 use App\Views\CategoriesView;
 use App\Views\TopicsView;
+use App\Views\UsersView;
 
 class GroupController extends Controller
 {
@@ -117,7 +117,6 @@ class GroupController extends Controller
         $categoryName = $this->post_params['entity-category'];
         $categoryInfo = CategoriesModel::getCategoryId($categoryName);
 
-        $groupID = rand(1, 1000);
         $groupTitle = $this->post_params['entity-title'];
         $groupCategoryId = $categoryInfo['id'];
         $groupDescription = $this->post_params['entity-description'];
@@ -137,6 +136,8 @@ class GroupController extends Controller
         ];
 
         GroupsModel::newGroup($groupData);
+        $groupID = GroupsModel::getLastRecord('groups');
+        $groupID = $groupID['MAX(id)'];
 
         if (isset($groupTopics)) {
             GroupsTopicsModel::addGroupsTopics($groupID, $groupTopics);

@@ -14,13 +14,12 @@ class GroupsModel extends Model
         try {
             $db = static::getDB();
 
-            $sql = 'INSERT INTO `groups` (id, title, description, categories_id, location_country, 
+            $sql = 'INSERT INTO `groups` (title, description, categories_id, location_country, 
                       location_city, users_id)
-                      VALUES (:id, :title, :description, :categoriesID,
+                      VALUES (:title, :description, :categoriesID,
                               :locationCountry, :locationCity, :usersID)';
             $sth = $db->prepare($sql);
             $sth->execute([
-                ':id' => $groupData['groupID'],
                 ':title' => $groupData['groupTitle'],
                 ':description' => $groupData['groupDescription'],
                 ':categoriesID' => $groupData['groupCategory'],

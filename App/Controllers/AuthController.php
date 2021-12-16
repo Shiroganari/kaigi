@@ -18,7 +18,7 @@ class AuthController extends Controller
         session_start();
 
         if (isset($_SESSION['active'])) {
-            header('Location: /profile');
+            header('Location: /user/' . $_SESSION['userID']);
             exit;
         }
 
@@ -52,7 +52,7 @@ class AuthController extends Controller
 
         // If a user has already logged in, then redirect to the profile page
         if (isset($_SESSION['active'])) {
-            header('Location: /profile');
+            header('Location: /user/' . $_SESSION['userID']);
             exit;
         }
 
@@ -79,7 +79,7 @@ class AuthController extends Controller
         $_SESSION['pass'] = $user['password'];
         $_SESSION['userID'] = $user['id'];
 
-        header('Location: /user/' . $user['id']);
+        header('Location: /home');
     }
 
     public function completeRegistrationPage()
@@ -92,14 +92,14 @@ class AuthController extends Controller
         }
 
         if (!$_SESSION['status'] == 1) {
-            header('Location: /profile');
+            header('Location: /user/' . $_SESSION['userID']);
             exit;
         }
 
         $topics = TopicsModel::getAll();
         $topicsList = TopicsView::renderTopics($topics, 'checkbox');
 
-        View::renderTemplate('auth/completeRegistration.php', 'Kaigi | Завершение регистрации', 'auth',
+        View::renderTemplate('auth/completeRegistration', 'Kaigi | Завершение регистрации', 'auth',
             [
                 'topicsList' => $topicsList
             ]
@@ -136,7 +136,7 @@ class AuthController extends Controller
         }
 
         $_SESSION['status'] = 2;
-        header('Location: /profile');
+        header('Location: /user/' . $userID);
     }
 
     public function logout()
@@ -157,7 +157,7 @@ class AuthController extends Controller
         return 'OK';
     }
 
-    public function userAuthentication(string $email, string $password)
+    protected function userAuthentication(string $email, string $password)
     {
         $user = UsersModel::getUser($email);
 

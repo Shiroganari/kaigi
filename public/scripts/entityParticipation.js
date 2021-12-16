@@ -1,3 +1,32 @@
+function kickMember(event, userID) {
+    event.preventDefault();
+
+    let url = $('#url').val();
+    let excludeUrl = url.split('/');
+    let entityType = excludeUrl[1];
+    let entityID = excludeUrl[2];
+
+    let methodUrl;
+
+    if (entityType === 'event') {
+        methodUrl = '/event/kick-member';
+    } else if (entityType === 'group') {
+        methodUrl = '/group/kick-member';
+    }
+
+    $.ajax({
+        url: methodUrl,
+        method: 'POST',
+        data: {
+            userID: userID,
+            entityID: entityID
+        },
+        success: function () {
+            event.target.closest('.member-item').remove();
+        }
+    });
+}
+
 // Join/Leave an event or group
 $('#entity-participation').on('click', function () {
     let button = $(this);

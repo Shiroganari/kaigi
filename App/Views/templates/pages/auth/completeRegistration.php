@@ -49,3 +49,6 @@
         <input class="form__button button" type="submit" value="Завершить регистрацию">
     </form> <!-- /.form -->
 </section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="//geodata.solutions/includes/countrystatecity.js"></script>

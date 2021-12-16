@@ -27,7 +27,7 @@ class ProfileController extends Controller
 
         // If a user has not completed the registration process
         if ($_SESSION['status'] == 1) {
-            header('Location: /auth/completeRegistrationPage');
+            header('Location: /complete-registration');
             exit;
         }
 

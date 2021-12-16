@@ -12,7 +12,7 @@ use Core\Controller;
 
 class ReportController extends Controller
 {
-    public function createReport()
+    public function sendReport()
     {
         $senderID = $this->post_params['senderID'];
         $nickname = $this->post_params['nickname'];

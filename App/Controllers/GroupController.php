@@ -126,7 +126,6 @@ class GroupController extends Controller
         $groupOrganizer = $userID;
 
         $groupData = [
-            'groupID' => $groupID,
             'groupTitle' => $groupTitle,
             'groupCategory' => $groupCategoryId,
             'groupDescription' => $groupDescription,
@@ -143,7 +142,7 @@ class GroupController extends Controller
             GroupsTopicsModel::addGroupsTopics($groupID, $groupTopics);
         }
 
-        GroupsMembersModel::newMember($groupID, $userID, 1);
+        GroupsMembersModel::newMember($groupID, $userID, ORGANIZER);
 
         header('Location: /group/' . $groupID);
     }
@@ -152,7 +151,6 @@ class GroupController extends Controller
     {
         $userID = (int)$this->post_params['userID'];
         $groupID = (int)$this->post_params['entityID'];
-        $roleID = 2; // Участник
 
         if (GroupsMembersModel::getUser($groupID, $userID)) {
             GroupsMembersModel::removeMember($groupID, $userID);
@@ -160,7 +158,7 @@ class GroupController extends Controller
             exit;
         }
 
-        GroupsMembersModel::newMember($groupID, $userID, $roleID);
+        GroupsMembersModel::newMember($groupID, $userID, MEMBER);
         echo json_encode('Join');
     }
 

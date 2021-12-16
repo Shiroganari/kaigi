@@ -1,6 +1,39 @@
-function showPopup(reportType, nickname) {
+let url = $('#url').val();
+let excludeUrl = url.split('/');
+let entityType = excludeUrl[1];
+let entityID = excludeUrl[2];
+
+function kickMember(event, userID) {
+    event.preventDefault();
+
+    let methodUrl;
+
+    if (entityType === 'event') {
+        methodUrl = '/event/kick-member';
+    } else if (entityType === 'group') {
+        methodUrl = '/group/kick-member';
+    }
+
+
+    $.ajax({
+        url: methodUrl,
+        method: 'POST',
+        data: {
+            userID: userID,
+            entityID: entityID
+        },
+        success: function () {
+            event.target.closest('.member-item').remove();
+        }
+    });
+}
+
+
+
+function showPopup(event, reportType, nickname) {
+    event.preventDefault();
     let senderID = $('#user-id').val();
-    let URL = $('#url').val();
+    console.log(url);
 
     $('body').addClass('lock');
 
@@ -28,7 +61,7 @@ function showPopup(reportType, nickname) {
     $('#report-data__sender').val(senderID);
     $('#report-data__type').val(reportType);
     $('#report-data__nickname').val(nickname);
-    $('#report-data__url').val(URL);
+    $('#report-data__url').val(url);
 
     $('.close-report').on('click', function () {
         $('.popup--report').removeClass('active');

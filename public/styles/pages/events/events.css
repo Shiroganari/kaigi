@@ -556,10 +556,6 @@ h1 {
   border-radius: 0;
 }
 
-.member-item.sender .report-button {
-  display: none;
-}
-
 .members-list {
   overflow-y: scroll;
   display: none;
@@ -931,6 +927,10 @@ h1 {
   margin-top: 40px;
   display: flex;
   font-size: 1em;
+}
+.event-header__organizer-link {
+  color: #242323;
+  text-decoration: underline;
 }
 .event-header .report-button {
   opacity: 1;

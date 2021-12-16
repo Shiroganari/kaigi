@@ -6,7 +6,7 @@
         $redirectURL = '/login';
         $onClickAction = "window.location='" . $redirectURL . "'";
     } else {
-        $onClickAction = "showPopup('$reportType', '$nickname')";
+        $onClickAction = "showPopup(event, '$reportType', '$nickname');";
     }
 ?>
 

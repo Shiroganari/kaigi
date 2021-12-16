@@ -556,10 +556,6 @@ h1 {
   border-radius: 0;
 }
 
-.member-item.sender .report-button {
-  display: none;
-}
-
 .members-list {
   overflow-y: scroll;
   display: none;

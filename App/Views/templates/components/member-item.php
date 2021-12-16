@@ -20,14 +20,14 @@ if ($memberID ===  $senderID) {
 
 ?>
 
-<a class="member-item <?php if (isset($isSender)) echo 'sender'; ?>" href="#">
+<a class="member-item" href="/user/<?php echo $memberID; ?>">
     <div class="member-item__avatar">
         <img class="member-item__img" src="/images/mongol.jpg" alt="member Picture">
     </div>
 
     <div class="member-item__information">
         <div class="member-item__name">
-         <?php echo $firstName . ' ' . $lastName; ?>
+            <?php echo $firstName . ' ' . $lastName; ?>
         </div>
 
         <div class="member-item__username">
@@ -43,13 +43,22 @@ if ($memberID ===  $senderID) {
                 }
             ?>
         </div>
+
+        <?php if ($organizerPrivileges and !$isSender): ?>
+        <button class="member-item__kick button" onClick="kickMember(event, '<?php echo $memberID; ?>');">
+            Исключить пользователя
+        </button>
+        <?php endif; ?>
     </div>
 
-    <?php \Core\View::render('component:report-button',
-        [
-            'reportType' => 'user',
-            'nickname' => $username,
-            'userID' => $senderID
-        ])
+    <?php
+        if (!$isSender) {
+            \Core\View::render('component:report-button',
+                [
+                    'reportType' => 'user',
+                    'nickname' => $username,
+                    'userID' => $senderID
+                ]);
+        }
     ?>
 </a>

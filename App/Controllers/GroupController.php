@@ -27,7 +27,8 @@ class GroupController extends Controller
         $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
         $groupMembersCount = GroupsMembersModel::countGroupMembers($groupID);
         $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
-        $groupOrganizer = UsersModel::getUserById($groupData['users_id']);
+        $groupOrganizerID = $groupData['users_id'];
+        $groupOrganizer = UsersModel::getUserById($groupOrganizerID);
         $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
 
         $userID = null;
@@ -51,8 +52,17 @@ class GroupController extends Controller
             $isMember = true;
         }
 
+        $membersList = null;
+
+        if ($userID == $groupOrganizerID) {
+            $organizerPrivileges = true;
+            $membersList = UsersView::renderUser($groupMembers, $organizerPrivileges);
+        } else {
+            $organizerPrivileges = false;
+            $membersList = UsersView::renderUser($groupMembers, $organizerPrivileges);
+        }
+
         $topicsList = TopicsView::renderTopics($groupTopics, 'text');
-        $membersList = UsersView::renderUser($groupMembers);
 
         ob_start();
         View::render('component:report-button',
@@ -151,5 +161,14 @@ class GroupController extends Controller
 
         GroupsMembersModel::newMember($groupID, $userID, $roleID);
         echo json_encode('Join');
+    }
+
+    public function kickMember()
+    {
+        $userID = $this->post_params['userID'];
+        $groupID = $this->post_params['entityID'];
+
+        GroupsMembersModel::removeMember($groupID, $userID);
+        echo json_encode('The user has been kicked');
     }
 }

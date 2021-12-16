@@ -30,7 +30,8 @@ class EventController extends Controller
         $eventMembersID = EventsMembersModel::getAllMembers($eventID);
         $formatName = FormatsModel::getFormatName($eventData['formats_id']);
         $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
-        $organizerName = UsersModel::getUserById($eventData['users_id']);
+        $organizerID = $eventData['users_id'];
+        $organizer = UsersModel::getUserById($organizerID);
 
         $userID = null;
         $user = null;
@@ -53,8 +54,17 @@ class EventController extends Controller
             $isMember = true;
         }
 
+        $membersList = null;
+
+        if ($userID == $organizerID) {
+            $organizerPrivileges = true;
+            $membersList = UsersView::renderUser($eventMembers, $organizerPrivileges);
+        } else {
+            $organizerPrivileges = false;
+            $membersList = UsersView::renderUser($eventMembers, $organizerPrivileges);
+        }
+
         $topicsList = TopicsView::renderTopics($eventTopics, 'text');
-        $membersList = UsersView::renderUser($eventMembers);
 
         ob_start();
         View::render('component:report-button',
@@ -71,7 +81,7 @@ class EventController extends Controller
             'eventData' => $eventData,
             'eventFormat' => $formatName,
             'eventCategory' => $categoryName,
-            'organizerName' => $organizerName,
+            'organizer' => $organizer,
             'topicsList' => $topicsList,
             'userID' => $userID,
             'isMember' => $isMember,
@@ -172,5 +182,14 @@ class EventController extends Controller
 
         EventsMembersModel::newMember($entityID, $userID, MEMBER);
         echo json_encode('Join');
+    }
+
+    public function kickMember()
+    {
+        $userID = $this->post_params['userID'];
+        $eventID = $this->post_params['entityID'];
+
+        EventsMembersModel::removeMember($eventID, $userID);
+        echo json_encode('The user has been kicked');
     }
 }

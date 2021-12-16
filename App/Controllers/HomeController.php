@@ -11,6 +11,11 @@ class HomeController extends Controller
     {
         session_start();
 
+        if (!isset($_SESSION['userID'])) {
+            header('Location: /');
+            exit;
+        }
+
         View::renderTemplate('home/index','Kaigi | Главная страница', 'home');
     }
 }

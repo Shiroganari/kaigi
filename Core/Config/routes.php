@@ -4,7 +4,8 @@ use Core\Router;
 
 $router = new Router();
 
-$router->add('', ['controller' => 'home', 'action' => 'index']);
+$router->add('', ['controller' => 'intro', 'action' => 'index']);
+$router->add('home', ['controller' => 'home', 'action' => 'index']);
 $router->add('login', ['controller' => 'auth', 'action' => 'loginPage']);
 $router->add('report', ['controller' => 'report', 'action' => 'createReport']);
 $router->add('registration', ['controller' => 'auth', 'action' => 'registrationPage']);

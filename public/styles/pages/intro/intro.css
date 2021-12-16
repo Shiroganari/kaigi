@@ -325,34 +325,14 @@ h1 {
   margin-right: 0;
 }
 
-.home {
+.intro {
   min-height: 80vh;
 }
-.home__inner {
+.intro__inner {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 80vh;
 }
 
-.home-nav {
-  margin-top: 100px;
-}
-.home-nav__link {
-  padding: 30px;
-  font-size: 2em;
-  color: #242323;
-  border: 2px solid #242323;
-  border-radius: 10px;
-  margin-right: 30px;
-}
-.home-nav__link:hover {
-  color: #d40634;
-  border-color: #d40634;
-}
-.home-nav__link:last-child {
-  margin-right: 0;
-}
-
-/*# sourceMappingURL=home.css.map */
+/*# sourceMappingURL=intro.css.map */

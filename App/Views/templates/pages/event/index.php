@@ -29,10 +29,12 @@
 
                     <div class="event-header__organizer">
                         Организатор:
-                        <?php
-                            echo($organizerName['first_name'] . ' ' . $organizerName['last_name'] . ' [' .
-                                $organizerName['username'] . ']');
-                        ?>
+                        <a class="event-header__organizer-link" href="/user/<?php echo $organizer['id']; ?>" >
+                            <?php
+                                echo($organizer['first_name'] . ' ' . $organizer['last_name'] . ' [' .
+                                    $organizer['username'] . ']');
+                            ?>
+                        </a>
                     </div>
 
                     <div class="event-header__format">

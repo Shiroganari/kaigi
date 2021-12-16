@@ -31,8 +31,8 @@ class ProfileController extends Controller
             exit;
         }
 
-        $user = UsersModel::getUser($_SESSION['email']);
-        $userID = $_SESSION['userID'];
+        $userID = $this->route_params['id'];
+        $user = UsersModel::getUserById($userID);
         $userTopics = UsersTopics::getUserTopics($userID);
         $userGroups = GroupsMembersModel::getUserGroups($userID);
         $groups = [];

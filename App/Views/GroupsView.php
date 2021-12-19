@@ -14,7 +14,7 @@ class GroupsView extends View
         ob_start();
 
         foreach ($groups as $group) {
-            $categoryInfo = CategoriesModel::getCategoryBy('id', $group['categories_id']);
+            $categoryInfo = CategoriesModel::getBy('id', $group['categories_id']);
             $groupMembersCount = GroupsMembersModel::countMembers($group['id']);
 
             $groupData = [

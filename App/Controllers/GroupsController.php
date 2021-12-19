@@ -59,7 +59,7 @@ class GroupsController extends Controller
 
         if (isset($this->post_params['groupsCategory'])) {
             $categoryName = $this->post_params['groupsCategory'];
-            $groupsCategory = CategoriesModel::getCategoryBy('title', $categoryName);
+            $groupsCategory = CategoriesModel::getBy('title', $categoryName);
 
             if ($groupsCategory) {
                 $groupsCategoryID = $groupsCategory['id'];

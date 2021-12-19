@@ -63,12 +63,12 @@ class EventsController extends Controller
 
         if (isset($this->post_params['eventFormat'])) {
             $formatName = $this->post_params['eventFormat'];
-            $eventFormat = FormatsModel::getFormatBy('title', $formatName);
+            $eventFormat = FormatsModel::getBy('title', $formatName);
         }
 
         if (isset($this->post_params['eventCategory'])) {
             $categoryName = $this->post_params['eventCategory'];
-            $eventCategory = CategoriesModel::getCategoryBy('title', $categoryName);
+            $eventCategory = CategoriesModel::getBy('title', $categoryName);
         }
 
         if ($eventFormat) {

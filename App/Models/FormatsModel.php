@@ -14,19 +14,4 @@ class FormatsModel extends Model
 
     public int $id;
     public string $title;
-
-    public static function getFormatBy(string $column, string $value)
-    {
-        try {
-            $query = (new QueryBuilder())
-                ->table(static::$table)
-                ->select('*')
-                ->where([$column => $value]);
-
-            return $query->first($query);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
 }

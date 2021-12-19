@@ -27,7 +27,7 @@ class GroupController extends Controller
         $group = new GroupsModel();
         $group = $group->getGroupBy('id', $groupID);
         $groupData = $group->createData();
-        $groupCategory = CategoriesModel::getCategoryBy('id', $groupData['categoryID']);
+        $groupCategory = CategoriesModel::getBy('id', $groupData['categoryID']);
 
         // Getting a list of group topics
         $groupTopics = GroupsTopicsModel::getTopics($groupID);
@@ -106,7 +106,7 @@ class GroupController extends Controller
         $userID = $_SESSION['userID'];
 
         $categoryName = $this->post_params['entity-category'];
-        $category = CategoriesModel::getCategoryBy('title', $categoryName);
+        $category = CategoriesModel::getBy('title', $categoryName);
 
         $groupTitle = $this->post_params['entity-title'];
         $groupCategoryId = $category['id'];

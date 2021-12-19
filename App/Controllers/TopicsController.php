@@ -14,7 +14,7 @@ class TopicsController extends Controller
     {
         $categoryName = $this->post_params['category'];
 
-        $category = CategoriesModel::getCategoryBy('title', $categoryName);
+        $category = CategoriesModel::getBy('title', $categoryName);
         $categoryID = null;
 
         if ($category) {

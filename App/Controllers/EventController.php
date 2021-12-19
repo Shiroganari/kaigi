@@ -28,8 +28,8 @@ class EventController extends Controller
         $event = new EventsModel();
         $event = $event->getEventBy('id', $eventID);
         $eventData = $event->createData();
-        $category = CategoriesModel::getCategoryBy('id', $event->getCategoryID());
-        $format = FormatsModel::getFormatBy('id', $event->getFormatID());
+        $category = CategoriesModel::getBy('id', $event->getCategoryID());
+        $format = FormatsModel::getBy('id', $event->getFormatID());
 
         // Getting a list of event topics
         $eventTopics = EventsTopicsModel::getTopics($eventID);
@@ -114,8 +114,8 @@ class EventController extends Controller
         $categoryName = $this->post_params['entity-category'];
         $formatName = $this->post_params['entity-format'];
 
-        $categoryInfo = CategoriesModel::getCategoryBy('title', $categoryName);
-        $formatInfo = FormatsModel::getFormatBy('title', $formatName);
+        $categoryInfo = CategoriesModel::getBy('title', $categoryName);
+        $formatInfo = FormatsModel::getBy('title', $formatName);
 
         $eventTitle = $this->post_params['entity-title'];
         $eventDescription = $this->post_params['entity-description'];

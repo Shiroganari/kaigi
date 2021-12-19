@@ -21,6 +21,21 @@ class Model
         }
     }
 
+    public static function getBy(string $column, string $value)
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->where([$column => $value]);
+
+            return $query->first($query);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
     public static function getLast()
     {
         try {

@@ -14,7 +14,7 @@ class EventsView extends View
         ob_start();
 
         foreach ($events as $event) {
-            $categoryInfo = CategoriesModel::getCategoryBy('id', $event['categories_id']);
+            $categoryInfo = CategoriesModel::getBy('id', $event['categories_id']);
             $eventMembersCount = EventsMembersModel::countMembers($event['id']);
 
             $eventData = [

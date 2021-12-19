@@ -4,39 +4,28 @@ namespace App\Models;
 
 use Core\Model;
 
+use Core\QueryBuilder;
 use PDO;
 use PDOException;
 
 class FormatsModel extends Model
 {
-    public static function getFormatName(int $formatID)
+    protected static string $table = 'formats';
+
+    public int $id;
+    public string $title;
+
+    public static function getFormatBy(string $column, string $value)
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->where([$column => $value]);
 
-            $sql = 'SELECT name FROM `formats` WHERE id = :formatID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':formatID', $formatID);
-            $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            return $query->first($query);
         } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public static function getFormatId(string $formatName)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT id FROM `formats` WHERE name = :formatName';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':formatName', $formatName);
-            $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
+            echo $e->getMessage();
             return false;
         }
     }

@@ -23,70 +23,61 @@ class EventController extends Controller
         session_start();
 
         $eventID = $this->route_params['id'];
-        $eventData = EventsModel::getEventInfoById($eventID);
-        $eventTitle = $eventData['title'];
-        $eventTopics = EventsTopicsModel::getEventTopics($eventID);
-        $eventMembersCount = EventsMembersModel::countEventMembers($eventID);
-        $eventMembersID = EventsMembersModel::getAllMembers($eventID);
-        $formatName = FormatsModel::getFormatName($eventData['formats_id']);
-        $categoryName = CategoriesModel::getCategoryName($eventData['categories_id']);
-        $organizerID = $eventData['users_id'];
-        $organizer = UsersModel::getUserById($organizerID);
+
+        // Getting event data
+        $event = new EventsModel();
+        $event = $event->getEventBy('id', $eventID);
+        $eventData = $event->createData();
+        $category = CategoriesModel::getCategoryBy('id', $event->getCategoryID());
+        $format = FormatsModel::getFormatBy('id', $event->getFormatID());
+
+        // Getting a list of event topics
+        $eventTopics = EventsTopicsModel::getTopics($eventID);
+        $topicsList = null;
+
+        if ($eventTopics) {
+            $topicsList = TopicsView::renderTopics($eventTopics, 'text');
+        }
+
+        // Getting data about event's organizer
+        $organizer = new UsersModel();
+        $organizer = $organizer->getUserBy('id', $event->getOrganizerID());
+        $organizerData = $organizer->createData();
 
         $userID = null;
-        $user = null;
         $isMember = false;
-        $eventMembers = [];
-
-        foreach ($eventMembersID as $value) {
-            $eventMembers[] = UsersModel::getUserById($value['users_id']);
-        }
 
         if (isset($_SESSION['userID'])) {
             $userID = $_SESSION['userID'];
+            $isMember = EventsMembersModel::isMember($eventID, $userID);
         }
 
-        if ($userID) {
-            $user = EventsMembersModel::getUser($eventID, $userID);
-        }
-
-        if ($user) {
-            $isMember = true;
-        }
-
-        $membersList = null;
-
-        if ($userID == $organizerID) {
-            $organizerPrivileges = true;
-            $membersList = UsersView::renderUser($eventMembers, $organizerPrivileges);
-        } else {
-            $organizerPrivileges = false;
-            $membersList = UsersView::renderUser($eventMembers, $organizerPrivileges);
-        }
-
-        $topicsList = TopicsView::renderTopics($eventTopics, 'text');
+        // Getting a list of event members
+        $organizerPrivileges = $userID == $event->getOrganizerID();
+        $eventMembers = EventsMembersModel::getEventMembers($eventID);
+        $membersList = UsersView::renderUser($eventMembers, $organizerPrivileges);
 
         ob_start();
         View::render('component:report-button',
             [
                 'reportType' => 'event',
-                'nickname' => $eventData['title'],
+                'nickname' => $event->getTitle(),
                 'userID' => $userID
             ]
         );
         $reportButton = ob_get_clean();
 
+        $eventTitle = $eventData['title'];
         View::renderTemplate('event/index', "Kaigi | $eventTitle", 'events',
         [
-            'eventData' => $eventData,
-            'eventFormat' => $formatName,
-            'eventCategory' => $categoryName,
-            'organizer' => $organizer,
-            'topicsList' => $topicsList,
+            'event' => $eventData,
+            'organizer' => $organizerData,
+            'topics' => $topicsList,
+            'members' => $membersList,
+            'category' => $category['title'],
+            'format' => $format['title'],
             'userID' => $userID,
             'isMember' => $isMember,
-            'eventMembersCount' => $eventMembersCount['COUNT(*)'],
-            'membersList' => $membersList,
             'reportButton' => $reportButton
         ]);
     }
@@ -100,8 +91,9 @@ class EventController extends Controller
             exit;
         }
 
-        $categories = CategoriesModel::getAll();
+        $categories = CategoriesModel::getList('title');
         $categoriesList = CategoriesView::renderCategories($categories);
+
         View::renderTemplate('event/new-event', 'Kaigi | Новое событие', 'events',
             [
                 'categoriesList' => $categoriesList
@@ -122,12 +114,12 @@ class EventController extends Controller
         $categoryName = $this->post_params['entity-category'];
         $formatName = $this->post_params['entity-format'];
 
-        $categoryInfo = CategoriesModel::getCategoryId($categoryName);
-        $formatInfo = FormatsModel::getFormatId($formatName);
+        $categoryInfo = CategoriesModel::getCategoryBy('title', $categoryName);
+        $formatInfo = FormatsModel::getFormatBy('title', $formatName);
 
         $eventTitle = $this->post_params['entity-title'];
         $eventDescription = $this->post_params['entity-description'];
-        $eventCategoryId = $categoryInfo['id'];
+        $eventCategoryID = $categoryInfo['id'];
         $eventDate = date('Y-m-d', strtotime($this->post_params['entity-date']));
         $eventTime = date('H:i', strtotime($this->post_params['entity-time']));
         $eventFormat = $formatInfo['id'];
@@ -135,7 +127,7 @@ class EventController extends Controller
         $eventCity = $this->post_params['entity-city'];
         $eventStreet = $this->post_params['entity-street'];
         $eventTopics = $this->post_params['entity-topics'];
-        $eventOrganizer = $_SESSION['userID'];
+        $eventOrganizerID = $_SESSION['userID'];
 
         // If the event format is 'offline'
         if ($eventFormat == 1) {
@@ -145,23 +137,22 @@ class EventController extends Controller
         }
 
         $eventData = [
-            'eventTitle' => $eventTitle,
-            'eventCategory' => $eventCategoryId,
-            'eventDescription' => $eventDescription,
-            'eventDate' => $eventDate . ' ' . $eventTime,
-            'eventFormat' => $eventFormat,
-            'eventCountry' => $eventCountry,
-            'eventCity' => $eventCity,
-            'eventStreet' => $eventStreet,
-            'eventOrganizer' => $eventOrganizer
+            'title' => $eventTitle,
+            'description' => $eventDescription,
+            'country' => $eventCountry,
+            'city' => $eventCity,
+            'street' => $eventStreet,
+            'format' => $eventFormat,
+            'categoryID' => $eventCategoryID,
+            'organizerID' => $eventOrganizerID,
+            'dateStart' => $eventDate . ' ' . $eventTime
         ];
 
         EventsModel::newEvent($eventData);
-        $eventID = EventsModel::getLastRecord('events');
-        $eventID = $eventID['MAX(id)'];
+        $eventID = EventsModel::getLast();
 
         if (isset($eventTopics)) {
-            EventsTopicsModel::addEventsTopics($eventID, $eventTopics);
+            EventsTopicsModel::addTopics($eventID, $eventTopics);
         }
 
         EventsMembersModel::newMember($eventID, $userID, ORGANIZER);
@@ -174,7 +165,7 @@ class EventController extends Controller
         $userID = (int)$this->post_params['userID'];
         $entityID = (int)$this->post_params['entityID'];
 
-        if (EventsMembersModel::getUser($entityID, $userID)) {
+        if (EventsMembersModel::isMember($entityID, $userID)) {
             EventsMembersModel::removeMember($entityID, $userID);
             echo json_encode('Left');
             exit;

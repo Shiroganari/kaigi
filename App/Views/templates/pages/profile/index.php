@@ -12,15 +12,15 @@
 
                 <div class="profile-about__item profile-about__name">
                     <?php
-                        echo $user['first_name'];
+                        echo $user['firstName'];
                         echo ' ';
-                        echo $user['last_name'];
+                        echo $user['lastName'];
                     ?>
                 </div>
 
                 <div class="profile-about__item profile-about__location">
                     <span>Локация: </span>
-                    <?php echo $user['location_city'] . ', ' . $user['location_country']; ?>
+                    <?php echo $user['city'] . ', ' . $user['country']; ?>
                 </div>
             </div> <!-- /.profile-about -->
 

@@ -1,5 +1,5 @@
 <?php
-    $eventID = $eventData['id'];
+    $eventID = $event['id'];
     $activeClass = '';
 
     if ($isMember) {
@@ -24,14 +24,14 @@
 
                 <div class="event-header__information">
                     <h1 class="event-header__title">
-                        <?php echo $eventData['title']; ?>
+                        <?php echo $event['title']; ?>
                     </h1>
 
                     <div class="event-header__organizer">
                         Организатор:
                         <a class="event-header__organizer-link" href="/user/<?php echo $organizer['id']; ?>" >
                             <?php
-                                echo($organizer['first_name'] . ' ' . $organizer['last_name'] . ' [' .
+                                echo($organizer['firstName'] . ' ' . $organizer['lastName'] . ' [' .
                                     $organizer['username'] . ']');
                             ?>
                         </a>
@@ -39,28 +39,28 @@
 
                     <div class="event-header__format">
                         Формат:
-                        <?php echo $eventFormat['name']; ?>
+                        <?php echo $format; ?>
                     </div>
 
-                    <?php if ($eventData['location_country']): ?>
+                    <?php if ($event['country']): ?>
                         <div class="event-header__location">
                             Локация:
                             <div class="event-header__country">
-                                <?php echo $eventData['location_country']; ?>
+                                <?php echo $event['country']; ?>
                             </div>
 
                             <div class="event-header__city">
                                 <?php
-                                    if ($eventData['location_city']) {
-                                        echo ', ' . $eventData['location_city'];
+                                    if ($event['city']) {
+                                        echo ', ' . $event['city'];
                                     }
                                 ?>
                             </div>
 
                             <div class="event-header__street">
                                 <?php
-                                    if ($eventData['location_street']) {
-                                        echo ', ' . $eventData['location_street'];
+                                    if ($event['street']) {
+                                        echo ', ' . $event['street'];
                                     }
                                 ?>
                             </div>
@@ -69,22 +69,22 @@
 
                     <div class="event-header__date">
                         Дата начала:
-                        <?php echo date('Y-m-d', strtotime($eventData['date_start'])); ?>
+                        <?php echo date('Y-m-d', strtotime($event['dateStart'])); ?>
                     </div>
 
                     <div class="event-header__time">
                         Время начала:
-                        <?php echo date('H:i', strtotime($eventData['date_start'])); ?>
+                        <?php echo date('H:i', strtotime($event['dateStart'])); ?>
                     </div>
 
                     <div class="event-header__category">
                         Категория:
-                        <?php echo $eventCategory['name']; ?>
+                        <?php echo $category; ?>
                     </div>
 
                     <div class="event-header__members">
                         Количество участников:
-                        <?php echo ' ' . $eventMembersCount; ?>
+                        <?php echo ' ' . $event['membersCount']; ?>
                     </div>
 
                     <div class="event-header__participation">
@@ -127,11 +127,11 @@
                 </div>
 
                 <div class="event-content__description tab-content active" id="event-about">
-                    <?php echo $eventData['description']; ?>
+                    <?php echo $event['description']; ?>
                 </div>
 
                 <div class="event-content__members members-list tab-content" id="event-members">
-                    <?php echo $membersList; ?>
+                    <?php echo $members; ?>
                 </div>
 
             </div> <!-- /.event-content -->
@@ -140,7 +140,7 @@
                 <div class="event-topics__title">Топики:</div>
 
                 <div class="event-topics__inner">
-                    <?php echo $topicsList; ?>
+                    <?php echo $topics; ?>
                 </div>
             </div> <!-- /.event-topics -->
         </div> <!-- /.event__inner -->

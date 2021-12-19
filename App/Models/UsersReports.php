@@ -7,21 +7,10 @@ use PDOException;
 
 class UsersReports extends Model
 {
-    public static function createReport($senderID, $userID, $description)
-    {
-        try {
-            $db = static::getDB();
+    private static string $table = 'users_reports';
+    private static string $columnAuthorID = 'authors_id';
+    private static string $columnEntityID = 'users_id';
+    private static string $columnDescription = 'description';
 
-            $sql = 'INSERT INTO `users_reports` (sender_id, users_id, description) VALUES(:senderID, :userID, :description)';
-
-            $sth = $db->prepare($sql);
-            $sth->execute([
-                ':senderID' => $senderID,
-                ':userID' => $userID,
-                ':description' => $description
-            ]);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
+    use \App\Traits\Models\EntityReportsTrait;
 }

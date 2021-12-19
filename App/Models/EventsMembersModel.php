@@ -3,111 +3,27 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\QueryBuilder;
 
-use PDO;
 use PDOException;
 
 class EventsMembersModel extends Model
 {
-    public static function newMember(int $eventID, int $userID, int $roleID): void
+    protected static string $table = 'events_members';
+    private static string $columnEntityID = 'events_id';
+    private static string $columnUserID = 'users_id';
+    private static string $columnRoleID = 'roles_id';
+
+    use \App\Traits\Models\EntityMembersTrait;
+
+    public static function getEventMembers(int $eventID)
     {
         try {
-            $db = static::getDB();
+            $sql = "SELECT users.* FROM users 
+                INNER JOIN events_members ON events_members.events_id = $eventID WHERE events_members.users_id = users.id
+                ORDER BY events_members.date_creation DESC";
 
-            $sql = 'INSERT INTO `events_members` (events_id, users_id, roles_id) VALUES (:eventID, :userID, :roleID)';
-            $sth = $db->prepare($sql);
-            $sth->execute([
-                ':eventID' => $eventID,
-                ':userID' => $userID,
-                ':roleID' => $roleID
-            ]);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public static function removeMember(int $eventID, int $userID): void
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'DELETE FROM `events_members` WHERE events_id = :eventID AND users_id = :userID';
-            $sth = $db->prepare($sql);
-            $sth->execute([
-                ':eventID' => $eventID,
-                ':userID' => $userID
-            ]);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    public static function getUser(int $eventID, int $userID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT * FROM `events_members` WHERE events_id = :eventID AND users_id = :userID';
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':eventID' => $eventID,
-                ':userID' => $userID,
-            ]);
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-
-    public static function countEventMembers(int $eventID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT COUNT(*) FROM `events_members` WHERE events_id = :eventID';
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':eventID' => $eventID,
-            ]);
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-
-    public static function getAllMembers(int $eventID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT users_id FROM `events_members` WHERE events_id = :eventID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':eventID', $eventID);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-
-    public static function getUserEvents(int $userID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT * FROM `events_members` WHERE users_id = :userID';
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':userID' => $userID,
-            ]);
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return (new QueryBuilder())->get($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;

@@ -22,47 +22,38 @@ class GroupController extends Controller
         session_start();
 
         $groupID = $this->route_params['id'];
-        $groupData = GroupsModel::getGroupInfoById($groupID);
-        $groupTitle = $groupData['title'];
-        $groupTopics = GroupsTopicsModel::getGroupTopics($groupID);
-        $groupMembersCount = GroupsMembersModel::countGroupMembers($groupID);
-        $groupMembersID = GroupsMembersModel::getAllMembers($groupID);
-        $groupOrganizerID = $groupData['users_id'];
-        $groupOrganizer = UsersModel::getUserById($groupOrganizerID);
-        $categoryName = CategoriesModel::getCategoryName($groupData['categories_id']);
+
+        // Getting group data
+        $group = new GroupsModel();
+        $group = $group->getGroupBy('id', $groupID);
+        $groupData = $group->createData();
+        $groupCategory = CategoriesModel::getCategoryBy('id', $groupData['categoryID']);
+
+        // Getting a list of group topics
+        $groupTopics = GroupsTopicsModel::getTopics($groupID);
+        $topicsList = null;
+
+        if ($groupTopics) {
+            $topicsList = TopicsView::renderTopics($groupTopics, 'text');
+        }
+
+        // Getting data about event's organizer
+        $organizer = new UsersModel();
+        $organizer = $organizer->getUserBy('id', $group->getOrganizerID());
+        $organizerData = $organizer->createData();
 
         $userID = null;
-        $user = null;
         $isMember = false;
-        $groupMembers = [];
-
-        foreach($groupMembersID as $value) {
-            $groupMembers[] = UsersModel::getUserById($value['users_id']);
-        }
 
         if (isset($_SESSION['userID'])) {
             $userID = $_SESSION['userID'];
+            $isMember = GroupsMembersModel::isMember($groupID, $userID);
         }
 
-        if ($userID) {
-            $user = GroupsMembersModel::getUser($groupID, $userID);
-        }
-
-        if ($user) {
-            $isMember = true;
-        }
-
-        $membersList = null;
-
-        if ($userID == $groupOrganizerID) {
-            $organizerPrivileges = true;
-            $membersList = UsersView::renderUser($groupMembers, $organizerPrivileges);
-        } else {
-            $organizerPrivileges = false;
-            $membersList = UsersView::renderUser($groupMembers, $organizerPrivileges);
-        }
-
-        $topicsList = TopicsView::renderTopics($groupTopics, 'text');
+        // Getting a list of group members
+        $organizerPrivileges = $userID == $group->getOrganizerID();
+        $groupMembers = GroupsMembersModel::getGroupMembers($groupID);
+        $membersList = UsersView::renderUser($groupMembers, $organizerPrivileges);
 
         ob_start();
         View::render('component:report-button',
@@ -74,15 +65,15 @@ class GroupController extends Controller
         );
         $reportButton = ob_get_clean();
 
+        $groupTitle = $groupData['title'];
         View::renderTemplate('group/index', "Kaigi | $groupTitle", 'groups',
             [
                 'groupData' => $groupData,
-                'groupCategory' => $categoryName,
-                'organizerName' => $groupOrganizer,
+                'organizer' => $organizerData,
+                'category' => $groupCategory['title'],
                 'topicsList' => $topicsList,
                 'userID' => $userID,
                 'isMember' => $isMember,
-                'groupMembersCount' => $groupMembersCount['COUNT(*)'],
                 'membersList' => $membersList,
                 'reportButton' => $reportButton
             ]
@@ -98,7 +89,7 @@ class GroupController extends Controller
             exit;
         }
 
-        $categories = CategoriesModel::getAll();
+        $categories = CategoriesModel::getList('title');
         $categoriesList = CategoriesView::renderCategories($categories);
 
         View::renderTemplate('group/new-group', 'Kaigi | Создание новой группы', 'groups',
@@ -115,10 +106,10 @@ class GroupController extends Controller
         $userID = $_SESSION['userID'];
 
         $categoryName = $this->post_params['entity-category'];
-        $categoryInfo = CategoriesModel::getCategoryId($categoryName);
+        $category = CategoriesModel::getCategoryBy('title', $categoryName);
 
         $groupTitle = $this->post_params['entity-title'];
-        $groupCategoryId = $categoryInfo['id'];
+        $groupCategoryId = $category['id'];
         $groupDescription = $this->post_params['entity-description'];
         $groupCountry = $this->post_params['entity-country'];
         $groupCity = $this->post_params['entity-city'];
@@ -126,20 +117,19 @@ class GroupController extends Controller
         $groupOrganizer = $userID;
 
         $groupData = [
-            'groupTitle' => $groupTitle,
-            'groupCategory' => $groupCategoryId,
-            'groupDescription' => $groupDescription,
-            'groupCountry' => $groupCountry,
-            'groupCity' => $groupCity,
-            'groupOrganizer' => $groupOrganizer
+            'title' => $groupTitle,
+            'category' => $groupCategoryId,
+            'description' => $groupDescription,
+            'country' => $groupCountry,
+            'city' => $groupCity,
+            'organizer' => $groupOrganizer
         ];
 
         GroupsModel::newGroup($groupData);
-        $groupID = GroupsModel::getLastRecord('groups');
-        $groupID = $groupID['MAX(id)'];
+        $groupID = GroupsModel::getLast();
 
         if (isset($groupTopics)) {
-            GroupsTopicsModel::addGroupsTopics($groupID, $groupTopics);
+            GroupsTopicsModel::addTopics($groupID, $groupTopics);
         }
 
         GroupsMembersModel::newMember($groupID, $userID, ORGANIZER);
@@ -152,7 +142,7 @@ class GroupController extends Controller
         $userID = (int)$this->post_params['userID'];
         $groupID = (int)$this->post_params['entityID'];
 
-        if (GroupsMembersModel::getUser($groupID, $userID)) {
+        if (GroupsMembersModel::isMember($groupID, $userID)) {
             GroupsMembersModel::removeMember($groupID, $userID);
             echo json_encode('Left');
             exit;

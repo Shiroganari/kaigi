@@ -73,21 +73,21 @@
                         <div class="group-block-content__item">
                             <h3 class="group-block-content__title">Локация:</h3>
                             <span class="group-block-content__location">
-                                <?php echo $groupData['location_country']; ?>
+                                <?php echo $groupData['country']; ?>
                             </span>
                         </div>
 
                         <div class="group-block-content__item">
                             <h3 class="group-block-content__title">Категории:</h3>
                             <div class="group-block-content__categories">
-                                <?php echo $groupCategory['name']; ?>
+                                <?php echo $category; ?>
                             </div>
                         </div>
 
                         <div class="group-block-content__item">
                             <h3 class="group-block-content__title">Количество участников:</h3>
                             <div class="group-block-content__members-count">
-                                <?php echo ' ' . $groupMembersCount; ?>
+                                <?php echo ' ' . $groupData['membersCount']; ?>
                             </div>
                         </div>
 

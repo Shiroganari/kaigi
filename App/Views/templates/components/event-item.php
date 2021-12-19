@@ -1,28 +1,28 @@
 <?php
 
-$eventID = $eventData['eventID'];
-$eventTitle = $eventData['eventTitle'];
-$eventDescription = $eventData['eventDescription'];
-$eventCountry = $eventData['eventCountry'];
-$eventCity = $eventData['eventCity'];
-$eventDate = $eventData['eventDate'];
-$eventMembersCount = $eventData['eventMembersCount'];
-$eventCategory = $eventData['eventCategory'];
+    $id = $eventData['id'];
+    $title = $eventData['title'];
+    $description = $eventData['description'];
+    $country = $eventData['country'];
+    $city = $eventData['city'];
+    $dateStart = $eventData['dateStart'];
+    $category = $eventData['category'];
+    $membersCount = $eventData['membersCount'];
 
 ?>
 
-<a class="event-item" href="/event/<?php echo $eventID; ?>">
+<a class="event-item" href="/event/<?php echo $id; ?>">
 
     <div class="event-item__avatar">
         <img class="event-item__img" src="/images/mongol.jpg" alt="Event Picture">
     </div>
 
     <div class="event-item__information">
-        <h3 class="event-item__title"><?php echo $eventTitle; ?></h3>
+        <h3 class="event-item__title"><?php echo $title; ?></h3>
 
-        <?php if ($eventDescription): ?>
+        <?php if ($description): ?>
             <div class="event-item__description">
-                <?php echo $eventDescription; ?>
+                <?php echo $description; ?>
             </div>
         <?php else: ?>
             <div class="event-item__description">Описание отсутствует</div>
@@ -30,11 +30,11 @@ $eventCategory = $eventData['eventCategory'];
 
         <div class="event-item__location">
             <?php
-                if ($eventCountry) {
-                    echo $eventCountry;
+                if ($country) {
+                    echo $country;
 
-                    if ($eventCity != '') {
-                        echo ', ' . $eventCity;
+                    if ($city != '') {
+                        echo ', ' . $country;
                     }
                 } else {
                     echo 'Онлайн';
@@ -43,19 +43,19 @@ $eventCategory = $eventData['eventCategory'];
         </div>
 
         <div class="event-item__time">
-            <?php echo $eventDate; ?>
+            <?php echo $dateStart; ?>
         </div>
 
         <div class="event-item__members">
             Количество участников:
-            <?php echo ' ' . $eventMembersCount; ?>
+            <?php echo ' ' . $membersCount; ?>
         </div>
 
         <div class="event-item__categories">
             <div class="event-item__subtitle">Категории:</div>
             <?php
                 echo '<span>';
-                    echo "$eventCategory";
+                    echo "$category";
                 echo '</span>';
             ?>
         </div>

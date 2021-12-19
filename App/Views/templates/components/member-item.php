@@ -1,22 +1,22 @@
 <?php
 
-$memberID = $userData['id'];
-$firstName = $userData['first_name'];
-$lastName = $userData['last_name'];
-$username = $userData['username'];
-$locationCountry = $userData['location_country'];
-$locationCity = $userData['location_city'];
+    $memberID = $userData['id'];
+    $firstName = $userData['first_name'];
+    $lastName = $userData['last_name'];
+    $username = $userData['username'];
+    $locationCountry = $userData['location_country'];
+    $locationCity = $userData['location_city'];
 
-$senderID = null;
-$isSender = null;
+    $senderID = null;
+    $isSender = false;
 
-if (isset($_SESSION['userID'])) {
-    $senderID = $_SESSION['userID'];
-}
+    if (isset($_SESSION['userID'])) {
+        $senderID = $_SESSION['userID'];
+    }
 
-if ($memberID ===  $senderID) {
-    $isSender = true;
-}
+    if ((int)$memberID === (int)$senderID) {
+        $isSender = true;
+    }
 
 ?>
 

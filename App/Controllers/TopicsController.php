@@ -14,7 +14,7 @@ class TopicsController extends Controller
     {
         $categoryName = $this->post_params['category'];
 
-        $category = CategoriesModel::getCategoryId($categoryName);
+        $category = CategoriesModel::getCategoryBy('title', $categoryName);
         $categoryID = null;
 
         if ($category) {
@@ -22,7 +22,7 @@ class TopicsController extends Controller
         }
 
         if ($categoryID) {
-            $topics = TopicsModel::getTopicByCategory($categoryID);
+            $topics = TopicsModel::getTopicsByCategory($categoryID);
             echo json_encode($topics);
         }
     }

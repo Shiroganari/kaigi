@@ -36,7 +36,7 @@ class AuthController extends Controller
             exit;
         }
 
-        if (UsersModel::checkUser($username, $email)) {
+        if (UsersModel::isUserExists($username, $email)) {
             echo 'Такой пользователь уже существует.';
             exit;
         }
@@ -61,23 +61,27 @@ class AuthController extends Controller
 
     public function login()
     {
+        session_start();
+
         $email = $this->post_params['email'];
         $password = $this->post_params['pass'];
         $user = $this->userAuthentication($email, $password);
 
-        if (gettype($user) !== 'array') {
+        if (gettype($user) !== 'object') {
             header('Location: /login');
             exit;
         }
 
-        session_start();
-
         $_SESSION['active'] = true;
-        $_SESSION['status'] = $user['status'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['pass'] = $user['password'];
-        $_SESSION['userID'] = $user['id'];
+        $_SESSION['status'] = $user->getStatus();
+        $_SESSION['username'] = $user->getUsername();
+        $_SESSION['email'] = $user->getEmail();
+        $_SESSION['userID'] = $user->getID();
+
+        if ($user->getStatus() == TRIAL_STATUS) {
+            header('Location: /complete-registration');
+            exit;
+        }
 
         header('Location: /home');
     }
@@ -96,7 +100,7 @@ class AuthController extends Controller
             exit;
         }
 
-        $topics = TopicsModel::getAll();
+        $topics = TopicsModel::getList('title');
         $topicsList = TopicsView::renderTopics($topics, 'checkbox');
 
         View::renderTemplate('auth/completeRegistration', 'Kaigi | Завершение регистрации', 'auth',
@@ -122,8 +126,8 @@ class AuthController extends Controller
             'firstName' => $firstName,
             'lastName' => $lastName,
             'description' => $description,
-            'locationCountry' => $locationCountry,
-            'locationCity' => $locationCity
+            'country' => $locationCountry,
+            'city' => $locationCity
         ];
 
         UsersModel::completeUserRegistration($userData);
@@ -132,11 +136,11 @@ class AuthController extends Controller
         $topics = $this->post_params['topics'];
 
         if (isset($topics)) {
-            UsersTopics::addUsersTopics($userID, $topics);
+            UsersTopics::addTopics($userID, $topics);
         }
 
         $_SESSION['status'] = 2;
-        header('Location: /user/' . $userID);
+        header('Location: /home');
     }
 
     public function logout()
@@ -159,13 +163,14 @@ class AuthController extends Controller
 
     protected function userAuthentication(string $email, string $password)
     {
-        $user = UsersModel::getUser($email);
+        $user = new UsersModel();
+        $user = $user->getUserBy('email', $email);
 
         if (!$user) {
             return 'Wrong email';
         }
 
-        $hashPassword = $user['password'];
+        $hashPassword = $user->getPassword();
 
         if (password_verify($password, $hashPassword)) {
             return $user;

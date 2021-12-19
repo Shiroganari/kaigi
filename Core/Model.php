@@ -7,41 +7,69 @@ use PDOException;
 
 class Model
 {
-    protected static function getDB()
+    public static function get()
     {
-        static $db = null;
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*');
 
-        if ($db === null) {
-            $host = DB_HOST;
-            $dbname = DB_NAME;
-            $username = DB_USER;
-            $pass = DB_PASS;
+            return $query->get($query);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 
-            try {
-                $db = new PDO(
-                    "mysql:host=$host;dbname=$dbname;charset=utf8",
-                    $username, $pass
-                );
-                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    public static function getLast()
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('id')
+                ->max();
 
-                return $db;
-            } catch (PDOException $e) {
-                echo $e->getMessage();
+            return $query->first($query)["MAX(id)"];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function getList(string $column = '*')
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select($column);
+
+            $result = $query->get($query);
+
+            $list = [];
+
+            foreach ($result as $item) {
+                foreach($item as $title) {
+                    $list[] = $title;
+                }
+            }
+
+            return $list;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function toList(array $array): array
+    {
+        $list = [];
+
+        foreach ($array as $item) {
+            foreach($item as $title) {
+                $list[] = $title;
             }
         }
 
-        return $db;
-    }
-
-    public static function getLastRecord(string $tableName) {
-        try {
-            $db = static::getDB();
-
-            $sql = "SELECT MAX(id) FROM $tableName";
-            $stmt = $db->query($sql);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
+        return $list;
     }
 }

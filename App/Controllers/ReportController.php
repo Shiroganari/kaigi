@@ -21,14 +21,17 @@ class ReportController extends Controller
         $url = $this->post_params['url'];
 
         if ($reportType === 'user') {
-            $user = UsersModel::getUserByUsername($nickname);
-            UsersReports::createReport($senderID, $user['id'], $description);
+            $user = new UsersModel();
+            $user = $user->getUserBy('username', $nickname);
+            UsersReports::createReport($senderID, $user->getID(), $description);
         } elseif ($reportType === 'group') {
-            $group = GroupsModel::getGroupInfoByTitle($nickname);
-            GroupsReports::createReport($senderID, $group['id'], $description);
+            $group = new GroupsModel();
+            $group = $group->getGroupBy('title', $nickname);
+            GroupsReports::createReport($senderID, $group->getID(), $description);
         } elseif ($reportType === 'event') {
-            $event = EventsModel::getEventInfoByTitle($nickname);
-            EventsReports::createReport($senderID, $event['id'], $description);
+            $event = new EventsModel();
+            $event = $event->getEventBy('title', $nickname);
+            EventsReports::createReport($senderID, $event->getID(), $description);
         }
 
         header('Location: ' . $url);

@@ -4,47 +4,13 @@ namespace App\Models;
 
 use Core\Model;
 
-use PDO;
-use PDOException;
-
 class UsersTopics extends Model
 {
-    // Add user topics into the database
-    public static function addUsersTopics(int $userID, array $topics): void
-    {
-        try {
-            $db = static::getDB();
+    protected static string $table = 'users_topics';
 
-            $topicsCount = count($topics);
-            $sql = 'INSERT INTO `users_topics` (users_id, topics_name) VALUES (:userID, :topic)';
+    private static string $columnID = 'id';
+    private static string $columnEntityID = 'users_id';
+    private static string $columnTopicTitle = 'topics_title';
 
-            for ($i = 0; $i < $topicsCount; $i++) {
-                $stmt = $db->prepare($sql);
-                $stmt->execute([
-                    ':userID' => $userID,
-                    ':topic' => $topics[$i]
-                ]);
-            }
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
-
-    // Get user topics from the database
-    public static function getUserTopics(int $userID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT topics_name FROM `users_topics` WHERE users_id = :userID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':userID', $userID);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
-        }
-    }
+    use \App\Traits\Models\EntityTopicsTrait;
 }

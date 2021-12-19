@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\UsersModel;
 use Core\Controller;
 use Core\View;
 
@@ -18,7 +19,7 @@ class EventsController extends Controller
     {
         session_start();
 
-        $categories = CategoriesModel::getAll();
+        $categories = CategoriesModel::getList('title');
         $categoriesList = CategoriesView::renderCategories($categories);
 
         View::renderTemplate('events/index', 'Kaigi | Все события', 'events',
@@ -62,12 +63,12 @@ class EventsController extends Controller
 
         if (isset($this->post_params['eventFormat'])) {
             $formatName = $this->post_params['eventFormat'];
-            $eventFormat = FormatsModel::getFormatId($formatName);
+            $eventFormat = FormatsModel::getFormatBy('title', $formatName);
         }
 
         if (isset($this->post_params['eventCategory'])) {
             $categoryName = $this->post_params['eventCategory'];
-            $eventCategory = CategoriesModel::getCategoryId($categoryName);
+            $eventCategory = CategoriesModel::getCategoryBy('title', $categoryName);
         }
 
         if ($eventFormat) {

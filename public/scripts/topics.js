@@ -21,11 +21,11 @@ function showTopics(element, data) {
 
     for (let i = 0; i < Object.keys(data).length; i++) {
         if (element.hasClass('select')) {
-            $('<option>' + data[i]['topics_name'] + '</option>').appendTo('.topics');
+            $('<option>' + data[i] + '</option>').appendTo('.topics');
         } else {
             let label = $('<div class="label-choice">').html("" +
-                "<input class='label-choice__checkbox' name='entity-topics[]' type='checkbox' value='" + data[i]['topics_name'] + "'>" +
-                "<span class='label-choice__title'>" + data[i]['topics_name'] + "</span>");
+                "<input class='label-choice__checkbox' name='entity-topics[]' type='checkbox' value='" + data[i] + "'>" +
+                "<span class='label-choice__title'>" + data[i] + "</span>");
             label.appendTo('.topics');
         }
     }

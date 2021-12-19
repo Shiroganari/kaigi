@@ -4,74 +4,122 @@ namespace App\Models;
 
 use Core\Model;
 
+use Core\QueryBuilder;
 use PDO;
 use PDOException;
 
 class GroupsModel extends Model
 {
+    protected static string $table = 'groups';
+
+    private static string $columnID = 'id';
+    private static string $columnTitle = 'title';
+    private static string $columnDescription = 'description';
+    private static string $columnCountry = 'location_country';
+    private static string $columnCity = 'location_city';
+    private static string $columnCategories = 'categories_id';
+    private static string $columnOrganizer = 'users_id';
+    private static string $columnDateCreation = 'date_creation';
+
+    private int $id;
+
+    private string $title;
+    private string $description;
+    private string $country;
+    private string $city;
+    private string $categoryID;
+    private string $organizerID;
+    private string $dateCreation;
+
     public static function newGroup(array $groupData): void
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->insert(
+                    [
+                        static::$columnTitle => $groupData['title'],
+                        static::$columnDescription => $groupData['description'],
+                        static::$columnCategories => $groupData['category'],
+                        static::$columnCountry=> $groupData['country'],
+                        static::$columnCity => $groupData['city'],
+                        static::$columnOrganizer => $groupData['organizer'],
+                    ]
+                );
 
-            $sql = 'INSERT INTO `groups` (title, description, categories_id, location_country, 
-                      location_city, users_id)
-                      VALUES (:title, :description, :categoriesID,
-                              :locationCountry, :locationCity, :usersID)';
-            $sth = $db->prepare($sql);
-            $sth->execute([
-                ':title' => $groupData['groupTitle'],
-                ':description' => $groupData['groupDescription'],
-                ':categoriesID' => $groupData['groupCategory'],
-                ':locationCountry' => $groupData['groupCountry'],
-                ':locationCity' => $groupData['groupCity'],
-                ':usersID' => $groupData['groupOrganizer']
-            ]);
+            $query->execute($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
 
-    public static function getGroupInfoById(int $groupID)
+    public function createData()
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->getTitle(),
+            'description' => $this->getDescription(),
+            'country' => $this->getCountry(),
+            'city' => $this->getCity(),
+            'categoryID' => $this->getCategoryID(),
+            'organizerID' => $this->getOrganizerID(),
+            'dateCreation' => $this->getDateCreation(),
+            'membersCount' => GroupsMembersModel::countMembers($this->id)
+        ];
+    }
+
+    public function getGroupBy(string $column, string $value)
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->where([$column => $value]);
 
-            $sql = 'SELECT * FROM `groups` WHERE id = :groupID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':groupID', $groupID);
-            $stmt->execute();
+            $group = $query->first($query);
 
-            return $stmt->fetch();
+            $this->id = $group['id'];
+            $this->title = $group['title'];
+            $this->description = $group['description'];
+            $this->country = $group['location_country'];
+            $this->city = $group['location_city'];
+            $this->categoryID = $group['categories_id'];
+            $this->organizerID = $group['users_id'];
+            $this->dateCreation = $group['date_creation'];
+
+            return $this;
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
 
-    public static function getGroupInfoByTitle(string $groupTitle)
+    public static function getUserGroups(int $userID, string $organizer = '', string $groupTitle = '')
     {
         try {
-            $db = static::getDB();
+            $sql = "SELECT groups.* FROM groups 
+                INNER JOIN groups_members ON groups_members.users_id = $userID WHERE groups_members.groups_id = groups.id";
 
-            $sql = 'SELECT * FROM `groups` WHERE title = :groupTitle';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':groupTitle', $groupTitle);
-            $stmt->execute();
+            if ($organizer === 'true') {
+                $sql .= " AND groups.users_id = $userID";
+            }
 
-            return $stmt->fetch();
+            if ($groupTitle) {
+                $sql .= " AND groups.title LIKE '%$groupTitle%'";
+            }
+
+            $sql .= ' ORDER BY groups_members.date_creation DESC';
+
+            return (new QueryBuilder())->get($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
-
 
     public static function getGroupsByFilters($groupTitle, $groupCountry, $groupCity, $groupCategoryID)
     {
         try {
-            $db = static::getDB();
-
             $sql = 'SELECT * FROM groups WHERE group_status="1"';
 
             if ($groupTitle) {
@@ -92,41 +140,51 @@ class GroupsModel extends Model
 
             $sql .= ' ORDER BY date_creation DESC';
 
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $query = new QueryBuilder();
+            return $query->get($sql);
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;
         }
     }
 
-    public static function getUserGroups(int $userID, string $organizer, string $groupTitle)
+    public function getID(): int
     {
-        try {
-            $db = static::getDB();
+        return $this->id;
+    }
 
-            $sql = 'SELECT groups.* FROM groups
-            INNER JOIN groups_members ON groups_members.groups_id = groups.id WHERE groups_members.users_id = :userID';
+    public function getTitle(): string
+    {
+        return $this->title;
+    }
 
-            if ($organizer === 'true') {
-                $sql .= " AND groups.users_id = $userID";
-            }
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
 
-            if ($groupTitle) {
-                $sql .= " AND groups.title LIKE '%$groupTitle%'";
-            }
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
 
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':userID' => $userID,
-            ]);
+    public function getCity(): string
+    {
+        return $this->city;
+    }
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
+    public function getCategoryID(): int
+    {
+        return $this->categoryID;
+    }
+
+    public function getOrganizerID(): int
+    {
+        return $this->organizerID;
+    }
+
+    public function getDateCreation(): string
+    {
+        return $this->dateCreation;
     }
 }

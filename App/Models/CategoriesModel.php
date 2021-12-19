@@ -3,54 +3,31 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\QueryBuilder;
 
-use PDO;
 use PDOException;
 
 class CategoriesModel extends Model
 {
-    public static function getAll()
+    protected static string $table = 'categories';
+
+    private static string $columnID = 'id';
+    private static string $columnTitle = 'title';
+
+    public int $id;
+    public string $title;
+
+    public static function getCategoryBy(string $column, string $value)
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->where([$column => $value]);
 
-            $sql = 'SELECT name FROM `categories`';
-            $stmt = $db->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $query->first($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
-            return false;
-        }
-    }
-
-    public static function getCategoryName(int $categoryID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT name FROM `categories` WHERE id = :categoryID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':categoryID', $categoryID);
-            $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            return false;
-        }
-    }
-
-    public static function getCategoryId(string $categoryName)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT id FROM `categories` WHERE name = :categoryName';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':categoryName', $categoryName);
-            $stmt->execute();
-
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
             return false;
         }
     }

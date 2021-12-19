@@ -1,6 +1,5 @@
 <?php
 
 foreach ($categories as $category) {
-    $categoryName = $category['name'];
-    echo "<option value='$categoryName'>$categoryName</option>";
+    echo "<option value='$category'>$category</option>";
 }

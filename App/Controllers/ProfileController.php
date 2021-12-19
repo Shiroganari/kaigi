@@ -2,13 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Models\GroupsModel;
 use Core\Controller;
 use Core\View;
 
 use App\Models\UsersModel;
 use App\Models\UsersTopics;
-use App\Models\GroupsModel;
-use App\Models\GroupsMembersModel;
 
 use App\Views\GroupsView;
 use App\Views\TopicsView;
@@ -26,30 +25,35 @@ class ProfileController extends Controller
         }
 
         // If a user has not completed the registration process
-        if ($_SESSION['status'] == 1) {
+        if ($_SESSION['status'] == TRIAL_STATUS) {
             header('Location: /complete-registration');
             exit;
         }
 
-        $userID = $this->route_params['id'];
-        $user = UsersModel::getUserById($userID);
-        $userTopics = UsersTopics::getUserTopics($userID);
-        $userGroups = GroupsMembersModel::getUserGroups($userID);
-        $groups = [];
+        $user = new UsersModel();
 
-        foreach ($userGroups as $group) {
-            $groups[] = GroupsModel::getGroupInfoById($group['groups_id']);
-        }
+        $userID = $this->route_params['id'];
+        $user = $user->getUserBy('id', $userID);
+        $userData = [
+            'username' => $user->getUsername(),
+            'firstName' => $user->getFirstName(),
+            'lastName' => $user->getLastName(),
+            'country' => $user->getCountry(),
+            'city' => $user->getCity(),
+            'description' => $user->getDescription()
+        ];
 
         // Getting a list of user topics
-        $topicsList = TopicsView::renderTopics($userTopics, 'text');
+        $userTopics = UsersTopics::getTopics($userID);
+        $topicsList = TopicsView::renderTopics($userTopics, TEXT_INPUT);
 
         // Getting a list of user groups
-        $groupsList = GroupsView::renderGroups($groups);
+        $userGroups = GroupsModel::getUserGroups($userID);
+        $groupsList = GroupsView::renderGroups($userGroups);
 
         View::renderTemplate('profile/index','Kaigi | Профиль', 'profile',
             [
-                'user' => $user,
+                'user' => $userData,
                 'topicsList' => $topicsList,
                 'groupsList' => $groupsList
             ]

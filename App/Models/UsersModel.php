@@ -3,142 +3,202 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\QueryBuilder;
 
 use PDO;
 use PDOException;
 
 class UsersModel extends Model
 {
-    public static function getAll()
+    protected static string $table = 'users';
+
+    private static string $columnID = 'id';
+    private static string $columnFirstName = 'first_name';
+    private static string $columnLastName = 'last_name';
+    private static string $columnUsername = 'username';
+    private static string $columnEmail = 'email';
+    private static string $columnDescription = 'description';
+    private static string $columnPassword = 'password';
+    private static string $columnCountry = 'location_country';
+    private static string $columnCity = 'location_city';
+    private static string $columnAvatar = 'avatar';
+    private static string $columnStatus = 'status';
+
+    private int $id;
+    private int $status;
+
+    private string $email;
+    private string $password;
+
+    private string $firstName;
+    private string $lastName;
+    private string $username;
+    private string $description;
+    private string $country;
+    private string $city;
+    private string $avatar;
+
+    public static function isUserExists(string $username, string $email): bool
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->orWhere(
+                    [
+                        static::$columnUsername => $username,
+                        static::$columnEmail => $email
+                    ]
+                );
 
-            $sql = 'SELECT * FROM users';
-            $stmt = $db->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($query->first($query)) {
+                return true; // If user exists
+            }
+
+            return false;
         } catch (PDOException $e) {
             echo $e->getMessage();
-            exit;
-        }
-    }
-
-    public static function checkUser(string $username, string $email)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT * FROM `users` WHERE username = :username OR email = :email';
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':username' => $username,
-                ':email' => $email
-            ]);
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
+            return false;
         }
     }
 
     public static function userRegistration(string $username, string $email, string $password): void
     {
+        $passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table('users')
+                ->insert(
+                    [
+                        static::$columnUsername => $username,
+                        static::$columnEmail => $email,
+                        static::$columnPassword => $passwordHash,
+                    ]
+                );
 
-            $passwordHash = password_hash($password, PASSWORD_DEFAULT);
-
-            $sql = 'INSERT INTO `users` (username, email, password) VALUES (:username, :email, :password)';
-            $sth = $db->prepare($sql);
-            $sth->execute([
-                ':username' => $username,
-                ':email' => $email,
-                ':password' => $passwordHash
-            ]);
+            $query->execute($query);
         } catch (PDOException $e) {
             echo $e->getMessage();
-            exit;
+            return;
         }
     }
 
     public static function completeUserRegistration(array $userData): void
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->where([static::$columnID => $userData['userID']])
+                ->update(
+                    [
+                        static::$columnFirstName => $userData['firstName'],
+                        static::$columnLastName => $userData['lastName'],
+                        static::$columnDescription => $userData['description'],
+                        static::$columnCountry => $userData['country'],
+                        static::$columnCity => $userData['city'],
+                        static::$columnStatus => FULL_STATUS
+                    ]
+                );
 
-            $sql = 'UPDATE `users` SET 
-                first_name = :firstName,
-                last_name = :lastName,
-                description = :description,
-                location_country = :locationCountry,
-                location_city = :locationCity,
-                status = :status
-            WHERE id = :userID';
+            echo($query);
+            $query->execute($query);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return;
+        }
+    }
 
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':firstName' => $userData['firstName'],
-                ':lastName' => $userData['lastName'],
-                ':description' => $userData['description'],
-                ':locationCountry' => $userData['locationCountry'],
-                ':locationCity' => $userData['locationCity'],
-                ':status' => 2,
-                ':userID' => $userData['userID']
-            ]);
+    public function getUserBy(string $column, string $value)
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('*')
+                ->where([$column=> $value]);
+
+            $user = $query->first($query);
+
+            $this->id = $user[static::$columnID];
+            $this->firstName = $user[static::$columnFirstName];
+            $this->lastName = $user[static::$columnLastName];
+            $this->username = $user[static::$columnUsername];
+            $this->email = $user[static::$columnEmail];
+            $this->password = $user[static::$columnPassword];
+            $this->description = $user[static::$columnDescription];
+            $this->country = $user[static::$columnCountry];
+            $this->city = $user[static::$columnCity];
+            $this->avatar = $user[static::$columnAvatar];
+            $this->status = $user[static::$columnStatus];
+
+            return $this;
         } catch (PDOException $e) {
             echo $e->getMessage();
             exit;
         }
     }
 
-    public static function getUser(string $email)
+    public function createData(): array
     {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT * FROM `users` WHERE email = :email';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':email', $email);
-            $stmt->execute();
-
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
-        }
+        return [
+            'id' => $this->id,
+            'firstName' => $this->firstName,
+            'lastName' => $this->lastName,
+            'username' => $this->username,
+            'description' => $this->description,
+            'country' => $this->country,
+            'city' => $this->city
+        ];
     }
 
-    public static function getUserByUsername(string $username)
+    public function getID(): int
     {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT * FROM `users` WHERE username = :username';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':username', $username);
-            $stmt->execute();
-
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
-        }
+        return $this->id;
     }
 
-    public static function getUserById(int $id)
+    public function getStatus(): int
     {
-        try {
-            $db = static::getDB();
+        return $this->status;
+    }
 
-            $sql = 'SELECT * FROM `users` WHERE id = :userID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':userID', $id);
-            $stmt->execute();
 
-            return $stmt->fetch();
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            exit;
-        }
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function getCountry(): string
+    {
+        return $this->country;
+    }
+
+    public function getCity(): string
+    {
+        return $this->city;
+    }
+
+    public function getPassword(): string
+    {
+        return $this->password;
     }
 }

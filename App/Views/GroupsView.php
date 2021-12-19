@@ -14,17 +14,17 @@ class GroupsView extends View
         ob_start();
 
         foreach ($groups as $group) {
-            $categoryInfo = CategoriesModel::getCategoryName($group['categories_id']);
-            $groupMembers = GroupsMembersModel::countGroupMembers($group['id']);
+            $categoryInfo = CategoriesModel::getCategoryBy('id', $group['categories_id']);
+            $groupMembersCount = GroupsMembersModel::countMembers($group['id']);
 
             $groupData = [
-                'groupID' => $group['id'],
-                'groupTitle' => $group['title'],
-                'groupDescription' => $group['description'],
-                'groupCountry' => $group['location_country'],
-                'groupCity' => $group['location_city'],
-                'groupCategory' => $categoryInfo['name'],
-                'groupMembersCount' => $groupMembers['COUNT(*)']
+                'id' => $group['id'],
+                'title' => $group['title'],
+                'description' => $group['description'],
+                'country' => $group['location_country'],
+                'city' => $group['location_city'],
+                'category' => $categoryInfo['title'],
+                'membersCount' => $groupMembersCount
             ];
 
             View::render('component:group-item', ['groupData' => $groupData]);

@@ -4,36 +4,31 @@ namespace App\Models;
 
 use Core\Model;
 
+use Core\QueryBuilder;
 use PDO;
 use PDOException;
 
 class TopicsModel extends Model
 {
-    public static function getAll()
+    protected static string $table = 'topics';
+
+    private static string $columnID = 'id';
+    private static string $columnTopicTitle = 'title';
+    private static string $columnCategoryID = 'categories_id';
+
+    public int $id;
+    public int $categoryID;
+    public string $topicTitle;
+
+    public static function getTopicsByCategory(int $categoryID)
     {
         try {
-            $db = static::getDB();
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select(static::$columnTopicTitle)
+                ->where([static::$columnCategoryID => $categoryID]);
 
-            $sql = 'SELECT topics_name FROM `topics`';
-            $stmt = $db->query($sql);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-            return false;
-        }
-    }
-
-    public static function getTopicByCategory(int $categoryID)
-    {
-        try {
-            $db = static::getDB();
-
-            $sql = 'SELECT topics_name FROM `topics` WHERE categories_id = :categoryID';
-            $stmt = $db->prepare($sql);
-            $stmt->bindValue(':categoryID', $categoryID);
-            $stmt->execute();
-
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return Model::toList($query->get($query));
         } catch (PDOException $e) {
             echo $e->getMessage();
             return false;

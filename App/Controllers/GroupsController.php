@@ -2,14 +2,15 @@
 
 namespace App\Controllers;
 
-use App\Views\CategoriesView;
 use Core\Controller;
 use Core\View;
 
 use App\Models\CategoriesModel;
 use App\Models\GroupsModel;
+use App\Models\UsersModel;
 
 use App\Views\GroupsView;
+use App\Views\CategoriesView;
 
 class GroupsController extends Controller
 {
@@ -17,7 +18,7 @@ class GroupsController extends Controller
     {
         session_start();
 
-        $categories = CategoriesModel::getAll();
+        $categories = CategoriesModel::getList('title');
         $categoriesList = CategoriesView::renderCategories($categories);
 
         View::renderTemplate('groups/index', 'Kaigi | Группы', 'groups',
@@ -58,7 +59,7 @@ class GroupsController extends Controller
 
         if (isset($this->post_params['groupsCategory'])) {
             $categoryName = $this->post_params['groupsCategory'];
-            $groupsCategory = CategoriesModel::getCategoryId($categoryName);
+            $groupsCategory = CategoriesModel::getCategoryBy('title', $categoryName);
 
             if ($groupsCategory) {
                 $groupsCategoryID = $groupsCategory['id'];

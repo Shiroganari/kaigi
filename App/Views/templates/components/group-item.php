@@ -5,7 +5,7 @@
     $description = $groupData['description'];
     $country = $groupData['country'];
     $city = $groupData['city'];
-    $category = $groupData['category'];
+    $categoryTitle = $groupData['categoryTitle'];
     $membersCount = $groupData['membersCount'];
 
 ?>
@@ -58,7 +58,7 @@
         <div class="group-item__categories">
             <div class="group-item__subtitle">Категории:</div>
             <span><?php
-                echo "$category" ?></span>
+                echo "$categoryTitle" ?></span>
         </div>
     </div>
 </a>

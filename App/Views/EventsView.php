@@ -9,27 +9,22 @@ use App\Models\EventsMembersModel;
 
 class EventsView extends View
 {
-    public static function renderEvents($events)
+    public static function renderEvent($event, $eventInfo)
     {
         ob_start();
 
-        foreach ($events as $event) {
-            $categoryInfo = CategoriesModel::getBy('id', $event['categories_id']);
-            $eventMembersCount = EventsMembersModel::countMembers($event['id']);
+        $eventData = [
+            'id' => $event['id'],
+            'title' => $event['title'],
+            'description' => $event['description'],
+            'country' => $event['location_country'],
+            'city' => $event['location_city'],
+            'dateStart' => $event['date_start'],
+            'categoryTitle' => $eventInfo['category_title'],
+            'membersCount' => $eventInfo['members_count']
+        ];
 
-            $eventData = [
-                'id' => $event['id'],
-                'title' => $event['title'],
-                'description' => $event['description'],
-                'country' => $event['location_country'],
-                'city' => $event['location_city'],
-                'dateStart' => $event['date_start'],
-                'membersCount' => $eventMembersCount,
-                'category' => $categoryInfo['title']
-            ];
-
-            View::render('component:event-item', ['eventData' => $eventData]);
-        }
+        View::render('component:event-item', ['eventData' => $eventData]);
 
         return ob_get_clean();
     }

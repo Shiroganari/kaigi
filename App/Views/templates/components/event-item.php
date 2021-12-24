@@ -6,7 +6,7 @@
     $country = $eventData['country'];
     $city = $eventData['city'];
     $dateStart = $eventData['dateStart'];
-    $category = $eventData['category'];
+    $categoryTitle = $eventData['categoryTitle'];
     $membersCount = $eventData['membersCount'];
 
 ?>
@@ -55,7 +55,7 @@
             <div class="event-item__subtitle">Категории:</div>
             <?php
                 echo '<span>';
-                    echo "$category";
+                    echo "$categoryTitle";
                 echo '</span>';
             ?>
         </div>

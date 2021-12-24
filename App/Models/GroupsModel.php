@@ -117,6 +117,14 @@ class GroupsModel extends Model
         }
     }
 
+    public static function getGroupInfo($group): array
+    {
+        return [
+            'category_title' => CategoriesModel::getBy('id', $group['categories_id'])['title'],
+            'members_count' => GroupsMembersModel::countMembers($group['id'])
+        ];
+    }
+
     public static function getGroupsByFilters($groupTitle, $groupCountry, $groupCity, $groupCategoryID)
     {
         try {

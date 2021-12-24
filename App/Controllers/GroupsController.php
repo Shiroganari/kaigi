@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\GroupsMembersModel;
+use App\Traits\Controllers\EntityItemTrait;
 use Core\Controller;
 use Core\View;
 
@@ -14,6 +16,8 @@ use App\Views\CategoriesView;
 
 class GroupsController extends Controller
 {
+    use EntityItemTrait;
+
     public function index()
     {
         session_start();
@@ -86,14 +90,12 @@ class GroupsController extends Controller
             $isOrganizer = $this->post_params['isOrganizer'];
         }
 
-        $groups = null;
-
         if ($myGroups) {
             $groups = GroupsModel::getUserGroups($userID, $isOrganizer, $groupsTitle);
         } else {
             $groups = groupsModel::getGroupsByFilters($groupsTitle, $groupsCountry, $groupsCity, $groupsCategoryID);
         }
 
-        echo GroupsView::renderGroups($groups);
+        echo self::getGroupsItems($groups);
     }
 }

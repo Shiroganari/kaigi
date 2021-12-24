@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\GroupsModel;
+use App\Traits\Controllers\EntityItemTrait;
 use Core\Controller;
 use Core\View;
 
@@ -14,6 +15,8 @@ use App\Views\TopicsView;
 
 class ProfileController extends Controller
 {
+    use EntityItemTrait;
+
     public function index()
     {
         session_start();
@@ -49,7 +52,7 @@ class ProfileController extends Controller
 
         // Getting a list of user groups
         $userGroups = GroupsModel::getUserGroups($userID);
-        $groupsList = GroupsView::renderGroups($userGroups);
+        $groupsList = self::getGroupsItems($userGroups);
 
         View::renderTemplate('profile/index','Kaigi | Профиль', 'profile',
             [

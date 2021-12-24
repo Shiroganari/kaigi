@@ -108,6 +108,14 @@ class EventsModel extends Model
         }
     }
 
+    public static function getEventInfo($event): array
+    {
+        return [
+            'category_title' => CategoriesModel::getBy('id', $event['categories_id'])['title'],
+            'members_count' => EventsMembersModel::countMembers($event['id'])
+        ];
+    }
+
     public function createData()
     {
         return [

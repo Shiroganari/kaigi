@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UsersModel;
+use App\Traits\Controllers\EntityItemTrait;
 use Core\Controller;
 use Core\View;
 
@@ -15,6 +16,8 @@ use App\Views\EventsView;
 
 class EventsController extends Controller
 {
+    use EntityItemTrait;
+
     public function index()
     {
         session_start();
@@ -99,8 +102,6 @@ class EventsController extends Controller
             $isOrganizer = $this->post_params['isOrganizer'];
         }
 
-        $events = null;
-
         if ($myEvents) {
             $events = EventsModel::getUserEvents($userID, $isOrganizer, $eventTitle);
         } else {
@@ -113,6 +114,6 @@ class EventsController extends Controller
             );
         }
 
-        echo EventsView::renderEvents($events);
+        echo self::getEventsItems($events);
     }
 }

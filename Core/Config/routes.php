@@ -19,6 +19,8 @@ $router->add('auth/completeRegistration', ['controller' => 'auth', 'action' => '
 
 // Users
 $router->add('user/{id:\d+}', ['controller' => 'profile', 'action' => 'index']);
+$router->add('users', ['controller' => 'users', 'action' => 'showUsers']);
+$router->add('users/changeUserStatus', ['controller' => 'users', 'action' => 'changeUserStatus']);
 
 // Events
 $router->add('events', ['controller' => 'events', 'action' => 'index']);

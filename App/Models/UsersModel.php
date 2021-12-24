@@ -5,7 +5,6 @@ namespace App\Models;
 use Core\Model;
 use Core\QueryBuilder;
 
-use PDO;
 use PDOException;
 
 class UsersModel extends Model
@@ -81,6 +80,44 @@ class UsersModel extends Model
         } catch (PDOException $e) {
             echo $e->getMessage();
             return;
+        }
+    }
+
+    public static function getUsersWhereFilters($filter = '')
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table('users')
+                ->select('*')
+                ->like()
+                ->orWhere(
+                    [
+                        static::$columnFirstName => $filter,
+                        static::$columnLastName => $filter,
+                        static::$columnUsername => $filter
+                    ]
+                );
+
+            return $query->get($query);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
+
+    public static function changeUserStatus(int $userID, int $statusID): bool
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->where([static::$columnID => $userID])
+                ->update([static::$columnStatus => $statusID]);
+
+            $query->execute($query);
+            return true;
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
         }
     }
 
@@ -160,7 +197,6 @@ class UsersModel extends Model
     {
         return $this->status;
     }
-
 
     public function getFirstName(): string
     {

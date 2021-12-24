@@ -87,4 +87,18 @@ class Model
 
         return $list;
     }
+
+    public static function count()
+    {
+        try {
+            $query = (new QueryBuilder())
+                ->table(static::$table)
+                ->select('COUNT(*)');
+
+            return $query->first($query)['COUNT(*)'];
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            return false;
+        }
+    }
 }
